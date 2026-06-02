@@ -53,8 +53,8 @@ const SCENARIOS = [
   },
   {
     tag: 'Перенос прийому',
-    patient: 'У мене запис на п'ятницю о 15:00. Можна перенести на наступний тиждень?',
-    ai: 'Звісно! Скасовую п'ятницю о 15:00. На наступному тижні є вівторок о 11:00 або середа о 16:30. Що підходить?',
+    patient: "У мене запис на п'ятницю о 15:00. Можна перенести на наступний тиждень?",
+    ai: "Звісно! Скасовую п'ятницю о 15:00. На наступному тижні є вівторок о 11:00 або середа о 16:30. Що підходить?",
   },
   {
     tag: 'Нічне звернення',
@@ -111,6 +111,11 @@ export default function LandingPage() {
           <div className="flex items-center gap-3">
             <a href="#how" className="hidden md:block text-white/60 hover:text-white text-sm transition-colors">Як це працює</a>
             <a href="#demo" className="hidden md:block text-white/60 hover:text-white text-sm transition-colors">Демо</a>
+            {/* Language switcher */}
+            <div className="flex items-center border border-white/15 rounded-lg overflow-hidden text-xs font-semibold">
+              <span className="px-2.5 py-1.5 bg-white/15 text-white">UA</span>
+              <Link href="/en" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors">EN</Link>
+            </div>
             <Link href="/login" className="text-white/60 hover:text-white text-sm transition-colors">Увійти</Link>
             <Link
               href="/register"

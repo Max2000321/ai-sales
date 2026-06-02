@@ -8,19 +8,42 @@ interface Message {
   content: string
 }
 
-const INITIAL: Message[] = [
-  { role: 'assistant', content: "Добрий день! Я AI-адміністратор клініки Ivory Dental. Можу записати вас на прийом, розповісти про послуги та ціни. Чим можу допомогти?" }
-]
+const CONTENT = {
+  uk: {
+    initial: "Добрий день! Я AI-адміністратор клініки Ivory Dental. Можу записати вас на прийом, розповісти про послуги та ціни. Чим можу допомогти?",
+    suggestions: [
+      "Скільки коштує чищення зубів?",
+      "Хочу записатись на прийом",
+      "Є імпланти? Яка ціна?",
+      "Працюєте у вихідні?",
+    ],
+    placeholder: "Напишіть запитання...",
+    online: "відповідає миттєво",
+    error: "Вибачте, сталася помилка. Спробуйте ще раз.",
+  },
+  en: {
+    initial: "Hello! I'm the AI administrator for Ivory Dental Clinic. I can book your appointment and answer any questions about our services and prices. How can I help?",
+    suggestions: [
+      "How much is teeth cleaning?",
+      "I'd like to book an appointment",
+      "What are your implant prices?",
+      "Do you work on weekends?",
+    ],
+    placeholder: "Write a message...",
+    online: "replies instantly",
+    error: "Something went wrong. Please try again.",
+  },
+}
 
-const SUGGESTIONS = [
-  "Скільки коштує чищення зубів?",
-  "Хочу записатись на прийом",
-  "Є імпланти? Яка ціна?",
-  "Працюєте у вихідні?",
-]
+interface Props {
+  lang?: 'uk' | 'en'
+}
 
-export default function DemoChat() {
-  const [messages, setMessages] = useState<Message[]>(INITIAL)
+export default function DemoChat({ lang = 'uk' }: Props) {
+  const c = CONTENT[lang]
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: c.initial }
+  ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(true)
@@ -51,7 +74,7 @@ export default function DemoChat() {
       const data = await res.json()
       setMessages(m => [...m, { role: 'assistant', content: data.reply }])
     } catch {
-      setMessages(m => [...m, { role: 'assistant', content: 'Вибачте, сталася помилка. Спробуйте ще раз.' }])
+      setMessages(m => [...m, { role: 'assistant', content: c.error }])
     } finally {
       setLoading(false)
     }
@@ -69,7 +92,7 @@ export default function DemoChat() {
         </div>
         <div>
           <p className="text-white font-semibold text-sm">Ivory Dental</p>
-          <p className="text-emerald-400 text-xs">Онлайн • відповідає миттєво</p>
+          <p className="text-emerald-400 text-xs">{c.online}</p>
         </div>
         <div className="ml-auto text-xs text-white/40">demo</div>
       </div>
@@ -105,7 +128,7 @@ export default function DemoChat() {
 
         {showSuggestions && !loading && messages.length === 1 && (
           <div className="space-y-1.5 pt-1">
-            {SUGGESTIONS.map(s => (
+            {c.suggestions.map(s => (
               <button
                 key={s}
                 onClick={() => send(s)}
@@ -128,7 +151,7 @@ export default function DemoChat() {
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Напишіть запитання..."
+          placeholder={c.placeholder}
           disabled={loading}
           className="flex-1 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-40"
           style={{ background: '#252c45' }}
