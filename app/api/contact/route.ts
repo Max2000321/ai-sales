@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'DentAI <noreply@dentai.app>',
+      from: 'DentAI <onboarding@resend.dev>',
       to: [toEmail],
       reply_to: email,
       subject: `Нова заявка: ${name} — ${clinic || 'без назви'}`,
