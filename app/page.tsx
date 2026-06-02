@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Check, Shield, Clock, TrendingUp, MessageSquare, Star, ArrowRight, Zap, Lock } from 'lucide-react'
+import { Check, Shield, Clock, TrendingUp, MessageSquare, Star, ArrowRight, Zap, Lock, Moon, TrendingDown, MessageCircle, BellOff, Search, UserX, Inbox, CalendarCheck, CheckCircle2, Bot, ListChecks } from 'lucide-react'
 import DemoChat from '@/components/landing/DemoChat'
 import AnimateOnScroll from '@/components/landing/AnimateOnScroll'
 import FaqSection from '@/components/landing/FaqSection'
@@ -256,19 +256,19 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: '🌙',
+                Icon: Moon, iconColor: 'text-indigo-500', iconBg: 'bg-indigo-50',
                 title: 'Після 19:00',
                 body: 'Пацієнт написав у Instagram о 21:00. Адміністратор побачить повідомлення завтра зранку. До того часу він вже записався до іншої клініки.',
                 label: 'Типова ситуація щовечора',
               },
               {
-                icon: '⏳',
+                Icon: Clock, iconColor: 'text-amber-500', iconBg: 'bg-amber-50',
                 title: 'Повільна відповідь',
                 body: 'Навіть вдень адміністратор зайнятий — на ресепшені черга, телефон дзвонить. Повідомлення у Telegram чекає 2–4 години. Пацієнт не чекає.',
                 label: 'Щоденна реальність',
               },
               {
-                icon: '💸',
+                Icon: TrendingDown, iconColor: 'text-red-500', iconBg: 'bg-red-50',
                 title: 'Ціна запитання',
                 body: 'Один пропущений пацієнт — це €50–500 залежно від процедури. 15 пропущених на тиждень = до €7,500 на місяць прямих втрат.',
                 label: 'Прямі фінансові втрати',
@@ -276,7 +276,9 @@ export default function LandingPage() {
             ].map((item, i) => (
               <AnimateOnScroll key={item.title} delay={i * 120}>
                 <div className="border border-slate-200 rounded-2xl p-6 h-full bg-white hover:border-slate-300 hover:shadow-md transition-all">
-                  <div className="text-3xl mb-4">{item.icon}</div>
+                  <div className={`w-11 h-11 rounded-xl ${item.iconBg} flex items-center justify-center mb-5`}>
+                    <item.Icon className={`w-5 h-5 ${item.iconColor}`} />
+                  </div>
                   <div className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-2">{item.label}</div>
                   <h3 className="font-bold text-slate-900 text-lg mb-3">{item.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{item.body}</p>
@@ -306,73 +308,25 @@ export default function LandingPage() {
 
               <div className="space-y-0">
                 {[
-                  {
-                    time: '20:47',
-                    day: 'Понеділок',
-                    icon: '💬',
-                    title: 'Пацієнт пише у WhatsApp',
-                    text: '"Добрий вечір! Хочу записатись на чищення зубів. Є місця на цьому тижні?"',
-                    status: 'patient',
-                  },
-                  {
-                    time: '20:47',
-                    day: 'Понеділок',
-                    icon: '😴',
-                    title: 'Адміністратор не відповідає',
-                    text: 'Робочий день закінчився о 19:00. Повідомлення залишилось непрочитаним.',
-                    status: 'lost',
-                  },
-                  {
-                    time: '20:51',
-                    day: 'Понеділок',
-                    icon: '🔍',
-                    title: 'Пацієнт шукає іншу клініку',
-                    text: 'Через 4 хвилини без відповіді він відкриває Google і знаходить конкурента.',
-                    status: 'danger',
-                  },
-                  {
-                    time: '20:55',
-                    day: 'Понеділок',
-                    icon: '✅',
-                    title: 'Пацієнт записався до конкурента',
-                    text: 'Конкурент відповів за 30 секунд. Пацієнт записаний. Він більше не повернеться до вас.',
-                    status: 'lost',
-                  },
-                  {
-                    time: '09:12',
-                    day: 'Вівторок',
-                    icon: '📩',
-                    title: 'Ваш адміністратор бачить повідомлення',
-                    text: 'Запізно. Пацієнт вже у конкурента. Це коштувало вам €60–500.',
-                    status: 'late',
-                  },
+                  { time: '20:47', day: 'Понеділок', Icon: MessageCircle, iconClass: 'text-indigo-400', title: 'Пацієнт пише у WhatsApp', text: '"Добрий вечір! Хочу записатись на чищення зубів. Є місця на цьому тижні?"', status: 'patient' },
+                  { time: '20:47', day: 'Понеділок', Icon: BellOff, iconClass: 'text-slate-400', title: 'Адміністратор не відповідає', text: 'Робочий день закінчився о 19:00. Повідомлення залишилось непрочитаним.', status: 'lost' },
+                  { time: '20:51', day: 'Понеділок', Icon: Search, iconClass: 'text-amber-400', title: 'Пацієнт шукає іншу клініку', text: 'Через 4 хвилини без відповіді він відкриває Google і знаходить конкурента.', status: 'danger' },
+                  { time: '20:55', day: 'Понеділок', Icon: UserX, iconClass: 'text-red-400', title: 'Пацієнт записався до конкурента', text: 'Конкурент відповів за 30 секунд. Пацієнт записаний. Він більше не повернеться до вас.', status: 'lost' },
+                  { time: '09:12', day: 'Вівторок', Icon: Inbox, iconClass: 'text-slate-500', title: 'Ваш адміністратор бачить повідомлення', text: 'Запізно. Пацієнт вже у конкурента. Це коштувало вам €60–500.', status: 'late' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 pb-0">
-                    {/* Time column */}
                     <div className="hidden sm:flex flex-col items-center gap-1 w-24 shrink-0 pt-5">
                       <span className="text-white/30 text-xs font-mono">{item.time}</span>
                       <span className="text-white/20 text-xs">{item.day}</span>
                     </div>
-
-                    {/* Dot */}
                     <div className="hidden sm:flex flex-col items-center shrink-0">
-                      <div className={`w-3 h-3 rounded-full mt-6 z-10 shrink-0 ${
-                        item.status === 'patient' ? 'bg-indigo-400' :
-                        item.status === 'lost' ? 'bg-red-400' :
-                        item.status === 'danger' ? 'bg-amber-400' :
-                        'bg-slate-600'
-                      }`} />
+                      <div className={`w-3 h-3 rounded-full mt-6 z-10 shrink-0 ${item.status === 'patient' ? 'bg-indigo-400' : item.status === 'lost' ? 'bg-red-400' : item.status === 'danger' ? 'bg-amber-400' : 'bg-slate-600'}`} />
                     </div>
-
-                    {/* Content */}
-                    <div className={`flex-1 rounded-2xl p-5 mb-3 border ${
-                      item.status === 'lost' ? 'border-red-500/20 bg-red-500/5' :
-                      item.status === 'danger' ? 'border-amber-500/20 bg-amber-500/5' :
-                      item.status === 'patient' ? 'border-indigo-500/20 bg-indigo-500/5' :
-                      'border-white/5 bg-white/3'
-                    }`}>
+                    <div className={`flex-1 rounded-2xl p-5 mb-3 border ${item.status === 'lost' ? 'border-red-500/20 bg-red-500/5' : item.status === 'danger' ? 'border-amber-500/20 bg-amber-500/5' : item.status === 'patient' ? 'border-indigo-500/20 bg-indigo-500/5' : 'border-white/5 bg-white/3'}`}>
                       <div className="flex items-start gap-3">
-                        <span className="text-xl shrink-0">{item.icon}</span>
+                        <div className="shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center mt-0.5">
+                          <item.Icon className={`w-4 h-4 ${item.iconClass}`} />
+                        </div>
                         <div>
                           <div className="flex items-center gap-3 mb-1 flex-wrap">
                             <p className="font-semibold text-white text-sm">{item.title}</p>
@@ -417,29 +371,23 @@ export default function LandingPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-2 relative z-10">
                 {[
-                  { icon: '💬', step: '1', title: 'Пацієнт пише', sub: 'WhatsApp / Instagram / Сайт', time: null, color: 'bg-slate-100 text-slate-600' },
-                  { icon: '⚡', step: '2', title: 'AI відповідає', sub: 'миттєво, 24/7', time: '2 сек', color: 'bg-indigo-600 text-white' },
-                  { icon: '🎯', step: '3', title: 'Уточнює потребу', sub: 'послуга, дата, час', time: '30 сек', color: 'bg-indigo-100 text-indigo-700' },
-                  { icon: '📅', step: '4', title: 'Записує пацієнта', sub: 'обирає зручний слот', time: '1 хв', color: 'bg-indigo-100 text-indigo-700' },
-                  { icon: '✅', step: '5', title: 'Запис підтверджено', sub: 'пацієнт отримує підтвердження', time: null, color: 'bg-emerald-600 text-white' },
+                  { Icon: MessageCircle, title: 'Пацієнт пише', sub: 'WhatsApp / Instagram / Сайт', time: null, iconColor: 'text-slate-600', bg: 'bg-slate-100', ring: '' },
+                  { Icon: Zap, title: 'AI відповідає', sub: 'миттєво, 24/7', time: '2 сек', iconColor: 'text-white', bg: 'bg-indigo-600', ring: 'ring-4 ring-indigo-100' },
+                  { Icon: ListChecks, title: 'Уточнює потребу', sub: 'послуга, дата, час', time: '30 сек', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CalendarCheck, title: 'Записує пацієнта', sub: 'обирає зручний слот', time: '1 хв', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CheckCircle2, title: 'Запис підтверджено', sub: 'пацієнт отримує підтвердження', time: null, iconColor: 'text-white', bg: 'bg-emerald-600', ring: '' },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center text-center">
-                    {/* Icon */}
-                    <div className={`w-20 h-20 rounded-2xl flex flex-col items-center justify-center mb-3 shadow-sm ${item.color}`}>
-                      <span className="text-2xl">{item.icon}</span>
+                    <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-3 shadow-sm ${item.bg} ${item.ring}`}>
+                      <item.Icon className={`w-8 h-8 ${item.iconColor}`} />
                     </div>
-                    {/* Time badge */}
-                    {item.time && (
-                      <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span>
-                    )}
-                    {!item.time && <div className="h-5 mb-2" />}
+                    {item.time
+                      ? <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span>
+                      : <div className="h-5 mb-2" />
+                    }
                     <p className="font-bold text-slate-900 text-sm mb-1">{item.title}</p>
                     <p className="text-slate-500 text-xs leading-tight">{item.sub}</p>
-
-                    {/* Mobile arrow */}
-                    {i < 4 && (
-                      <div className="lg:hidden text-slate-300 text-2xl my-2">↓</div>
-                    )}
+                    {i < 4 && <div className="lg:hidden text-slate-300 text-xl my-2">↓</div>}
                   </div>
                 ))}
               </div>
@@ -449,12 +397,14 @@ export default function LandingPage() {
           <AnimateOnScroll delay={200}>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { label: 'Без участі адміністратора', icon: '🤖' },
-                { label: 'Будь-якої миті — навіть о 3 ночі', icon: '🌙' },
-                { label: 'Пацієнт записаний, не втрачений', icon: '🎉' },
-              ].map(({ label, icon }) => (
+                { label: 'Без участі адміністратора', Icon: Bot, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                { label: 'Будь-якої миті — навіть о 3 ночі', Icon: Moon, color: 'text-slate-600', bg: 'bg-slate-100' },
+                { label: 'Пацієнт записаний, не втрачений', Icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+              ].map(({ label, Icon, color, bg }) => (
                 <div key={label} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
-                  <span className="text-xl">{icon}</span>
+                  <div className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-4 h-4 ${color}`} />
+                  </div>
                   <p className="text-slate-700 font-medium text-sm">{label}</p>
                 </div>
               ))}

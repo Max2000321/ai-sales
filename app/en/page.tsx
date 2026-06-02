@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Check, Shield, Clock, TrendingUp, MessageSquare, Star, ArrowRight, Zap, Lock } from 'lucide-react'
+import { Check, Shield, Clock, TrendingUp, MessageSquare, Star, ArrowRight, Zap, Lock, Moon, TrendingDown, MessageCircle, BellOff, Search, UserX, Inbox, CalendarCheck, CheckCircle2, Bot, ListChecks } from 'lucide-react'
 import DemoChat from '@/components/landing/DemoChat'
 import AnimateOnScroll from '@/components/landing/AnimateOnScroll'
 import FaqSection from '@/components/landing/FaqSection'
@@ -215,13 +215,15 @@ export default function EnPage() {
           </AnimateOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: '🌙', title: 'After 7 PM', label: 'Every evening', body: 'A patient messaged your Instagram at 9 PM. Your receptionist will see it tomorrow morning. By then they have already booked with another clinic.' },
-              { icon: '⏳', title: 'Slow response', label: 'Daily reality', body: "Even during the day, your receptionist is busy — people waiting, phone ringing. That Telegram message waits 2–4 hours. The patient doesn't wait." },
-              { icon: '💸', title: 'The real cost', label: 'Direct financial loss', body: 'One missed patient = €50–500 depending on the procedure. 15 missed per week = up to €7,500 in direct losses per month.' },
+              { Icon: Moon, iconColor: 'text-indigo-500', iconBg: 'bg-indigo-50', title: 'After 7 PM', label: 'Every evening', body: 'A patient messaged your Instagram at 9 PM. Your receptionist will see it tomorrow morning. By then they have already booked with another clinic.' },
+              { Icon: Clock, iconColor: 'text-amber-500', iconBg: 'bg-amber-50', title: 'Slow response', label: 'Daily reality', body: "Even during the day, your receptionist is busy — people waiting, phone ringing. That Telegram message waits 2–4 hours. The patient doesn't wait." },
+              { Icon: TrendingDown, iconColor: 'text-red-500', iconBg: 'bg-red-50', title: 'The real cost', label: 'Direct financial loss', body: 'One missed patient = €50–500 depending on the procedure. 15 missed per week = up to €7,500 in direct losses per month.' },
             ].map((item, i) => (
               <AnimateOnScroll key={item.title} delay={i * 120}>
                 <div className="border border-slate-200 rounded-2xl p-6 h-full bg-white hover:border-slate-300 hover:shadow-md transition-all">
-                  <div className="text-3xl mb-4">{item.icon}</div>
+                  <div className={`w-11 h-11 rounded-xl ${item.iconBg} flex items-center justify-center mb-5`}>
+                    <item.Icon className={`w-5 h-5 ${item.iconColor}`} />
+                  </div>
                   <div className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-2">{item.label}</div>
                   <h3 className="font-bold text-slate-900 text-lg mb-3">{item.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{item.body}</p>
@@ -246,11 +248,11 @@ export default function EnPage() {
               <div className="absolute left-6 top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
               <div className="space-y-0">
                 {[
-                  { time: '8:47 PM', day: 'Monday', icon: '💬', title: 'Patient writes on WhatsApp', text: '"Good evening! I\'d like to book a teeth cleaning. Do you have slots this week?"', status: 'patient' },
-                  { time: '8:47 PM', day: 'Monday', icon: '😴', title: 'No response from the clinic', text: 'The working day ended at 7 PM. The message went unread.', status: 'lost' },
-                  { time: '8:51 PM', day: 'Monday', icon: '🔍', title: 'Patient searches for another clinic', text: '4 minutes without a reply. He opens Google and finds your competitor.', status: 'danger' },
-                  { time: '8:55 PM', day: 'Monday', icon: '✅', title: 'Patient books with a competitor', text: 'The competitor replied in 30 seconds. Appointment booked. He won\'t come back to you.', status: 'lost' },
-                  { time: '9:12 AM', day: 'Tuesday', icon: '📩', title: 'Your receptionist sees the message', text: 'Too late. The patient is already at your competitor. This cost you €60–500.', status: 'late' },
+                  { time: '8:47 PM', day: 'Monday', Icon: MessageCircle, iconClass: 'text-indigo-400', title: 'Patient writes on WhatsApp', text: '"Good evening! I\'d like to book a teeth cleaning. Do you have slots this week?"', status: 'patient' },
+                  { time: '8:47 PM', day: 'Monday', Icon: BellOff, iconClass: 'text-slate-400', title: 'No response from the clinic', text: 'The working day ended at 7 PM. The message went unread.', status: 'lost' },
+                  { time: '8:51 PM', day: 'Monday', Icon: Search, iconClass: 'text-amber-400', title: 'Patient searches for another clinic', text: '4 minutes without a reply. He opens Google and finds your competitor.', status: 'danger' },
+                  { time: '8:55 PM', day: 'Monday', Icon: UserX, iconClass: 'text-red-400', title: 'Patient books with a competitor', text: 'The competitor replied in 30 seconds. Appointment booked. He won\'t come back to you.', status: 'lost' },
+                  { time: '9:12 AM', day: 'Tuesday', Icon: Inbox, iconClass: 'text-slate-500', title: 'Your receptionist sees the message', text: 'Too late. The patient is already at your competitor. This cost you €60–500.', status: 'late' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 pb-0">
                     <div className="hidden sm:flex flex-col items-center gap-1 w-24 shrink-0 pt-5">
@@ -262,7 +264,9 @@ export default function EnPage() {
                     </div>
                     <div className={`flex-1 rounded-2xl p-5 mb-3 border ${item.status === 'lost' ? 'border-red-500/20 bg-red-500/5' : item.status === 'danger' ? 'border-amber-500/20 bg-amber-500/5' : item.status === 'patient' ? 'border-indigo-500/20 bg-indigo-500/5' : 'border-white/5 bg-white/3'}`}>
                       <div className="flex items-start gap-3">
-                        <span className="text-xl shrink-0">{item.icon}</span>
+                        <div className="shrink-0 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center mt-0.5">
+                          <item.Icon className={`w-4 h-4 ${item.iconClass}`} />
+                        </div>
                         <div>
                           <div className="flex items-center gap-3 mb-1 flex-wrap">
                             <p className="font-semibold text-white text-sm">{item.title}</p>
@@ -300,20 +304,20 @@ export default function EnPage() {
               <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-px bg-slate-200 z-0" />
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-2 relative z-10">
                 {[
-                  { icon: '💬', title: 'Patient writes', sub: 'WhatsApp / Instagram / Website', time: null, color: 'bg-slate-100 text-slate-600' },
-                  { icon: '⚡', title: 'AI responds', sub: 'instantly, 24/7', time: '2 sec', color: 'bg-indigo-600 text-white' },
-                  { icon: '🎯', title: 'Qualifies need', sub: 'service, date, time', time: '30 sec', color: 'bg-indigo-100 text-indigo-700' },
-                  { icon: '📅', title: 'Books appointment', sub: 'picks a convenient slot', time: '1 min', color: 'bg-indigo-100 text-indigo-700' },
-                  { icon: '✅', title: 'Booking confirmed', sub: 'patient receives confirmation', time: null, color: 'bg-emerald-600 text-white' },
+                  { Icon: MessageCircle, title: 'Patient writes', sub: 'WhatsApp / Instagram / Website', time: null, iconColor: 'text-slate-600', bg: 'bg-slate-100', ring: '' },
+                  { Icon: Zap, title: 'AI responds', sub: 'instantly, 24/7', time: '2 sec', iconColor: 'text-white', bg: 'bg-indigo-600', ring: 'ring-4 ring-indigo-100' },
+                  { Icon: ListChecks, title: 'Qualifies need', sub: 'service, date, time', time: '30 sec', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CalendarCheck, title: 'Books appointment', sub: 'picks a convenient slot', time: '1 min', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CheckCircle2, title: 'Booking confirmed', sub: 'patient receives confirmation', time: null, iconColor: 'text-white', bg: 'bg-emerald-600', ring: '' },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center text-center">
-                    <div className={`w-20 h-20 rounded-2xl flex flex-col items-center justify-center mb-3 shadow-sm ${item.color}`}>
-                      <span className="text-2xl">{item.icon}</span>
+                    <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-3 shadow-sm ${item.bg} ${item.ring}`}>
+                      <item.Icon className={`w-8 h-8 ${item.iconColor}`} />
                     </div>
                     {item.time ? <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span> : <div className="h-5 mb-2" />}
                     <p className="font-bold text-slate-900 text-sm mb-1">{item.title}</p>
                     <p className="text-slate-500 text-xs leading-tight">{item.sub}</p>
-                    {i < 4 && <div className="lg:hidden text-slate-300 text-2xl my-2">↓</div>}
+                    {i < 4 && <div className="lg:hidden text-slate-300 text-xl my-2">↓</div>}
                   </div>
                 ))}
               </div>
@@ -322,12 +326,14 @@ export default function EnPage() {
           <AnimateOnScroll delay={200}>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { label: 'No receptionist involvement', icon: '🤖' },
-                { label: 'Any time — even at 3 AM', icon: '🌙' },
-                { label: 'Patient booked, not lost', icon: '🎉' },
-              ].map(({ label, icon }) => (
+                { label: 'No receptionist involvement', Icon: Bot, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                { label: 'Any time — even at 3 AM', Icon: Moon, color: 'text-slate-600', bg: 'bg-slate-100' },
+                { label: 'Patient booked, not lost', Icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+              ].map(({ label, Icon, color, bg }) => (
                 <div key={label} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
-                  <span className="text-xl">{icon}</span>
+                  <div className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center shrink-0`}>
+                    <Icon className={`w-4 h-4 ${color}`} />
+                  </div>
                   <p className="text-slate-700 font-medium text-sm">{label}</p>
                 </div>
               ))}
