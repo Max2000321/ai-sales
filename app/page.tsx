@@ -155,12 +155,12 @@ export default function LandingPage() {
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-10">
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
                 <Link
                   href="/register"
                   className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors text-base"
                 >
-                  Отримати безкоштовне демо
+                  Спробувати 14 днів безкоштовно
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
@@ -170,6 +170,10 @@ export default function LandingPage() {
                   Подивитись як працює ↓
                 </a>
               </div>
+
+              <p className="text-white/35 text-sm mb-8">
+                Перші 14 днів безкоштовно · Без прив&apos;язки картки · Скасування будь-коли
+              </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/40">
                 <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> Налаштування за 24 год</span>
@@ -442,31 +446,157 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CHANNELS ── */}
-      <section className="py-24 bg-white">
+      {/* ── DASHBOARD MOCKUP ── */}
+      <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Один дашборд — всі канали</h2>
               <p className="text-slate-500 text-lg max-w-2xl mx-auto">
                 Пацієнти пишуть де їм зручно. Ви керуєте всім з одного місця.
               </p>
             </div>
           </AnimateOnScroll>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {CHANNELS.map(({ name, color, bg, letter }, i) => (
-              <AnimateOnScroll key={name} delay={i * 60}>
-                <div className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all cursor-default">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-sm" style={{ background: bg, color }}>
-                    {letter}
+
+          <AnimateOnScroll delay={100}>
+            {/* Dashboard shell */}
+            <div className="rounded-2xl border border-slate-200 shadow-2xl overflow-hidden">
+              {/* Top bar */}
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200 bg-slate-50">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                <span className="ml-3 text-xs text-slate-400 font-mono">app.dentai.io/dashboard</span>
+              </div>
+
+              <div className="flex" style={{ background: '#f8fafc' }}>
+                {/* Sidebar */}
+                <div className="hidden md:flex flex-col w-52 shrink-0 border-r border-slate-200 bg-white py-4">
+                  <div className="flex items-center gap-2 px-4 mb-6">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">D</span>
+                    </div>
+                    <span className="font-bold text-slate-800 text-sm">DentAI</span>
                   </div>
-                  <span className="text-slate-700 font-medium text-sm">{name}</span>
+                  {[
+                    { label: 'Діалоги', active: true },
+                    { label: 'Аналітика', active: false },
+                    { label: 'База знань', active: false },
+                    { label: 'Налаштування', active: false },
+                  ].map(({ label, active }) => (
+                    <div key={label} className={`mx-2 px-3 py-2 rounded-lg text-sm mb-0.5 cursor-default ${active ? 'bg-indigo-600 text-white font-medium' : 'text-slate-500 hover:bg-slate-50'}`}>
+                      {label}
+                    </div>
+                  ))}
                 </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
+
+                {/* Main content */}
+                <div className="flex-1 p-5 min-w-0">
+                  {/* Stats row */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                    {[
+                      { label: 'Діалогів сьогодні', value: '24', delta: '+6', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                      { label: 'Нових записів', value: '11', delta: '+3', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                      { label: 'Оброблено AI', value: '22', delta: '92%', color: 'text-sky-600', bg: 'bg-sky-50' },
+                      { label: 'Пропущено', value: '0', delta: '—', color: 'text-slate-400', bg: 'bg-slate-100' },
+                    ].map(({ label, value, delta, color, bg }) => (
+                      <div key={label} className="bg-white rounded-xl border border-slate-100 p-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="text-xs text-slate-400">{label}</p>
+                          <span className={`text-xs font-semibold ${color}`}>{delta}</span>
+                        </div>
+                        <p className={`text-2xl font-black ${color}`}>{value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Dialog list */}
+                  <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+                      <p className="text-sm font-semibold text-slate-800">Останні діалоги</p>
+                      <span className="text-xs text-slate-400">сьогодні, 14:32</span>
+                    </div>
+                    {[
+                      {
+                        name: 'Марина К.',
+                        preview: 'Хочу записатись на чищення...',
+                        time: '14:31',
+                        channel: 'In',
+                        channelColor: '#E1306C',
+                        channelBg: '#fdf2f8',
+                        status: 'Записана',
+                        statusColor: 'bg-emerald-100 text-emerald-700',
+                      },
+                      {
+                        name: 'Андрій П.',
+                        preview: 'Скільки коштує імплант?',
+                        time: '14:18',
+                        channel: 'Tg',
+                        channelColor: '#229ED9',
+                        channelBg: '#eff8ff',
+                        status: 'Відповідено',
+                        statusColor: 'bg-sky-100 text-sky-700',
+                      },
+                      {
+                        name: 'Олена В.',
+                        preview: 'Добрий день! Хочу перенести...',
+                        time: '13:55',
+                        channel: 'Wa',
+                        channelColor: '#25D366',
+                        channelBg: '#f0fdf4',
+                        status: 'Новий',
+                        statusColor: 'bg-amber-100 text-amber-700',
+                      },
+                      {
+                        name: 'Дмитро Л.',
+                        preview: 'Дякую, все зрозуміло!',
+                        time: '13:40',
+                        channel: 'In',
+                        channelColor: '#E1306C',
+                        channelBg: '#fdf2f8',
+                        status: 'Записаний',
+                        statusColor: 'bg-emerald-100 text-emerald-700',
+                      },
+                      {
+                        name: 'Martin N.',
+                        preview: 'Dobrý den, mám dotaz na cenu...',
+                        time: '13:12',
+                        channel: 'Fb',
+                        channelColor: '#1877F2',
+                        channelBg: '#eff6ff',
+                        status: 'Відповідено',
+                        statusColor: 'bg-sky-100 text-sky-700',
+                      },
+                    ].map(({ name, preview, time, channel, channelColor, channelBg, status, statusColor }) => (
+                      <div key={name} className="flex items-center gap-3 px-4 py-3 border-b border-slate-50 hover:bg-slate-50 transition-colors cursor-default">
+                        {/* Avatar */}
+                        <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-sm shrink-0">
+                          {name[0]}
+                        </div>
+                        {/* Text */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <p className="text-sm font-semibold text-slate-800 truncate">{name}</p>
+                            <span className="text-xs font-bold rounded px-1.5 py-0.5 shrink-0" style={{ background: channelBg, color: channelColor }}>{channel}</span>
+                          </div>
+                          <p className="text-xs text-slate-400 truncate">{preview}</p>
+                        </div>
+                        {/* Right */}
+                        <div className="flex flex-col items-end gap-1 shrink-0">
+                          <span className="text-xs text-slate-400">{time}</span>
+                          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${statusColor}`}>{status}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+
           <AnimateOnScroll delay={200}>
-            <div className="mt-10 bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="mt-8 bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
               <div>
                 <p className="font-semibold text-slate-900">Ваші пацієнти вже там.</p>
                 <p className="text-slate-500 text-sm">67% звернень до клінік надходять через месенджери та соцмережі — не через телефон.</p>
@@ -667,6 +797,11 @@ export default function LandingPage() {
                   >
                     {cta}
                   </Link>
+                  {ctaHref !== '/contact' && (
+                    <p className={`text-center text-xs mt-2.5 ${highlight ? 'text-indigo-300' : 'text-slate-400'}`}>
+                      14 днів безкоштовно — без картки
+                    </p>
+                  )}
                 </div>
               </AnimateOnScroll>
             ))}

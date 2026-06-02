@@ -130,14 +130,17 @@ export default function EnPage() {
                   <span key={t} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/70 px-3 py-1.5 rounded-full">{t}</span>
                 ))}
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 mb-10">
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
                 <Link href="/register" className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors text-base">
-                  Get a free demo <ArrowRight className="w-4 h-4" />
+                  Try free for 14 days <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a href="#demo" className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 text-white/70 hover:text-white px-6 py-3.5 rounded-xl font-medium transition-colors text-base">
                   See how it works ↓
                 </a>
               </div>
+              <p className="text-white/35 text-sm mb-8">
+                First 14 days free · No credit card required · Cancel anytime
+              </p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/40">
                 <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> Live in 24 hours</span>
                 <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> No technical skills needed</span>
@@ -560,6 +563,11 @@ export default function EnPage() {
                   <Link href={ctaHref} className={`block text-center py-3 rounded-xl text-sm font-semibold transition-colors ${highlight ? 'bg-white text-indigo-600 hover:bg-indigo-50' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}>
                     {cta}
                   </Link>
+                  {ctaHref !== '/contact' && (
+                    <p className={`text-center text-xs mt-2.5 ${highlight ? 'text-indigo-300' : 'text-slate-400'}`}>
+                      14 days free — no credit card
+                    </p>
+                  )}
                 </div>
               </AnimateOnScroll>
             ))}
