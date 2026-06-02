@@ -11,11 +11,10 @@ interface Message {
 const CONTENT = {
   uk: {
     initial: "Добрий день! Я AI-адміністратор клініки Ivory Dental. Можу записати вас на прийом, розповісти про послуги та ціни. Чим можу допомогти?",
-    suggestions: [
-      "Скільки коштує чищення зубів?",
-      "Хочу записатись на прийом",
-      "Є імпланти? Яка ціна?",
-      "Працюєте у вихідні?",
+    quickActions: [
+      { label: "Записатись", message: "Хочу записатись на прийом" },
+      { label: "Дізнатись ціни", message: "Які у вас ціни на послуги?" },
+      { label: "Перенести прийом", message: "Хочу перенести мій запис на інший час" },
     ],
     placeholder: "Напишіть запитання...",
     online: "відповідає миттєво",
@@ -23,11 +22,10 @@ const CONTENT = {
   },
   en: {
     initial: "Hello! I'm the AI administrator for Ivory Dental Clinic. I can book your appointment and answer any questions about our services and prices. How can I help?",
-    suggestions: [
-      "How much is teeth cleaning?",
-      "I'd like to book an appointment",
-      "What are your implant prices?",
-      "Do you work on weekends?",
+    quickActions: [
+      { label: "Book appointment", message: "I'd like to book an appointment" },
+      { label: "See prices", message: "What are your prices for services?" },
+      { label: "Reschedule", message: "I'd like to reschedule my appointment" },
     ],
     placeholder: "Write a message...",
     online: "replies instantly",
@@ -35,11 +33,10 @@ const CONTENT = {
   },
   cz: {
     initial: "Dobrý den! Jsem AI administrátor ordinace Ivory Dental. Mohu vám zarezervovat schůzku a odpovědět na otázky o našich službách a cenách. Jak vám mohu pomoci?",
-    suggestions: [
-      "Kolik stojí čištění zubů?",
-      "Chci si objednat termín",
-      "Jaké jsou ceny implantátů?",
-      "Ordinujete o víkendu?",
+    quickActions: [
+      { label: "Objednat se", message: "Chci si objednat termín" },
+      { label: "Zjistit ceny", message: "Jaké jsou vaše ceny za služby?" },
+      { label: "Přeobjednat", message: "Chci přesunout svůj termín" },
     ],
     placeholder: "Napište zprávu...",
     online: "odpovídá okamžitě",
@@ -58,7 +55,7 @@ export default function DemoChat({ lang = 'uk' }: Props) {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showSuggestions, setShowSuggestions] = useState(true)
+  const [hasError, setHasError] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -67,7 +64,7 @@ export default function DemoChat({ lang = 'uk' }: Props) {
 
   async function send(text: string) {
     if (!text.trim() || loading) return
-    setShowSuggestions(false)
+    setHasError(false)
     const userMsg: Message = { role: 'user', content: text }
     const next = [...messages, userMsg]
     setMessages(next)
@@ -83,9 +80,12 @@ export default function DemoChat({ lang = 'uk' }: Props) {
           history: messages.map(m => ({ role: m.role, content: m.content })),
         }),
       })
+      if (!res.ok) throw new Error('API error')
       const data = await res.json()
+      if (!data.reply) throw new Error('Empty reply')
       setMessages(m => [...m, { role: 'assistant', content: data.reply }])
     } catch {
+      setHasError(true)
       setMessages(m => [...m, { role: 'assistant', content: c.error }])
     } finally {
       setLoading(false)
@@ -93,9 +93,9 @@ export default function DemoChat({ lang = 'uk' }: Props) {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden flex flex-col border border-white/10 shadow-2xl" style={{ height: 460, background: '#1a1f35' }}>
+    <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden flex flex-col border border-white/10 shadow-2xl" style={{ height: 520, background: '#1a1f35' }}>
       {/* Header */}
-      <div className="px-4 py-3 flex items-center gap-3 border-b border-white/10" style={{ background: '#141827' }}>
+      <div className="px-4 py-3 flex items-center gap-3 border-b border-white/10 shrink-0" style={{ background: '#141827' }}>
         <div className="relative">
           <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm">
             ID
@@ -110,7 +110,7 @@ export default function DemoChat({ lang = 'uk' }: Props) {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
@@ -138,26 +138,27 @@ export default function DemoChat({ lang = 'uk' }: Props) {
           </div>
         )}
 
-        {showSuggestions && !loading && messages.length === 1 && (
-          <div className="space-y-1.5 pt-1">
-            {c.suggestions.map(s => (
-              <button
-                key={s}
-                onClick={() => send(s)}
-                className="block w-full text-left text-xs text-indigo-300 border border-indigo-500/30 rounded-xl px-3 py-2 hover:bg-indigo-600/20 transition-colors"
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
         <div ref={bottomRef} />
+      </div>
+
+      {/* Quick actions — always visible */}
+      <div className="px-3 pt-2 pb-1 flex gap-1.5 shrink-0" style={{ background: '#1a1f35' }}>
+        {c.quickActions.map(({ label, message }) => (
+          <button
+            key={label}
+            onClick={() => send(message)}
+            disabled={loading}
+            className="flex-1 text-center text-xs text-indigo-300 border border-indigo-500/30 rounded-lg px-2 py-1.5 hover:bg-indigo-600/20 transition-colors disabled:opacity-40 truncate"
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* Input */}
       <form
         onSubmit={e => { e.preventDefault(); send(input) }}
-        className="p-3 border-t border-white/10 flex gap-2"
+        className="p-3 border-t border-white/10 flex gap-2 shrink-0"
       >
         <input
           type="text"
@@ -171,7 +172,7 @@ export default function DemoChat({ lang = 'uk' }: Props) {
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40 hover:bg-indigo-500"
+          className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40 hover:bg-indigo-500 shrink-0"
         >
           {loading ? <Loader2 className="w-4 h-4 text-white animate-spin" /> : <Send className="w-4 h-4 text-white" />}
         </button>
