@@ -733,6 +733,7 @@ export default function CzPage() {
               <Link href="/login" className="hover:text-white/70 transition-colors">Přihlásit se</Link>
               <Link href="/register" className="hover:text-white/70 transition-colors">Rezervovat demo</Link>
               <a href="mailto:hello@dentai.app" className="hover:text-white/70 transition-colors">hello@dentai.app</a>
+              <Link href="/privacy" className="hover:text-white/70 transition-colors">Ochrana osobních údajů</Link>
             </div>
           </div>
           <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-2 text-white/20 text-sm">
