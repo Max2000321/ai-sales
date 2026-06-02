@@ -45,11 +45,11 @@ export default async function ConversationsPage() {
                   <div className="flex items-center gap-2">
                     <MessageSquare className="w-4 h-4 text-indigo-500" />
                     <span className="text-sm font-medium text-slate-700">
-                      {(conv.agents as { name: string } | null)?.name || 'Агент'}
+                      {(conv.agents as { name: string } | null)?.name || 'Agent'}
                     </span>
                   </div>
                   <span className="text-xs text-slate-400">
-                    {new Date(conv.updated_at).toLocaleString('ru', {
+                    {new Date(conv.updated_at).toLocaleString('en', {
                       day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
                     })}
                   </span>
@@ -70,7 +70,7 @@ export default async function ConversationsPage() {
                   ))}
                   {msgs.length > 4 && (
                     <p className="text-xs text-slate-400 text-center">
-                      + ещё {msgs.length - 4} сообщений
+                      + {msgs.length - 4} more messages
                     </p>
                   )}
                 </div>

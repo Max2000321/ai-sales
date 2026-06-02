@@ -69,7 +69,7 @@ export default function EmbedPage() {
                 className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition-colors"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                {copied ? 'Скопировано' : 'Копировать'}
+                {copied ? 'Copied!' : 'Copy'}
               </button>
             </div>
             <pre className="p-5 text-sm text-indigo-300 bg-slate-900 overflow-auto rounded-b-xl">

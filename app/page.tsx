@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Bot, Zap, Shield, BarChart3, MessageSquare, Upload } from 'lucide-react'
+import DemoChat from '@/components/landing/DemoChat'
 
 export default function LandingPage() {
   return (
@@ -40,7 +41,7 @@ export default function LandingPage() {
         <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
           Connect your website, documents and FAQ. AI answers customer questions 24/7 using your knowledge base.
         </p>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 mb-16">
           <Link
             href="/register"
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors text-base"
@@ -55,33 +56,11 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* Mock chat preview */}
-        <div className="mt-16 max-w-sm mx-auto bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden text-left">
-          <div className="bg-indigo-600 p-4 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="text-white font-medium text-sm">Sales Assistant</p>
-              <p className="text-indigo-200 text-xs">Online</p>
-            </div>
-          </div>
-          <div className="p-4 space-y-3">
-            <div className="bg-slate-100 rounded-xl rounded-tl-sm px-4 py-2.5 text-sm text-slate-700 max-w-[85%]">
-              Hi there! How can I help you today?
-            </div>
-            <div className="bg-indigo-600 rounded-xl rounded-tr-sm px-4 py-2.5 text-sm text-white max-w-[85%] ml-auto">
-              What are your pricing plans?
-            </div>
-            <div className="bg-slate-100 rounded-xl rounded-tl-sm px-4 py-2.5 text-sm text-slate-700 max-w-[85%]">
-              We have 3 plans: Starter from €49/mo, Pro from €149/mo, and Enterprise. Which one interests you?
-            </div>
-          </div>
-          <div className="p-3 border-t border-slate-100">
-            <div className="bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-400">
-              Write a message...
-            </div>
-          </div>
+        {/* Live demo chat */}
+        <div className="max-w-sm mx-auto">
+          <p className="text-sm text-slate-500 mb-3 font-medium">Try the live demo below ↓</p>
+          <DemoChat />
+          <p className="text-xs text-slate-400 mt-3">Powered by Advanced AI · No sign-up required</p>
         </div>
       </section>
 
@@ -130,7 +109,7 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold text-center text-slate-900 mb-12">Everything you need</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: Bot, title: 'Powered by Claude AI', desc: 'The most capable language model for accurate, helpful answers.' },
+              { icon: Bot, title: 'Powered by Advanced AI', desc: 'The most capable AI technology for accurate, helpful answers every time.' },
               { icon: Shield, title: 'Your data stays private', desc: 'Documents are stored only in your account, never shared.' },
               { icon: BarChart3, title: 'Conversation analytics', desc: 'See what customers ask about and improve your knowledge base.' },
               { icon: MessageSquare, title: 'Full conversation history', desc: 'Every customer chat in one place, searchable and organized.' },
@@ -222,15 +201,25 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-100 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center">
-              <Bot className="w-4 h-4 text-white" />
+      <footer className="border-t border-slate-100 py-10">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-semibold text-slate-900">SalesAI</span>
             </div>
-            <span className="font-semibold text-slate-900">SalesAI</span>
+            <div className="flex items-center gap-6 text-sm text-slate-500">
+              <span>contact@salesai.app</span>
+              <span>Europe, EU</span>
+              <Link href="/login" className="hover:text-slate-900">Sign in</Link>
+              <Link href="/register" className="hover:text-slate-900">Get started</Link>
+            </div>
           </div>
-          <p className="text-slate-500 text-sm">© 2026 SalesAI. All rights reserved.</p>
+          <div className="mt-6 pt-6 border-t border-slate-100 text-center text-sm text-slate-400">
+            © 2026 SalesAI. All rights reserved. · Powered by Advanced AI
+          </div>
         </div>
       </footer>
     </div>
