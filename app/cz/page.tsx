@@ -10,73 +10,73 @@ const CHANNELS = [
   { name: 'Telegram', color: '#229ED9', bg: '#eff8ff', letter: 'Tg' },
   { name: 'WhatsApp', color: '#25D366', bg: '#f0fdf4', letter: 'Wa' },
   { name: 'Viber', color: '#7360F2', bg: '#f5f3ff', letter: 'Vi' },
-  { name: 'Website', color: '#4F46E5', bg: '#eef2ff', letter: 'Web' },
+  { name: 'Web', color: '#4F46E5', bg: '#eef2ff', letter: 'Web' },
 ]
 
 const PROBLEMS = [
-  { stat: '73%', text: 'of patients choose the clinic that responds first', sub: 'Harvard Medical School research, 2023' },
-  { stat: '4+ hrs', text: 'average response time from a human administrator', sub: 'By then, the patient has already booked elsewhere' },
-  { stat: '15–20', text: 'inquiries lost per clinic per week after closing time', sub: 'That is 60–80 potential patients per month' },
+  { stat: '73 %', text: 'pacientů si vybere ordinaci, která odpoví jako první', sub: 'Výzkum Harvard Medical School, 2023' },
+  { stat: '4+ hod', text: 'průměrná doba odpovědi recepční na zprávu', sub: 'Do té doby si pacient objedná ke konkurenci' },
+  { stat: '15–20', text: 'dotazů týdně se ztratí po zavírací době', sub: 'To je 60–80 potenciálních pacientů za měsíc' },
 ]
 
 const RESULTS = [
-  { icon: TrendingUp, value: '+38%', label: 'more appointments per month', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  { icon: Clock, value: '< 3 sec', label: 'response time to patients', color: 'text-indigo-600', bg: 'bg-indigo-50' },
-  { icon: MessageSquare, value: '0', label: 'missed patient inquiries', color: 'text-sky-600', bg: 'bg-sky-50' },
-  { icon: Shield, value: '24/7', label: 'no holidays, no sick days', color: 'text-violet-600', bg: 'bg-violet-50' },
+  { icon: TrendingUp, value: '+38 %', label: 'více objednání za měsíc', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { icon: Clock, value: '< 3 s', label: 'doba odpovědi pacientovi', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+  { icon: MessageSquare, value: '0', label: 'zmeškaných dotazů', color: 'text-sky-600', bg: 'bg-sky-50' },
+  { icon: Shield, value: '24/7', label: 'bez dovolených a svátků', color: 'text-violet-600', bg: 'bg-violet-50' },
 ]
 
 const SCENARIOS = [
   {
-    tag: 'Book a cleaning',
-    patient: 'Hello! I would like to book a professional teeth cleaning. What slots do you have this week?',
-    ai: 'Of course! The nearest available slots are tomorrow at 10:00 or Thursday at 14:30. Cleaning takes 45 min, €60. Which works better for you?',
+    tag: 'Objednání na čištění',
+    patient: 'Dobrý den! Chtěl(a) bych se objednat na profesionální čištění zubů. Máte volné termíny tento týden?',
+    ai: 'Samozřejmě! Nejbližší volné termíny jsou zítra v 10:00 nebo ve čtvrtek ve 14:30. Čištění trvá 45 minut, cena 1 500 Kč. Který termín vám vyhovuje?',
   },
   {
-    tag: 'Implant pricing',
-    patient: "I'm interested in a dental implant. How much does it cost?",
-    ai: 'An implant including crown starts from €800. The exact price depends on your clinical situation. Book a free consultation — the dentist will assess and give you a precise quote.',
+    tag: 'Cena implantátů',
+    patient: 'Zajímám se o zubní implantát. Kolik to u vás stojí?',
+    ai: 'Implantát včetně korunky začíná od 20 000 Kč. Přesná cena závisí na klinickém stavu. Objednejte se na bezplatnou konzultaci — lékař posoudí situaci a sdělí vám přesnou cenu.',
   },
   {
-    tag: 'Reschedule appointment',
-    patient: "I have an appointment on Friday at 3 PM. Can I move it to next week?",
-    ai: "Of course! I've cancelled Friday at 3 PM. Next week we have Tuesday at 11:00 or Wednesday at 16:30. Which suits you?",
+    tag: 'Přeobjednání',
+    patient: 'Mám termín v pátek ve 15:00. Mohu ho přesunout na příští týden?',
+    ai: 'Samozřejmě! Pátek v 15:00 jsem zrušila. Příští týden mám úterý v 11:00 nebo středu ve 16:30. Co vám vyhovuje?',
   },
   {
-    tag: 'Late-night inquiry',
-    patient: 'Toothache, it\'s 11 PM. What should I do? Do you have emergency appointments?',
-    ai: "I understand, that's very unpleasant. There's an urgent slot available tomorrow at 9:00. If the pain is severe — take a painkiller and call our emergency line: +XX XXX XXX XXX.",
+    tag: 'Noční dotaz',
+    patient: 'Bolí mě zub, je 23:00. Co mám dělat? Máte pohotovostní termíny?',
+    ai: 'Rozumím, to musí být nepříjemné. Na zítra je k dispozici pohotovostní termín v 9:00. Pokud je bolest velmi silná — vezměte analgetikum a zavolejte na pohotovostní linku: +420 XXX XXX XXX.',
   },
 ]
 
 const TESTIMONIALS = [
   {
-    name: 'Olena Kovalenko',
-    role: 'Clinic Owner',
-    clinic: 'Perlyna Dental, Kyiv',
-    text: 'In the first month we received 43 additional bookings that previously just disappeared after 7 PM. Our receptionist can finally focus on patients at the front desk instead of answering the same questions across 5 messengers simultaneously.',
-    initials: 'OK',
-    color: '#4F46E5',
-  },
-  {
     name: 'Martin Novák',
-    role: 'Head Dentist',
-    clinic: 'DentalCare Praha, Prague',
-    text: 'Our receptionists were handling 80+ messages a day. Now the AI handles 90% of inquiries automatically. Appointment occupancy increased by 35% in 6 weeks. Best investment of the year.',
+    role: 'Hlavní lékař',
+    clinic: 'DentalCare Praha',
+    text: 'Naše recepční zpracovávaly 80+ zpráv denně. Nyní AI zvládá 90 % dotazů automaticky. Obsazenost ordinace vzrostla o 35 % za 6 týdnů. Nejlepší investice za poslední rok.',
     initials: 'MN',
     color: '#0EA5E9',
   },
   {
-    name: 'Iryna Petrenko',
-    role: 'Network Director',
-    clinic: 'SmilePlus — 3 clinics, Lviv',
-    text: 'We started with one clinic. Within a week we connected all three. Patients are amazed to get a reply at 2 AM. Our Instagram conversion doubled in the first month.',
-    initials: 'IP',
+    name: 'Petra Horáková',
+    role: 'Majitelka ordinace',
+    clinic: 'Smile Studio Brno',
+    text: 'Ztratit pacienta jen proto, že nepřijmeme zprávu po 18. hodině, je frustrující. DentAI to vyřešil okamžitě. Nyní dostávám ráno hotový seznam objednaných pacientů z večera.',
+    initials: 'PH',
+    color: '#4F46E5',
+  },
+  {
+    name: 'Tomáš Dvořák',
+    role: 'Ředitel sítě',
+    clinic: 'DentalGroup — 4 ordinace',
+    text: 'Nasadili jsme DentAI do všech čtyř ordinací najednou. Integrace s naším rezervačním systémem trvala jeden den. Konverze z Instagramu se zvýšila dvojnásobně.',
+    initials: 'TD',
     color: '#10B981',
   },
 ]
 
-export default function EnPage() {
+export default function CzPage() {
   return (
     <div className="min-h-screen bg-white font-sans">
 
@@ -89,21 +89,24 @@ export default function EnPage() {
             </div>
             <div>
               <span className="text-white font-bold text-base">DentAI</span>
-              <span className="hidden sm:inline text-white/40 text-xs ml-2">for dental clinics</span>
+              <span className="hidden sm:inline text-white/40 text-xs ml-2">pro stomatologické ordinace</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <a href="#how" className="hidden md:block text-white/60 hover:text-white text-sm transition-colors">How it works</a>
+            <a href="#how" className="hidden md:block text-white/60 hover:text-white text-sm transition-colors">Jak to funguje</a>
             <a href="#demo" className="hidden md:block text-white/60 hover:text-white text-sm transition-colors">Demo</a>
             {/* Language switcher */}
             <div className="flex items-center border border-white/15 rounded-lg overflow-hidden text-xs font-semibold">
               <Link href="/" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors">UA</Link>
-              <span className="px-2.5 py-1.5 bg-white/15 text-white border-l border-white/10">EN</span>
-              <Link href="/cz" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">CZ</Link>
+              <Link href="/en" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">EN</Link>
+              <span className="px-2.5 py-1.5 bg-white/15 text-white border-l border-white/10">CZ</span>
             </div>
-            <Link href="/login" className="text-white/60 hover:text-white text-sm transition-colors">Sign in</Link>
-            <Link href="/register" className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-              Book a demo
+            <Link href="/login" className="text-white/60 hover:text-white text-sm transition-colors">Přihlásit se</Link>
+            <Link
+              href="/register"
+              className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              Rezervovat demo
             </Link>
           </div>
         </div>
@@ -116,32 +119,41 @@ export default function EnPage() {
             <div>
               <div className="inline-flex items-center gap-2 border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 px-3 py-1.5 rounded-full text-xs font-medium mb-6">
                 <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse" />
-                AI Administrator for Dental Clinics
+                AI administrátor pro stomatologické ordinace
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-white leading-[1.15] mb-6">
-                While your clinic is closed —<br />
-                <span className="text-indigo-400">patients book with competitors</span>
+                Když je vaše ordinace<br />
+                zavřená — pacienti<br />
+                <span className="text-indigo-400">jdou ke konkurenci</span>
               </h1>
               <p className="text-lg text-white/60 leading-relaxed mb-6 max-w-lg">
-                DentAI responds to patients on your website, Instagram, Telegram and WhatsApp 24/7 — and automatically books appointments.
+                DentAI odpovídá pacientům na webu, Instagramu, Telegramu a WhatsApp
+                24 hodin denně — a automaticky je objednává na termín.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
-                {['Replaces your receptionist', 'Responds in 2 seconds', 'Books appointments 24/7'].map(t => (
+                {['Nahradí recepční', 'Odpověď za 2 sekundy', 'Objednávání 24/7'].map(t => (
                   <span key={t} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/70 px-3 py-1.5 rounded-full">{t}</span>
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
-                <Link href="/register" className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors text-base">
-                  Get a free demo <ArrowRight className="w-4 h-4" />
+                <Link
+                  href="/register"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors text-base"
+                >
+                  Získat bezplatné demo
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a href="#demo" className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 text-white/70 hover:text-white px-6 py-3.5 rounded-xl font-medium transition-colors text-base">
-                  See how it works ↓
+                <a
+                  href="#demo"
+                  className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 text-white/70 hover:text-white px-6 py-3.5 rounded-xl font-medium transition-colors text-base"
+                >
+                  Jak to funguje ↓
                 </a>
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/40">
-                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> Live in 24 hours</span>
-                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> No technical skills needed</span>
-                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> GDPR-compliant</span>
+                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> Spuštění do 24 hodin</span>
+                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> Bez technických znalostí</span>
+                <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-emerald-400" /> V souladu s GDPR</span>
               </div>
             </div>
 
@@ -156,34 +168,36 @@ export default function EnPage() {
                     </div>
                     <div>
                       <p className="text-white font-semibold text-xs">Ivory Dental</p>
-                      <p className="text-emerald-400 text-xs">replies instantly</p>
+                      <p className="text-emerald-400 text-xs">odpovídá okamžitě</p>
                     </div>
                   </div>
                   <div className="p-4 space-y-3">
                     <div className="text-white/80 text-xs px-3 py-2.5 rounded-2xl rounded-tl-sm max-w-[90%]" style={{ background: '#1e2540' }}>
-                      Hello! How can I help you today? 😊
+                      Dobrý den! Jak vám mohu pomoci?
                     </div>
                     <div className="bg-indigo-600 text-white text-xs px-3 py-2.5 rounded-2xl rounded-tr-sm max-w-[85%] ml-auto">
-                      I'd like to book a cleaning. Any slots this week?
+                      Chtěl bych se objednat na čištění zubů. Máte volno tento týden?
                     </div>
                     <div className="text-white/80 text-xs px-3 py-2.5 rounded-2xl rounded-tl-sm max-w-[90%]" style={{ background: '#1e2540' }}>
-                      Sure! Thursday at 10:00 or Friday at 14:30. Cleaning is 45 min, €60. Which works?
+                      Samozřejmě! Je čtvrtek v 10:00 nebo pátek ve 14:30. Čištění 45 min, 1 500 Kč. Co vám vyhovuje?
                     </div>
                     <div className="bg-indigo-600 text-white text-xs px-3 py-2.5 rounded-2xl rounded-tr-sm max-w-[60%] ml-auto">
-                      Thursday at 10 👍
+                      Čtvrtek v 10:00
                     </div>
                     <div className="text-white/80 text-xs px-3 py-2.5 rounded-2xl rounded-tl-sm max-w-[90%]" style={{ background: '#1e2540' }}>
-                      Done! Please share your name and phone number to confirm.
+                      Skvěle! Termín je zarezervován. Uveďte prosím své jméno a telefon.
                     </div>
                   </div>
                   <div className="px-3 py-2 border-t border-white/10 flex items-center gap-2">
-                    <div className="flex-1 rounded-lg px-3 py-1.5 text-white/30 text-xs" style={{ background: '#1e2540' }}>Write a message...</div>
+                    <div className="flex-1 rounded-lg px-3 py-1.5 text-white/30 text-xs" style={{ background: '#1e2540' }}>
+                      Napište zprávu...
+                    </div>
                     <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
                       <SendIcon className="w-3 h-3 text-white" />
                     </div>
                   </div>
                 </div>
-                <p className="text-center text-white/30 text-xs mt-3">11:47 PM · response in 2 seconds</p>
+                <p className="text-center text-white/30 text-xs mt-3">23:47 · odpověď za 2 sekundy</p>
               </div>
             </div>
           </div>
@@ -210,15 +224,34 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How many patients did your clinic lose last week?</h2>
-              <p className="text-slate-500 text-lg max-w-2xl mx-auto">Most dental clinic owners don't know this number. But it exists.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Kolik pacientů vaše ordinace<br className="hidden md:block" /> každý týden ztrácí?
+              </h2>
+              <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                Většina majitelů stomatologií toto číslo nezná. Přitom existuje.
+              </p>
             </div>
           </AnimateOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { Icon: Moon, iconColor: 'text-indigo-500', iconBg: 'bg-indigo-50', title: 'After 7 PM', label: 'Every evening', body: 'A patient messaged your Instagram at 9 PM. Your receptionist will see it tomorrow morning. By then they have already booked with another clinic.' },
-              { Icon: Clock, iconColor: 'text-amber-500', iconBg: 'bg-amber-50', title: 'Slow response', label: 'Daily reality', body: "Even during the day, your receptionist is busy — people waiting, phone ringing. That Telegram message waits 2–4 hours. The patient doesn't wait." },
-              { Icon: TrendingDown, iconColor: 'text-red-500', iconBg: 'bg-red-50', title: 'The real cost', label: 'Direct financial loss', body: 'One missed patient = €50–500 depending on the procedure. 15 missed per week = up to €7,500 in direct losses per month.' },
+              {
+                Icon: Moon, iconColor: 'text-indigo-500', iconBg: 'bg-indigo-50',
+                title: 'Po 18. hodině',
+                body: 'Pacient napsal na Instagram v 21:00. Recepční to uvidí až ráno. Do té doby se objednala ke konkurenci, která odepsala za 30 sekund.',
+                label: 'Typická situace každý večer',
+              },
+              {
+                Icon: Clock, iconColor: 'text-amber-500', iconBg: 'bg-amber-50',
+                title: 'Pomalá odpověď',
+                body: 'I přes den je recepční zaneprázdněna — v čekárně fronta, telefon zvoní. Zpráva na Telegramu čeká 2–4 hodiny. Pacient nečeká.',
+                label: 'Každodenní realita',
+              },
+              {
+                Icon: TrendingDown, iconColor: 'text-red-500', iconBg: 'bg-red-50',
+                title: 'Cena jednoho dotazu',
+                body: 'Jeden ztracený pacient je 1 500–15 000 Kč podle procedury. 15 ztracených týdně = až 225 000 Kč přímých ztrát měsíčně.',
+                label: 'Přímé finanční ztráty',
+              },
             ].map((item, i) => (
               <AnimateOnScroll key={item.title} delay={i * 120}>
                 <div className="border border-slate-200 rounded-2xl p-6 h-full bg-white hover:border-slate-300 hover:shadow-md transition-all">
@@ -240,8 +273,10 @@ export default function EnPage() {
         <div className="max-w-4xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">This is how your clinic loses a patient</h2>
-              <p className="text-white/50 text-lg">It happens every evening. And you don't know about it.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Jak vaše ordinace ztrácí pacienta
+              </h2>
+              <p className="text-white/50 text-lg">Stává se to každý večer. A vy o tom nevíte.</p>
             </div>
           </AnimateOnScroll>
           <AnimateOnScroll delay={100}>
@@ -249,11 +284,11 @@ export default function EnPage() {
               <div className="absolute left-6 top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
               <div className="space-y-0">
                 {[
-                  { time: '8:47 PM', day: 'Monday', Icon: MessageCircle, iconClass: 'text-indigo-400', title: 'Patient writes on WhatsApp', text: '"Good evening! I\'d like to book a teeth cleaning. Do you have slots this week?"', status: 'patient' },
-                  { time: '8:47 PM', day: 'Monday', Icon: BellOff, iconClass: 'text-slate-400', title: 'No response from the clinic', text: 'The working day ended at 7 PM. The message went unread.', status: 'lost' },
-                  { time: '8:51 PM', day: 'Monday', Icon: Search, iconClass: 'text-amber-400', title: 'Patient searches for another clinic', text: '4 minutes without a reply. He opens Google and finds your competitor.', status: 'danger' },
-                  { time: '8:55 PM', day: 'Monday', Icon: UserX, iconClass: 'text-red-400', title: 'Patient books with a competitor', text: 'The competitor replied in 30 seconds. Appointment booked. He won\'t come back to you.', status: 'lost' },
-                  { time: '9:12 AM', day: 'Tuesday', Icon: Inbox, iconClass: 'text-slate-500', title: 'Your receptionist sees the message', text: 'Too late. The patient is already at your competitor. This cost you €60–500.', status: 'late' },
+                  { time: '20:47', day: 'Pondělí', Icon: MessageCircle, iconClass: 'text-indigo-400', title: 'Pacient píše na WhatsApp', text: '"Dobrý večer! Chtěl bych se objednat na čištění zubů. Máte volno tento týden?"', status: 'patient' },
+                  { time: '20:47', day: 'Pondělí', Icon: BellOff, iconClass: 'text-slate-400', title: 'Recepční neodpovídá', text: 'Pracovní doba skončila v 18:00. Zpráva zůstala nepřečtena.', status: 'lost' },
+                  { time: '20:51', day: 'Pondělí', Icon: Search, iconClass: 'text-amber-400', title: 'Pacient hledá jinou ordinaci', text: 'Po 4 minutách bez odpovědi otevírá Google a najde konkurenci.', status: 'danger' },
+                  { time: '20:55', day: 'Pondělí', Icon: UserX, iconClass: 'text-red-400', title: 'Pacient se objednal ke konkurenci', text: 'Konkurence odepsala za 30 sekund. Pacient je objednán. Už se k vám nevrátí.', status: 'lost' },
+                  { time: '09:12', day: 'Úterý', Icon: Inbox, iconClass: 'text-slate-500', title: 'Vaše recepční vidí zprávu', text: 'Příliš pozdě. Pacient je u konkurence. Přišlo vás to na 1 500–15 000 Kč.', status: 'late' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 pb-0">
                     <div className="hidden sm:flex flex-col items-center gap-1 w-24 shrink-0 pt-5">
@@ -284,8 +319,8 @@ export default function EnPage() {
           </AnimateOnScroll>
           <AnimateOnScroll delay={200}>
             <div className="mt-10 border border-indigo-500/20 bg-indigo-500/8 rounded-2xl p-6 text-center">
-              <p className="text-white font-semibold text-lg mb-2">15–20 situations like this every week.</p>
-              <p className="text-white/50 text-sm">That's €750–10,000 in direct losses per month — depending on your prices and services.</p>
+              <p className="text-white font-semibold text-lg mb-2">15–20 takových situací týdně.</p>
+              <p className="text-white/50 text-sm">To je 22 500–225 000 Kč přímých ztrát měsíčně — podle vašich cen a výkonů.</p>
             </div>
           </AnimateOnScroll>
         </div>
@@ -296,8 +331,8 @@ export default function EnPage() {
         <div className="max-w-5xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How it works with DentAI</h2>
-              <p className="text-slate-500 text-lg">Same patient. Different outcome.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Jak to funguje s DentAI</h2>
+              <p className="text-slate-500 text-lg">Stejný pacient. Jiný výsledek.</p>
             </div>
           </AnimateOnScroll>
           <AnimateOnScroll delay={100}>
@@ -305,17 +340,20 @@ export default function EnPage() {
               <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-px bg-slate-200 z-0" />
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-2 relative z-10">
                 {[
-                  { Icon: MessageCircle, title: 'Patient writes', sub: 'WhatsApp / Instagram / Website', time: null, iconColor: 'text-slate-600', bg: 'bg-slate-100', ring: '' },
-                  { Icon: Zap, title: 'AI responds', sub: 'instantly, 24/7', time: '2 sec', iconColor: 'text-white', bg: 'bg-indigo-600', ring: 'ring-4 ring-indigo-100' },
-                  { Icon: ListChecks, title: 'Qualifies need', sub: 'service, date, time', time: '30 sec', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
-                  { Icon: CalendarCheck, title: 'Books appointment', sub: 'picks a convenient slot', time: '1 min', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
-                  { Icon: CheckCircle2, title: 'Booking confirmed', sub: 'patient receives confirmation', time: null, iconColor: 'text-white', bg: 'bg-emerald-600', ring: '' },
+                  { Icon: MessageCircle, title: 'Pacient píše', sub: 'WhatsApp / Instagram / Web', time: null, iconColor: 'text-slate-600', bg: 'bg-slate-100', ring: '' },
+                  { Icon: Zap, title: 'AI odpovídá', sub: 'okamžitě, 24/7', time: '2 s', iconColor: 'text-white', bg: 'bg-indigo-600', ring: 'ring-4 ring-indigo-100' },
+                  { Icon: ListChecks, title: 'Upřesní potřebu', sub: 'výkon, datum, čas', time: '30 s', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CalendarCheck, title: 'Objedná pacienta', sub: 'vybere vhodný termín', time: '1 min', iconColor: 'text-indigo-700', bg: 'bg-indigo-100', ring: '' },
+                  { Icon: CheckCircle2, title: 'Termín potvrzen', sub: 'pacient dostane potvrzení', time: null, iconColor: 'text-white', bg: 'bg-emerald-600', ring: '' },
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col items-center text-center">
                     <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-3 shadow-sm ${item.bg} ${item.ring}`}>
                       <item.Icon className={`w-8 h-8 ${item.iconColor}`} />
                     </div>
-                    {item.time ? <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span> : <div className="h-5 mb-2" />}
+                    {item.time
+                      ? <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span>
+                      : <div className="h-5 mb-2" />
+                    }
                     <p className="font-bold text-slate-900 text-sm mb-1">{item.title}</p>
                     <p className="text-slate-500 text-xs leading-tight">{item.sub}</p>
                     {i < 4 && <div className="lg:hidden text-slate-300 text-xl my-2">↓</div>}
@@ -327,9 +365,9 @@ export default function EnPage() {
           <AnimateOnScroll delay={200}>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { label: 'No receptionist involvement', Icon: Bot, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-                { label: 'Any time — even at 3 AM', Icon: Moon, color: 'text-slate-600', bg: 'bg-slate-100' },
-                { label: 'Patient booked, not lost', Icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                { label: 'Bez zapojení recepční', Icon: Bot, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                { label: 'Kdykoli — i ve 3 v noci', Icon: Moon, color: 'text-slate-600', bg: 'bg-slate-100' },
+                { label: 'Pacient objednán, ne ztracen', Icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
               ].map(({ label, Icon, color, bg }) => (
                 <div key={label} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
                   <div className={`w-8 h-8 rounded-lg ${bg} flex items-center justify-center shrink-0`}>
@@ -348,18 +386,19 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How it works</h2>
-              <p className="text-slate-500 text-lg">Three steps — and your clinic never misses an inquiry again</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Jak to funguje</h2>
+              <p className="text-slate-500 text-lg">Tři kroky a vaše ordinace nezmeškáte žádný dotaz</p>
             </div>
           </AnimateOnScroll>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div className="hidden md:block absolute top-10 left-[33%] right-[33%] h-px bg-slate-200" />
             {[
-              { n: '01', title: 'Connect your channels', body: 'Instagram, Telegram, WhatsApp, Viber, Facebook and your website chat — we connect everything for you. Takes 1 day.' },
-              { n: '02', title: 'Train on your clinic data', body: 'Upload your price list, schedule and service descriptions. The AI learns to respond exactly like your best receptionist.' },
-              { n: '03', title: 'Your clinic works 24/7', body: 'The AI responds to patients, books appointments, reschedules visits. You see all conversations in your dashboard.' },
+              { n: '01', title: 'Připojíme kanály', body: 'Instagram, Telegram, WhatsApp, Viber, Facebook a chat na webu — vše připojíme za vás. Trvá to 1 den.' },
+              { n: '02', title: 'Natrénujeme na datech ordinace', body: 'Nahrajete ceník, rozvrh a popis služeb. AI se naučí odpovídat jako vaše nejlepší recepční.' },
+              { n: '03', title: 'Ordinace funguje 24/7', body: 'AI odpovídá pacientům, objednává na termíny, přeobjednává. Všechny dialogy vidíte v přehledu.' },
             ].map(({ n, title, body }, i) => (
               <AnimateOnScroll key={n} delay={i * 150}>
-                <div className="bg-white rounded-2xl p-7 border border-slate-100">
+                <div className="bg-white rounded-2xl p-7 border border-slate-100 relative">
                   <div className="text-5xl font-black text-slate-100 mb-4 leading-none">{n}</div>
                   <h3 className="font-bold text-slate-900 text-lg mb-3">{title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{body}</p>
@@ -375,14 +414,16 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">One dashboard — all channels</h2>
-              <p className="text-slate-500 text-lg max-w-2xl mx-auto">Patients write where it's convenient for them. You manage everything from one place.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Jeden přehled — všechny kanály</h2>
+              <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                Pacienti píší tam, kde jim to vyhovuje. Vy spravujete vše z jednoho místa.
+              </p>
             </div>
           </AnimateOnScroll>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {CHANNELS.map(({ name, color, bg, letter }, i) => (
               <AnimateOnScroll key={name} delay={i * 60}>
-                <div className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all">
+                <div className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all cursor-default">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-sm" style={{ background: bg, color }}>
                     {letter}
                   </div>
@@ -394,11 +435,11 @@ export default function EnPage() {
           <AnimateOnScroll delay={200}>
             <div className="mt-10 bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
               <div>
-                <p className="font-semibold text-slate-900">Your patients are already there.</p>
-                <p className="text-slate-500 text-sm">67% of dental clinic inquiries come through messengers and social media — not the phone.</p>
+                <p className="font-semibold text-slate-900">Vaši pacienti jsou tam.</p>
+                <p className="text-slate-500 text-sm">67 % dotazů do ordinací přichází přes messengery a sociální sítě — ne telefonem.</p>
               </div>
               <Link href="/register" className="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-colors flex items-center gap-2">
-                Connect your clinic <ArrowRight className="w-4 h-4" />
+                Připojit ordinaci <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </AnimateOnScroll>
@@ -412,14 +453,18 @@ export default function EnPage() {
             <AnimateOnScroll>
               <div>
                 <div className="inline-flex items-center gap-2 border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 px-3 py-1.5 rounded-full text-xs font-medium mb-6">
-                  <Zap className="w-3.5 h-3.5" /> Try it right now
+                  <Zap className="w-3.5 h-3.5" />
+                  Vyzkoušejte hned teď
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">Live AI administrator demo</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
+                  Živé demo AI administrátora
+                </h2>
                 <p className="text-white/60 text-lg leading-relaxed mb-8">
-                  This is the real AI — the same one you will install in your clinic. Write to it like a patient: ask about prices, book an appointment or reschedule a visit.
+                  Toto je skutečné AI — stejné, které nainstalujete ve své ordinaci.
+                  Napište mu jako pacient: zeptejte se na ceny, objednejte se nebo přesuňte termín.
                 </p>
                 <div className="space-y-3">
-                  {['Responds in 2–3 seconds', 'Speaks Ukrainian, Czech, English', 'Suggests specific available slots', 'Never rude, never unavailable'].map(t => (
+                  {['Odpovídá za 2–3 sekundy', 'Mluví česky, ukrajinsky, anglicky', 'Nabízí konkrétní termíny', 'Nikdy neodmítne a je vždy zdvořilé'].map(t => (
                     <div key={t} className="flex items-center gap-3 text-white/70 text-sm">
                       <div className="w-5 h-5 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 text-emerald-400" />
@@ -431,7 +476,7 @@ export default function EnPage() {
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll delay={150}>
-              <DemoChat lang="en" />
+              <DemoChat lang="cz" />
             </AnimateOnScroll>
           </div>
         </div>
@@ -442,8 +487,8 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Real use cases</h2>
-              <p className="text-slate-500 text-lg">What the AI handles every day in your clinic</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Reálné scénáře</h2>
+              <p className="text-slate-500 text-lg">Co AI dělá každý den ve vaší ordinaci</p>
             </div>
           </AnimateOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -473,8 +518,8 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">What your clinic gets</h2>
-              <p className="text-slate-500 text-lg">Concrete results, not abstract promises</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Co vaše ordinace získá</h2>
+              <p className="text-slate-500 text-lg">Konkrétní výsledky, ne abstraktní sliby</p>
             </div>
           </AnimateOnScroll>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
@@ -498,18 +543,18 @@ export default function EnPage() {
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">What clinics say</h2>
-              <p className="text-slate-500 text-lg">Real feedback from dental clinic owners</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Co říkají ordinace</h2>
+              <p className="text-slate-500 text-lg">Skutečné reference od majitelů stomatologií</p>
             </div>
           </AnimateOnScroll>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
               <AnimateOnScroll key={t.name} delay={i * 120}>
-                <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-all flex flex-col h-full">
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all flex flex-col h-full">
                   <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
                   </div>
-                  <p className="text-slate-700 text-sm leading-relaxed flex-1 mb-5">"{t.text}"</p>
+                  <p className="text-slate-700 text-sm leading-relaxed flex-1 mb-5">&ldquo;{t.text}&rdquo;</p>
                   <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: t.color }}>
                       {t.initials}
@@ -530,20 +575,39 @@ export default function EnPage() {
       <section className="py-24 bg-slate-50">
         <div className="max-w-4xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Simple pricing</h2>
-              <p className="text-slate-500 text-lg">A receptionist costs €1,500–3,000/mo. We cost 10–30× less.</p>
+            <div className="text-center mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Přehledný ceník</h2>
+              <p className="text-slate-500 text-lg">Recepční stojí 35 000–60 000 Kč/měsíc. My stojíme 10–30× méně.</p>
             </div>
           </AnimateOnScroll>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             {[
-              { name: 'Starter', price: '€79', period: '/mo', desc: 'Single clinic', features: ['1 AI administrator', '2 channels (website + 1 messenger)', '500 conversations/mo', 'Appointment booking', 'Support 9–18'], highlight: false, cta: 'Book a demo', ctaHref: '/register' },
-              { name: 'Clinic', price: '€179', period: '/mo', desc: 'Most popular', features: ['1 AI administrator', 'All 6 channels', '3,000 conversations/mo', 'Book, reschedule & cancel', 'Analytics & reports', '24/7 support'], highlight: true, cta: 'Book a demo', ctaHref: '/register' },
-              { name: 'Network', price: 'from €349', period: '/mo', desc: 'For clinic networks', features: ['Up to 5 clinics', 'All channels', 'Unlimited conversations', 'Dedicated account manager', 'Custom integrations', 'SLA'], highlight: false, cta: 'Contact us', ctaHref: '/contact' },
+              {
+                name: 'Start', price: '€79', period: '/měs',
+                desc: 'Pro jednu ordinaci',
+                features: ['1 AI administrátor', '2 kanály (web + 1 messenger)', '500 dialogů/měs', 'Objednávání na termíny', 'Podpora 9–18'],
+                highlight: false, cta: 'Rezervovat demo', ctaHref: '/register',
+              },
+              {
+                name: 'Ordinace', price: '€179', period: '/měs',
+                desc: 'Nejoblíbenější volba',
+                features: ['1 AI administrátor', 'Všechny 4 kanály', '3 000 dialogů/měs', 'Objednání + přeobjednání + zrušení', 'Analytika a reporty', 'Podpora 24/7'],
+                highlight: true, cta: 'Rezervovat demo', ctaHref: '/register',
+              },
+              {
+                name: 'Síť', price: 'od €349', period: '/měs',
+                desc: 'Pro sítě ordinací',
+                features: ['Až 5 ordinací', 'Všechny kanály', 'Neomezené dialogy', 'Osobní manažer', 'Vlastní integrace', 'SLA'],
+                highlight: false, cta: 'Kontaktovat nás', ctaHref: '/contact',
+              },
             ].map(({ name, price, period, desc, features, highlight, cta, ctaHref }, i) => (
               <AnimateOnScroll key={name} delay={i * 100}>
                 <div className={`rounded-2xl p-6 border h-full flex flex-col relative ${highlight ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-200'}`}>
-                  {highlight && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full">Most popular</div>}
+                  {highlight && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full">
+                      Nejoblíbenější
+                    </div>
+                  )}
                   <div className={`text-sm font-semibold mb-1 ${highlight ? 'text-indigo-200' : 'text-slate-500'}`}>{name}</div>
                   <div className={`text-xs mb-3 ${highlight ? 'text-indigo-300' : 'text-slate-400'}`}>{desc}</div>
                   <div className="flex items-baseline gap-1 mb-6">
@@ -553,28 +617,39 @@ export default function EnPage() {
                   <ul className="space-y-2.5 mb-6 flex-1">
                     {features.map(f => (
                       <li key={f} className={`text-sm flex items-start gap-2 ${highlight ? 'text-indigo-100' : 'text-slate-600'}`}>
-                        <Check className={`w-4 h-4 shrink-0 mt-0.5 ${highlight ? 'text-indigo-300' : 'text-indigo-500'}`} /> {f}
+                        <Check className={`w-4 h-4 shrink-0 mt-0.5 ${highlight ? 'text-indigo-300' : 'text-indigo-500'}`} />
+                        {f}
                       </li>
                     ))}
                   </ul>
-                  <Link href={ctaHref} className={`block text-center py-3 rounded-xl text-sm font-semibold transition-colors ${highlight ? 'bg-white text-indigo-600 hover:bg-indigo-50' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}>
+                  <Link
+                    href={ctaHref}
+                    className={`block text-center py-3 rounded-xl text-sm font-semibold transition-colors ${
+                      highlight ? 'bg-white text-indigo-600 hover:bg-indigo-50' : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                    }`}
+                  >
                     {cta}
                   </Link>
                 </div>
               </AnimateOnScroll>
             ))}
           </div>
+          <AnimateOnScroll delay={200}>
+            <p className="text-center text-slate-400 text-sm mt-6">
+              Nejste si jistí, který plán je pro vás? Kontaktujte nás — vybereme společně.
+            </p>
+          </AnimateOnScroll>
         </div>
       </section>
 
-      {/* ── TRUST ── */}
+      {/* ── TRUST / SECURITY ── */}
       <section className="py-16 bg-white border-y border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
-              { icon: Lock, title: 'GDPR-compliant', body: 'Patient data is stored on encrypted EU servers, fully compliant with healthcare regulations in Ukraine and the EU.' },
-              { icon: Shield, title: 'Your data is private', body: 'Your clinic data and patient information are never shared with third parties or used to train AI models.' },
-              { icon: MessageSquare, title: 'Full control', body: 'You always see all conversations. You can step in, correct or change settings at any moment.' },
+              { icon: Lock, title: 'V souladu s GDPR', body: 'Data pacientů jsou uložena na šifrovaných serverech v EU. Plný soulad s legislativou o zdravotní dokumentaci v ČR i EU.' },
+              { icon: Shield, title: 'Bezpečnost dat', body: 'Data vaší ordinace a pacientů nejsou nikdy sdílena s třetími stranami ani používána k trénování modelů.' },
+              { icon: MessageSquare, title: 'Plná kontrola', body: 'Vždy vidíte všechny dialogy. Můžete kdykoli zasáhnout, opravit nebo změnit nastavení.' },
             ].map(({ icon: Icon, title, body }) => (
               <AnimateOnScroll key={title}>
                 <div className="flex flex-col items-center">
@@ -595,12 +670,12 @@ export default function EnPage() {
         <div className="max-w-2xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">Frequently asked questions</h2>
-              <p className="text-slate-500">Answers to questions dental clinic owners ask us most</p>
+              <h2 className="text-3xl font-bold text-slate-900 mb-3">Časté otázky</h2>
+              <p className="text-slate-500">Odpovědi na otázky, které kladou majitelé ordinací</p>
             </div>
           </AnimateOnScroll>
           <AnimateOnScroll delay={100}>
-            <FaqSection lang="en" />
+            <FaqSection lang="cz" />
           </AnimateOnScroll>
         </div>
       </section>
@@ -609,22 +684,32 @@ export default function EnPage() {
       <section className="py-24" style={{ background: '#0a0e1a' }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <AnimateOnScroll>
-            <p className="text-indigo-400 text-sm font-semibold uppercase tracking-widest mb-4">Ready to stop losing patients?</p>
+            <p className="text-indigo-400 text-sm font-semibold uppercase tracking-widest mb-4">Připraveni zastavit ztráty pacientů?</p>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-5 leading-tight">
-              Book a free demo<br />for your clinic
+              Objednejte bezplatné demo<br />pro vaši ordinaci
             </h2>
             <p className="text-white/50 text-lg mb-8">
-              A 15-minute call. We will show exactly how it looks for your clinic — connected to your channels, with your prices and schedule.
+              15minutový hovor. Ukážeme, jak to bude vypadat ve vaší ordinaci —
+              s vašimi kanály, vašimi cenami a rozvrhem.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/register" className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-semibold text-base transition-colors">
-                Book a free demo <ArrowRight className="w-5 h-5" />
+              <Link
+                href="/register"
+                className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-semibold text-base transition-colors"
+              >
+                Objednat demo zdarma
+                <ArrowRight className="w-5 h-5" />
               </Link>
-              <a href="#demo" className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 text-white/60 hover:text-white px-8 py-4 rounded-xl font-medium text-base transition-colors">
-                Try the demo ↑
+              <a
+                href="#demo"
+                className="flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 text-white/60 hover:text-white px-8 py-4 rounded-xl font-medium text-base transition-colors"
+              >
+                Vyzkoušet demo ↑
               </a>
             </div>
-            <p className="text-white/30 text-sm mt-6">No credit card · Live in 24 hours · Cancel anytime</p>
+            <p className="text-white/30 text-sm mt-6">
+              Bez vazby na kartu · Spuštění do 24 hodin · Zrušení kdykoli
+            </p>
           </AnimateOnScroll>
         </div>
       </section>
@@ -640,22 +725,23 @@ export default function EnPage() {
                 </div>
                 <span className="text-white font-bold">DentAI</span>
               </div>
-              <p className="text-white/30 text-sm max-w-xs">AI administrator for dental clinics in Ukraine and Czech Republic.</p>
+              <p className="text-white/30 text-sm max-w-xs">AI administrátor pro stomatologické ordinace na Ukrajině a v České republice.</p>
             </div>
             <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/40">
-              <a href="#how" className="hover:text-white/70 transition-colors">How it works</a>
+              <a href="#how" className="hover:text-white/70 transition-colors">Jak to funguje</a>
               <a href="#demo" className="hover:text-white/70 transition-colors">Demo</a>
-              <Link href="/" className="hover:text-white/70 transition-colors">🇺🇦 Українська</Link>
-              <Link href="/login" className="hover:text-white/70 transition-colors">Sign in</Link>
+              <Link href="/login" className="hover:text-white/70 transition-colors">Přihlásit se</Link>
+              <Link href="/register" className="hover:text-white/70 transition-colors">Rezervovat demo</Link>
               <a href="mailto:hello@dentai.app" className="hover:text-white/70 transition-colors">hello@dentai.app</a>
             </div>
           </div>
           <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-2 text-white/20 text-sm">
-            <span>© 2026 DentAI. All rights reserved.</span>
-            <span>EU servers · GDPR-compliant · Medical data protected</span>
+            <span>© 2026 DentAI. Všechna práva vyhrazena.</span>
+            <span>Servery EU · GDPR · Zdravotní data chráněna</span>
           </div>
         </div>
       </footer>
+
     </div>
   )
 }

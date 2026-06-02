@@ -22,10 +22,19 @@ const FAQS = {
     { q: 'Which channels does it work with?', a: 'Website chat widget, Instagram Direct, Facebook Messenger, Telegram, WhatsApp and Viber — all managed from one dashboard. Patients write wherever they prefer, you see everything in one place.' },
     { q: 'Can I control what the AI says?', a: 'Fully. You upload your knowledge base — services, prices, conditions, schedule. The AI only answers based on your information. If it doesn\'t know something, it politely refers the patient to your staff.' },
   ],
+  cz: [
+    { q: 'Odpovídá AI česky a ukrajinsky?', a: 'Ano. AI automaticky rozpozná jazyk pacienta a odpovídá česky, ukrajinsky, anglicky nebo v jiném jazyce. Pro svoji ordinaci si také můžete nastavit výchozí jazyk komunikace.' },
+    { q: 'Jak dlouho trvá nastavení systému?', a: 'Většina ordinací zahájí provoz do 24 hodin. Náš tým se postará o vše — poskytnete informace o ordinaci, službách a cenách, my uděláme zbytek.' },
+    { q: 'Může AI skutečně objednávat pacienty?', a: 'Ano. AI se integruje s vaším rezervačním systémem a dokáže samostatně objednávat, přeobjednávat nebo rušit schůzky bez zapojení recepční.' },
+    { q: 'Co se stane, když má pacient naléhavý problém?', a: 'V urgentních situacích AI okamžitě sdělí číslo pohotovostního lékaře a adresu ordinace. Vy sami nastavujete pravidla eskalace — například přeposílání zpráv recepční nebo lékaři.' },
+    { q: 'Je systém v souladu s GDPR?', a: 'Ano. Všechna data pacientů jsou uložena na šifrovaných serverech v EU a zpracována v plném souladu s GDPR. Nikdy nepředáváme zdravotní data třetím stranám ani je nepoužíváme k trénování modelů.' },
+    { q: 'S jakými kanály systém pracuje?', a: 'Chat widget na webu, Instagram Direct, Facebook Messenger, Telegram, WhatsApp a Viber — vše ovládáte z jednoho přehledu. Pacient píše, kde mu to vyhovuje, vy vidíte vše na jednom místě.' },
+    { q: 'Mohu kontrolovat, co AI říká?', a: 'Plně. Nahrajete znalostní databázi — služby, ceny, podmínky, rozvrh. AI odpovídá pouze na základě vašich informací. Pokud něco neví, zdvořile odkáže pacienta na recepci.' },
+  ],
 }
 
 interface Props {
-  lang?: 'uk' | 'en'
+  lang?: 'uk' | 'en' | 'cz'
 }
 
 export default function FaqSection({ lang = 'uk' }: Props) {

@@ -114,7 +114,8 @@ export default function LandingPage() {
             {/* Language switcher */}
             <div className="flex items-center border border-white/15 rounded-lg overflow-hidden text-xs font-semibold">
               <span className="px-2.5 py-1.5 bg-white/15 text-white">UA</span>
-              <Link href="/en" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors">EN</Link>
+              <Link href="/en" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">EN</Link>
+              <Link href="/cz" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">CZ</Link>
             </div>
             <Link href="/login" className="text-white/60 hover:text-white text-sm transition-colors">Увійти</Link>
             <Link
@@ -622,21 +623,21 @@ export default function LandingPage() {
                 name: 'Старт', price: '€79', period: '/міс',
                 desc: 'Для одиночної клініки',
                 features: ['1 AI-адміністратор', '2 канали (сайт + 1 месенджер)', '500 діалогів/міс', 'Запис на прийом', 'Підтримка 9–18'],
-                highlight: false,
+                highlight: false, cta: 'Замовити демо', ctaHref: '/register',
               },
               {
                 name: 'Клініка', price: '€179', period: '/міс',
                 desc: 'Найпопулярніший вибір',
                 features: ['1 AI-адміністратор', 'Всі 6 каналів', '3000 діалогів/міс', 'Запис + перенос + скасування', 'Аналітика та звіти', 'Підтримка 24/7'],
-                highlight: true,
+                highlight: true, cta: 'Замовити демо', ctaHref: '/register',
               },
               {
                 name: 'Мережа', price: 'від €349', period: '/міс',
                 desc: 'Для мереж клінік',
                 features: ['До 5 клінік', 'Всі канали', 'Необмежені діалоги', 'Персональний менеджер', 'Кастомні інтеграції', 'SLA'],
-                highlight: false,
+                highlight: false, cta: "Зв'язатися з нами", ctaHref: '/contact',
               },
-            ].map(({ name, price, period, desc, features, highlight }, i) => (
+            ].map(({ name, price, period, desc, features, highlight, cta, ctaHref }, i) => (
               <AnimateOnScroll key={name} delay={i * 100}>
                 <div className={`rounded-2xl p-6 border h-full flex flex-col relative ${highlight ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-200'}`}>
                   {highlight && (
@@ -659,12 +660,12 @@ export default function LandingPage() {
                     ))}
                   </ul>
                   <Link
-                    href="/register"
+                    href={ctaHref}
                     className={`block text-center py-3 rounded-xl text-sm font-semibold transition-colors ${
                       highlight ? 'bg-white text-indigo-600 hover:bg-indigo-50' : 'bg-indigo-600 text-white hover:bg-indigo-700'
                     }`}
                   >
-                    Замовити демо
+                    {cta}
                   </Link>
                 </div>
               </AnimateOnScroll>

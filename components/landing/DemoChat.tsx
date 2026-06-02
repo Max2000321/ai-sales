@@ -33,14 +33,26 @@ const CONTENT = {
     online: "replies instantly",
     error: "Something went wrong. Please try again.",
   },
+  cz: {
+    initial: "Dobrý den! Jsem AI administrátor ordinace Ivory Dental. Mohu vám zarezervovat schůzku a odpovědět na otázky o našich službách a cenách. Jak vám mohu pomoci?",
+    suggestions: [
+      "Kolik stojí čištění zubů?",
+      "Chci si objednat termín",
+      "Jaké jsou ceny implantátů?",
+      "Ordinujete o víkendu?",
+    ],
+    placeholder: "Napište zprávu...",
+    online: "odpovídá okamžitě",
+    error: "Něco se pokazilo. Zkuste to prosím znovu.",
+  },
 }
 
 interface Props {
-  lang?: 'uk' | 'en'
+  lang?: 'uk' | 'en' | 'cz'
 }
 
 export default function DemoChat({ lang = 'uk' }: Props) {
-  const c = CONTENT[lang]
+  const c = CONTENT[lang] ?? CONTENT['uk']
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: c.initial }
   ])
