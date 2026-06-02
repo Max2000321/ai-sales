@@ -3,11 +3,44 @@
 import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase'
 import { Upload, Trash2, BookOpen, FileText, Loader2 } from 'lucide-react'
+import { useLang } from '@/components/dashboard/LangProvider'
+
+const T = {
+  uk: {
+    title: 'База знань', sub: 'Документи, FAQ та тексти, які агент використовує для відповідей',
+    agentLabel: 'Агент', noAgent: 'Спочатку створіть агента в Налаштуваннях',
+    addTitle: 'Додати текст / FAQ', sourcePlaceholder: 'Назва джерела (напр. FAQ, Прайс)',
+    textPlaceholder: 'Вставте текст, FAQ або опис послуг...',
+    addBtn: 'Додати до бази знань', fileTitle: 'Завантажити файл (.txt)',
+    fileHint: 'Підтримує .txt та .md файли',
+    sourcesTitle: 'Джерела', empty: 'База знань порожня',
+  },
+  en: {
+    title: 'Knowledge base', sub: 'Documents, FAQs and text the agent uses to answer questions',
+    agentLabel: 'Agent', noAgent: 'First create an agent in Settings',
+    addTitle: 'Add text / FAQ', sourcePlaceholder: 'Source name (e.g. FAQ, Price list)',
+    textPlaceholder: 'Paste text, FAQ or product descriptions...',
+    addBtn: 'Add to knowledge base', fileTitle: 'Upload file (.txt)',
+    fileHint: 'Supports .txt and .md files',
+    sourcesTitle: 'Sources', empty: 'Knowledge base is empty',
+  },
+  cz: {
+    title: 'Znalostní báze', sub: 'Dokumenty, FAQ a texty, které agent používá k odpovídání',
+    agentLabel: 'Agent', noAgent: 'Nejprve vytvořte agenta v Nastavení',
+    addTitle: 'Přidat text / FAQ', sourcePlaceholder: 'Název zdroje (např. FAQ, Ceník)',
+    textPlaceholder: 'Vložte text, FAQ nebo popis služeb...',
+    addBtn: 'Přidat do znalostní báze', fileTitle: 'Nahrát soubor (.txt)',
+    fileHint: 'Podporuje soubory .txt a .md',
+    sourcesTitle: 'Zdroje', empty: 'Znalostní báze je prázdná',
+  },
+}
 
 interface Agent { id: string; name: string }
 interface Chunk { id: string; source_name: string; content: string; created_at: string }
 
 export default function KnowledgePage() {
+  const { lang } = useLang()
+  const t = T[lang]
   const [agents, setAgents] = useState<Agent[]>([])
   const [selectedAgent, setSelectedAgent] = useState<string>('')
   const [chunks, setChunks] = useState<Chunk[]>([])
@@ -17,13 +50,8 @@ export default function KnowledgePage() {
   const [sourceName, setSourceName] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    loadAgents()
-  }, [])
-
-  useEffect(() => {
-    if (selectedAgent) loadChunks()
-  }, [selectedAgent])
+  useEffect(() => { loadAgents() }, [])
+  useEffect(() => { if (selectedAgent) loadChunks() }, [selectedAgent])
 
   async function loadAgents() {
     const supabase = createClient()
@@ -36,11 +64,7 @@ export default function KnowledgePage() {
   async function loadChunks() {
     setLoading(true)
     const supabase = createClient()
-    const { data } = await supabase
-      .from('knowledge_chunks')
-      .select('*')
-      .eq('agent_id', selectedAgent)
-      .order('created_at', { ascending: false })
+    const { data } = await supabase.from('knowledge_chunks').select('*').eq('agent_id', selectedAgent).order('created_at', { ascending: false })
     setChunks(data || [])
     setLoading(false)
   }
@@ -48,18 +72,12 @@ export default function KnowledgePage() {
   async function uploadText() {
     if (!faqText.trim() || !sourceName.trim() || !selectedAgent) return
     setUploading(true)
-
     const res = await fetch('/api/knowledge', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ agentId: selectedAgent, text: faqText, sourceName }),
     })
-
-    if (res.ok) {
-      setFaqText('')
-      setSourceName('')
-      await loadChunks()
-    }
+    if (res.ok) { setFaqText(''); setSourceName(''); await loadChunks() }
     setUploading(false)
   }
 
@@ -67,14 +85,12 @@ export default function KnowledgePage() {
     const file = e.target.files?.[0]
     if (!file || !selectedAgent) return
     setUploading(true)
-
     const text = await file.text()
     const res = await fetch('/api/knowledge', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ agentId: selectedAgent, text, sourceName: file.name }),
     })
-
     if (res.ok) await loadChunks()
     setUploading(false)
     if (fileRef.current) fileRef.current.value = ''
@@ -89,112 +105,66 @@ export default function KnowledgePage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-1">Knowledge base</h1>
-        <p className="text-slate-500 text-sm">Documents, FAQs and text the agent uses to answer questions</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-1">{t.title}</h1>
+        <p className="text-slate-500 text-sm">{t.sub}</p>
       </div>
 
-      {/* Agent selector */}
       {agents.length > 0 && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Agent</label>
-          <select
-            value={selectedAgent}
-            onChange={e => setSelectedAgent(e.target.value)}
-            className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t.agentLabel}</label>
+          <select value={selectedAgent} onChange={e => setSelectedAgent(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
             {agents.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
           </select>
         </div>
       )}
 
       {agents.length === 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-700 mb-6">
-          First create an agent in Settings
-        </div>
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-700 mb-6">{t.noAgent}</div>
       )}
 
       {selectedAgent && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Upload form */}
           <div className="space-y-4">
             <div className="bg-white rounded-xl border border-slate-200 p-5">
               <h2 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                <Upload className="w-4 h-4 text-indigo-500" />
-                Add text / FAQ
+                <Upload className="w-4 h-4 text-indigo-500" /> {t.addTitle}
               </h2>
               <div className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Source name (e.g. FAQ, Price list)"
-                  value={sourceName}
-                  onChange={e => setSourceName(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-                <textarea
-                  placeholder="Paste text, FAQ or product descriptions..."
-                  value={faqText}
-                  onChange={e => setFaqText(e.target.value)}
-                  rows={6}
-                  className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-                />
-                <button
-                  onClick={uploadText}
-                  disabled={uploading || !faqText.trim() || !sourceName.trim()}
-                  className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
-                >
-                  {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-                  Add to knowledge base
+                <input type="text" placeholder={t.sourcePlaceholder} value={sourceName} onChange={e => setSourceName(e.target.value)} className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <textarea placeholder={t.textPlaceholder} value={faqText} onChange={e => setFaqText(e.target.value)} rows={6} className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none" />
+                <button onClick={uploadText} disabled={uploading || !faqText.trim() || !sourceName.trim()} className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2">
+                  {uploading && <Loader2 className="w-4 h-4 animate-spin" />} {t.addBtn}
                 </button>
               </div>
             </div>
 
             <div className="bg-white rounded-xl border border-slate-200 p-5">
               <h2 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-indigo-500" />
-                Upload file (.txt)
+                <FileText className="w-4 h-4 text-indigo-500" /> {t.fileTitle}
               </h2>
-              <input
-                ref={fileRef}
-                type="file"
-                accept=".txt,.md"
-                onChange={uploadFile}
-                disabled={uploading}
-                className="w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700 file:text-sm file:font-medium hover:file:bg-indigo-100 cursor-pointer disabled:opacity-50"
-              />
-              <p className="text-xs text-slate-400 mt-2">Supports .txt and .md files</p>
+              <input ref={fileRef} type="file" accept=".txt,.md" onChange={uploadFile} disabled={uploading} className="w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700 file:text-sm file:font-medium hover:file:bg-indigo-100 cursor-pointer disabled:opacity-50" />
+              <p className="text-xs text-slate-400 mt-2">{t.fileHint}</p>
             </div>
           </div>
 
-          {/* Chunks list */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+            <div className="px-5 py-4 border-b border-slate-100">
               <h2 className="font-semibold text-slate-900 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-indigo-500" />
-                Sources ({chunks.length})
+                <BookOpen className="w-4 h-4 text-indigo-500" /> {t.sourcesTitle} ({chunks.length})
               </h2>
             </div>
             <div className="overflow-auto max-h-[500px]">
               {loading ? (
-                <div className="flex items-center justify-center p-10">
-                  <Loader2 className="w-6 h-6 text-indigo-500 animate-spin" />
-                </div>
+                <div className="flex items-center justify-center p-10"><Loader2 className="w-6 h-6 text-indigo-500 animate-spin" /></div>
               ) : chunks.length === 0 ? (
-                <div className="p-10 text-center">
-                  <BookOpen className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                  <p className="text-slate-400 text-sm">Knowledge base is empty</p>
-                </div>
+                <div className="p-10 text-center"><BookOpen className="w-8 h-8 text-slate-300 mx-auto mb-2" /><p className="text-slate-400 text-sm">{t.empty}</p></div>
               ) : (
                 <div className="divide-y divide-slate-100">
                   {chunks.map(chunk => (
                     <div key={chunk.id} className="px-5 py-3 group">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
-                          {chunk.source_name}
-                        </span>
-                        <button
-                          onClick={() => deleteChunk(chunk.id)}
-                          className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-all"
-                        >
+                        <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{chunk.source_name}</span>
+                        <button onClick={() => deleteChunk(chunk.id)} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-all">
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
