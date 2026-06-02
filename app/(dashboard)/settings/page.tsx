@@ -49,7 +49,7 @@ export default function SettingsPage() {
     })
     await loadAgents()
     setCreating(false)
-    setNewAgent({ name: '', description: '', system_prompt: 'Ты — AI-ассистент по продажам. Помогай клиентам, отвечай на вопросы и направляй к покупке.', widget_color: '#6366f1' })
+    setNewAgent({ name: '', description: '', system_prompt: 'You are an AI sales assistant. Help customers, answer their questions and guide them towards a purchase.', widget_color: '#6366f1' })
     setSaving(false)
   }
 
