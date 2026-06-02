@@ -117,12 +117,13 @@ export default function LandingPage() {
               <Link href="/en" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">EN</Link>
               <Link href="/cz" className="px-2.5 py-1.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors border-l border-white/10">CZ</Link>
             </div>
-            <Link href="/login" className="text-white/60 hover:text-white text-sm transition-colors">Увійти</Link>
+            <Link href="/login" className="hidden sm:block text-white/60 hover:text-white text-sm transition-colors">Увійти</Link>
             <Link
               href="/register"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap"
             >
-              Замовити демо
+              <span className="sm:hidden">Демо</span>
+              <span className="hidden sm:inline">Замовити демо</span>
             </Link>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function LandingPage() {
 
       {/* ── HERO ── */}
       <section className="pt-16" style={{ background: 'linear-gradient(160deg, #0a0e1a 0%, #111627 60%, #0f1320 100%)' }}>
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-6xl mx-auto px-6 py-12 md:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
             <div>
@@ -245,10 +246,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── PROBLEM ── */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
                 Скільки пацієнтів ваша клініка<br className="hidden md:block" /> втрачає щотижня?
               </h2>
@@ -295,10 +296,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── HOW PATIENTS ARE LOST ── */}
-      <section className="py-24 bg-slate-950">
+      <section className="py-12 md:py-24 bg-slate-950">
         <div className="max-w-4xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-14">
+            <div className="text-center mb-8 md:mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Ось як ваша клініка втрачає пацієнта
               </h2>
@@ -357,10 +358,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── FLOW ── */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
                 Як це працює з DentAI
               </h2>
@@ -419,10 +420,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how" className="py-24 bg-slate-50">
+      <section id="how" className="py-12 md:py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Як це працює</h2>
               <p className="text-slate-500 text-lg">Три кроки — і ваша клініка більше не пропускає жодного звернення</p>
             </div>
@@ -447,10 +448,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── DASHBOARD MOCKUP ── */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="py-12 md:py-24 bg-white overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-14">
+            <div className="text-center mb-8 md:mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Один дашборд — всі канали</h2>
               <p className="text-slate-500 text-lg max-w-2xl mx-auto">
                 Пацієнти пишуть де їм зручно. Ви керуєте всім з одного місця.
@@ -610,7 +611,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── DEMO ── */}
-      <section id="demo" className="py-24" style={{ background: '#0a0e1a' }}>
+      <section id="demo" className="py-12 md:py-24" style={{ background: '#0a0e1a' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <AnimateOnScroll>
@@ -646,10 +647,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── SCENARIOS ── */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Реальні сценарії роботи</h2>
               <p className="text-slate-500 text-lg">Ось що AI робить щодня у вашій клініці</p>
             </div>
@@ -681,10 +682,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── RESULTS ── */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-12 md:py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Що отримує ваша клініка</h2>
               <p className="text-slate-500 text-lg">Конкретні результати, не абстрактні обіцянки</p>
             </div>
@@ -706,10 +707,10 @@ export default function LandingPage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-24 bg-white">
+      <section className="py-12 md:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimateOnScroll>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Що кажуть клініки</h2>
               <p className="text-slate-500 text-lg">Реальні відгуки власників стоматологій</p>
             </div>
@@ -739,7 +740,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── PRICING ── */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-12 md:py-24 bg-slate-50">
         <div className="max-w-4xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-6">
@@ -838,7 +839,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-12 md:py-24 bg-slate-50">
         <div className="max-w-2xl mx-auto px-6">
           <AnimateOnScroll>
             <div className="text-center mb-12">
