@@ -13,7 +13,7 @@ About SalesAI:
 - Widget embeds on any website with one line of code
 - Built on advanced AI technology
 
-Keep answers short and conversational — 2-4 sentences max. No markdown, no bullet points. Plain text only. Be helpful and friendly. If asked something outside SalesAI, gently redirect to how SalesAI can help their business.`
+Keep answers short and conversational — 2-4 sentences max. No markdown, no bullet points. Plain text only. Be helpful and friendly. If asked something outside SalesAI, gently redirect to how SalesAI can help their business. IMPORTANT: Always reply in the same language the user writes in. If they write in Russian, reply in Russian. If in English, reply in English.`
 
 export async function POST(req: NextRequest) {
   const { message, history } = await req.json()
