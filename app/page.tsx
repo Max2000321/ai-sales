@@ -1,65 +1,238 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { Bot, Zap, Shield, BarChart3, MessageSquare, Upload } from 'lucide-react'
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-white">
+      {/* Nav */}
+      <nav className="border-b border-slate-100 px-6 py-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <Bot className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-semibold text-slate-900 text-lg">SalesAI</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-slate-600 hover:text-slate-900 text-sm font-medium">
+              Sign in
+            </Link>
+            <Link
+              href="/register"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Get started free
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </nav>
+
+      {/* Hero */}
+      <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
+        <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium mb-6">
+          <Zap className="w-3.5 h-3.5" />
+          AI Sales Employee
         </div>
-      </main>
+        <h1 className="text-5xl font-bold text-slate-900 mb-6 leading-tight">
+          Answer customer inquiries<br />
+          <span className="text-indigo-600">without a sales rep</span>
+        </h1>
+        <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+          Connect your website, documents and FAQ. AI answers customer questions 24/7 using your knowledge base.
+        </p>
+        <div className="flex items-center justify-center gap-4">
+          <Link
+            href="/register"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors text-base"
+          >
+            Create your agent — free
+          </Link>
+          <Link
+            href="#how"
+            className="text-slate-600 hover:text-slate-900 font-medium text-base flex items-center gap-2"
+          >
+            How it works →
+          </Link>
+        </div>
+
+        {/* Mock chat preview */}
+        <div className="mt-16 max-w-sm mx-auto bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden text-left">
+          <div className="bg-indigo-600 p-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+              <Bot className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-white font-medium text-sm">Sales Assistant</p>
+              <p className="text-indigo-200 text-xs">Online</p>
+            </div>
+          </div>
+          <div className="p-4 space-y-3">
+            <div className="bg-slate-100 rounded-xl rounded-tl-sm px-4 py-2.5 text-sm text-slate-700 max-w-[85%]">
+              Hi there! How can I help you today?
+            </div>
+            <div className="bg-indigo-600 rounded-xl rounded-tr-sm px-4 py-2.5 text-sm text-white max-w-[85%] ml-auto">
+              What are your pricing plans?
+            </div>
+            <div className="bg-slate-100 rounded-xl rounded-tl-sm px-4 py-2.5 text-sm text-slate-700 max-w-[85%]">
+              We have 3 plans: Starter from €49/mo, Pro from €149/mo, and Enterprise. Which one interests you?
+            </div>
+          </div>
+          <div className="p-3 border-t border-slate-100">
+            <div className="bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-400">
+              Write a message...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section id="how" className="bg-slate-50 py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center text-slate-900 mb-4">Up and running in 10 minutes</h2>
+          <p className="text-slate-600 text-center mb-12">Three steps to a working AI agent</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '1',
+                icon: Upload,
+                title: 'Upload your knowledge base',
+                desc: 'Upload documents, add FAQs or paste your website URL. The AI will learn about your company.',
+              },
+              {
+                step: '2',
+                icon: Bot,
+                title: 'Configure your agent',
+                desc: 'Give it a name, set the tone and choose a widget color that matches your brand.',
+              },
+              {
+                step: '3',
+                icon: MessageSquare,
+                title: 'Embed on your website',
+                desc: 'Copy one line of code and the chat widget appears on your site instantly.',
+              },
+            ].map(({ step, icon: Icon, title, desc }) => (
+              <div key={step} className="bg-white rounded-2xl p-6 border border-slate-100">
+                <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-indigo-600" />
+                </div>
+                <div className="text-xs font-semibold text-indigo-600 mb-2">STEP {step}</div>
+                <h3 className="font-semibold text-slate-900 mb-2">{title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center text-slate-900 mb-12">Everything you need</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Bot, title: 'Powered by Claude AI', desc: 'The most capable language model for accurate, helpful answers.' },
+              { icon: Shield, title: 'Your data stays private', desc: 'Documents are stored only in your account, never shared.' },
+              { icon: BarChart3, title: 'Conversation analytics', desc: 'See what customers ask about and improve your knowledge base.' },
+              { icon: MessageSquare, title: 'Full conversation history', desc: 'Every customer chat in one place, searchable and organized.' },
+              { icon: Zap, title: 'Instant responses', desc: 'Answers in seconds — no waiting for a sales rep to be available.' },
+              { icon: Upload, title: 'PDF, TXT, FAQ support', desc: 'Upload any document format to build your knowledge base.' },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="flex gap-4 p-4">
+                <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5 text-indigo-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-1">{title}</h3>
+                  <p className="text-slate-600 text-sm">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="bg-slate-50 py-20">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center text-slate-900 mb-4">Simple pricing</h2>
+          <p className="text-slate-600 text-center mb-12">A sales rep costs €3,000+/mo. We are 10× cheaper.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: 'Starter',
+                price: '€49',
+                features: ['1 agent', '500 messages/mo', '5 documents', 'Website widget'],
+                highlight: false,
+              },
+              {
+                name: 'Pro',
+                price: '€149',
+                features: ['3 agents', '5,000 messages/mo', 'Unlimited documents', 'Conversation history', 'Analytics'],
+                highlight: true,
+              },
+              {
+                name: 'Enterprise',
+                price: 'Custom',
+                features: ['No limits', 'Priority support', 'Custom domain', 'SLA'],
+                highlight: false,
+              },
+            ].map(({ name, price, features, highlight }) => (
+              <div
+                key={name}
+                className={`rounded-2xl p-6 border ${highlight ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-slate-200'}`}
+              >
+                <div className={`text-sm font-semibold mb-1 ${highlight ? 'text-indigo-200' : 'text-slate-500'}`}>{name}</div>
+                <div className={`text-3xl font-bold mb-1 ${highlight ? 'text-white' : 'text-slate-900'}`}>{price}</div>
+                <div className={`text-sm mb-6 ${highlight ? 'text-indigo-200' : 'text-slate-500'}`}>per month</div>
+                <ul className="space-y-2 mb-6">
+                  {features.map(f => (
+                    <li key={f} className={`text-sm flex items-center gap-2 ${highlight ? 'text-indigo-100' : 'text-slate-600'}`}>
+                      <span className={highlight ? 'text-indigo-300' : 'text-indigo-500'}>✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/register"
+                  className={`block text-center py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    highlight
+                      ? 'bg-white text-indigo-600 hover:bg-indigo-50'
+                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  }`}
+                >
+                  Get started
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Ready to try it?</h2>
+          <p className="text-slate-600 mb-8">Create your first agent for free. No credit card required.</p>
+          <Link
+            href="/register"
+            className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors text-base"
+          >
+            Create your agent →
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-100 py-8">
+        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center">
+              <Bot className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-semibold text-slate-900">SalesAI</span>
+          </div>
+          <p className="text-slate-500 text-sm">© 2026 SalesAI. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
-  );
+  )
 }
