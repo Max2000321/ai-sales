@@ -8,6 +8,7 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: '', clinic: '', phone: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   function update(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -16,10 +17,20 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    // Simulate a brief delay then show success
-    await new Promise(r => setTimeout(r, 800))
-    setLoading(false)
-    setSent(true)
+    setError(false)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('failed')
+      setSent(true)
+    } catch {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -184,6 +195,12 @@ export default function ContactPage() {
                 >
                   {loading ? 'Відправляємо...' : 'Відправити заявку'}
                 </button>
+
+                {error && (
+                  <p className="text-red-400 text-xs text-center bg-red-500/10 rounded-lg py-2">
+                    Щось пішло не так. Спробуйте ще раз або напишіть на hello@dentai.app
+                  </p>
+                )}
 
                 <p className="text-white/25 text-xs text-center">
                   Відповідаємо протягом 2 годин у робочий час
