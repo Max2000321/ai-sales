@@ -121,9 +121,14 @@ export default function EnPage() {
                 While your clinic is closed —<br />
                 <span className="text-indigo-400">patients book with competitors</span>
               </h1>
-              <p className="text-lg text-white/60 leading-relaxed mb-8 max-w-lg">
+              <p className="text-lg text-white/60 leading-relaxed mb-6 max-w-lg">
                 DentAI responds to patients on your website, Instagram, Telegram and WhatsApp 24/7 — and automatically books appointments.
               </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {['Replaces your receptionist', 'Responds in 2 seconds', 'Books appointments 24/7'].map(t => (
+                  <span key={t} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/70 px-3 py-1.5 rounded-full">{t}</span>
+                ))}
+              </div>
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
                 <Link href="/register" className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-xl font-semibold transition-colors text-base">
                   Get a free demo <ArrowRight className="w-4 h-4" />
@@ -224,6 +229,110 @@ export default function EnPage() {
               </AnimateOnScroll>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── HOW PATIENTS ARE LOST ── */}
+      <section className="py-24 bg-slate-950">
+        <div className="max-w-4xl mx-auto px-6">
+          <AnimateOnScroll>
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">This is how your clinic loses a patient</h2>
+              <p className="text-white/50 text-lg">It happens every evening. And you don't know about it.</p>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={100}>
+            <div className="relative">
+              <div className="absolute left-6 top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
+              <div className="space-y-0">
+                {[
+                  { time: '8:47 PM', day: 'Monday', icon: '💬', title: 'Patient writes on WhatsApp', text: '"Good evening! I\'d like to book a teeth cleaning. Do you have slots this week?"', status: 'patient' },
+                  { time: '8:47 PM', day: 'Monday', icon: '😴', title: 'No response from the clinic', text: 'The working day ended at 7 PM. The message went unread.', status: 'lost' },
+                  { time: '8:51 PM', day: 'Monday', icon: '🔍', title: 'Patient searches for another clinic', text: '4 minutes without a reply. He opens Google and finds your competitor.', status: 'danger' },
+                  { time: '8:55 PM', day: 'Monday', icon: '✅', title: 'Patient books with a competitor', text: 'The competitor replied in 30 seconds. Appointment booked. He won\'t come back to you.', status: 'lost' },
+                  { time: '9:12 AM', day: 'Tuesday', icon: '📩', title: 'Your receptionist sees the message', text: 'Too late. The patient is already at your competitor. This cost you €60–500.', status: 'late' },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6 pb-0">
+                    <div className="hidden sm:flex flex-col items-center gap-1 w-24 shrink-0 pt-5">
+                      <span className="text-white/30 text-xs font-mono">{item.time}</span>
+                      <span className="text-white/20 text-xs">{item.day}</span>
+                    </div>
+                    <div className="hidden sm:flex flex-col items-center shrink-0">
+                      <div className={`w-3 h-3 rounded-full mt-6 z-10 shrink-0 ${item.status === 'patient' ? 'bg-indigo-400' : item.status === 'lost' ? 'bg-red-400' : item.status === 'danger' ? 'bg-amber-400' : 'bg-slate-600'}`} />
+                    </div>
+                    <div className={`flex-1 rounded-2xl p-5 mb-3 border ${item.status === 'lost' ? 'border-red-500/20 bg-red-500/5' : item.status === 'danger' ? 'border-amber-500/20 bg-amber-500/5' : item.status === 'patient' ? 'border-indigo-500/20 bg-indigo-500/5' : 'border-white/5 bg-white/3'}`}>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl shrink-0">{item.icon}</span>
+                        <div>
+                          <div className="flex items-center gap-3 mb-1 flex-wrap">
+                            <p className="font-semibold text-white text-sm">{item.title}</p>
+                            <span className="sm:hidden text-white/30 text-xs font-mono">{item.time} · {item.day}</span>
+                          </div>
+                          <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={200}>
+            <div className="mt-10 border border-indigo-500/20 bg-indigo-500/8 rounded-2xl p-6 text-center">
+              <p className="text-white font-semibold text-lg mb-2">15–20 situations like this every week.</p>
+              <p className="text-white/50 text-sm">That's €750–10,000 in direct losses per month — depending on your prices and services.</p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* ── FLOW ── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <AnimateOnScroll>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How it works with DentAI</h2>
+              <p className="text-slate-500 text-lg">Same patient. Different outcome.</p>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={100}>
+            <div className="relative">
+              <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-px bg-slate-200 z-0" />
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-2 relative z-10">
+                {[
+                  { icon: '💬', title: 'Patient writes', sub: 'WhatsApp / Instagram / Website', time: null, color: 'bg-slate-100 text-slate-600' },
+                  { icon: '⚡', title: 'AI responds', sub: 'instantly, 24/7', time: '2 sec', color: 'bg-indigo-600 text-white' },
+                  { icon: '🎯', title: 'Qualifies need', sub: 'service, date, time', time: '30 sec', color: 'bg-indigo-100 text-indigo-700' },
+                  { icon: '📅', title: 'Books appointment', sub: 'picks a convenient slot', time: '1 min', color: 'bg-indigo-100 text-indigo-700' },
+                  { icon: '✅', title: 'Booking confirmed', sub: 'patient receives confirmation', time: null, color: 'bg-emerald-600 text-white' },
+                ].map((item, i) => (
+                  <div key={i} className="flex flex-col items-center text-center">
+                    <div className={`w-20 h-20 rounded-2xl flex flex-col items-center justify-center mb-3 shadow-sm ${item.color}`}>
+                      <span className="text-2xl">{item.icon}</span>
+                    </div>
+                    {item.time ? <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span> : <div className="h-5 mb-2" />}
+                    <p className="font-bold text-slate-900 text-sm mb-1">{item.title}</p>
+                    <p className="text-slate-500 text-xs leading-tight">{item.sub}</p>
+                    {i < 4 && <div className="lg:hidden text-slate-300 text-2xl my-2">↓</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={200}>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { label: 'No receptionist involvement', icon: '🤖' },
+                { label: 'Any time — even at 3 AM', icon: '🌙' },
+                { label: 'Patient booked, not lost', icon: '🎉' },
+              ].map(({ label, icon }) => (
+                <div key={label} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
+                  <span className="text-xl">{icon}</span>
+                  <p className="text-slate-700 font-medium text-sm">{label}</p>
+                </div>
+              ))}
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 

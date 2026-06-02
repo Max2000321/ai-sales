@@ -144,10 +144,15 @@ export default function LandingPage() {
                 <span className="text-indigo-400">йдуть до конкурентів</span>
               </h1>
 
-              <p className="text-lg text-white/60 leading-relaxed mb-8 max-w-lg">
+              <p className="text-lg text-white/60 leading-relaxed mb-6 max-w-lg">
                 DentAI відповідає пацієнтам на сайті, в Instagram, Telegram і WhatsApp
                 цілодобово — і автоматично записує їх на прийом.
               </p>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {['Замінює адміністратора', 'Відповідь за 2 секунди', 'Запис 24/7'].map(t => (
+                  <span key={t} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/70 px-3 py-1.5 rounded-full">{t}</span>
+                ))}
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
                 <Link
@@ -279,6 +284,182 @@ export default function LandingPage() {
               </AnimateOnScroll>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── HOW PATIENTS ARE LOST ── */}
+      <section className="py-24 bg-slate-950">
+        <div className="max-w-4xl mx-auto px-6">
+          <AnimateOnScroll>
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Ось як ваша клініка втрачає пацієнта
+              </h2>
+              <p className="text-white/50 text-lg">Це відбувається щовечора. І ви про це не знаєте.</p>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={100}>
+            <div className="relative">
+              {/* Timeline line */}
+              <div className="absolute left-6 top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
+
+              <div className="space-y-0">
+                {[
+                  {
+                    time: '20:47',
+                    day: 'Понеділок',
+                    icon: '💬',
+                    title: 'Пацієнт пише у WhatsApp',
+                    text: '"Добрий вечір! Хочу записатись на чищення зубів. Є місця на цьому тижні?"',
+                    status: 'patient',
+                  },
+                  {
+                    time: '20:47',
+                    day: 'Понеділок',
+                    icon: '😴',
+                    title: 'Адміністратор не відповідає',
+                    text: 'Робочий день закінчився о 19:00. Повідомлення залишилось непрочитаним.',
+                    status: 'lost',
+                  },
+                  {
+                    time: '20:51',
+                    day: 'Понеділок',
+                    icon: '🔍',
+                    title: 'Пацієнт шукає іншу клініку',
+                    text: 'Через 4 хвилини без відповіді він відкриває Google і знаходить конкурента.',
+                    status: 'danger',
+                  },
+                  {
+                    time: '20:55',
+                    day: 'Понеділок',
+                    icon: '✅',
+                    title: 'Пацієнт записався до конкурента',
+                    text: 'Конкурент відповів за 30 секунд. Пацієнт записаний. Він більше не повернеться до вас.',
+                    status: 'lost',
+                  },
+                  {
+                    time: '09:12',
+                    day: 'Вівторок',
+                    icon: '📩',
+                    title: 'Ваш адміністратор бачить повідомлення',
+                    text: 'Запізно. Пацієнт вже у конкурента. Це коштувало вам €60–500.',
+                    status: 'late',
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-6 pb-0">
+                    {/* Time column */}
+                    <div className="hidden sm:flex flex-col items-center gap-1 w-24 shrink-0 pt-5">
+                      <span className="text-white/30 text-xs font-mono">{item.time}</span>
+                      <span className="text-white/20 text-xs">{item.day}</span>
+                    </div>
+
+                    {/* Dot */}
+                    <div className="hidden sm:flex flex-col items-center shrink-0">
+                      <div className={`w-3 h-3 rounded-full mt-6 z-10 shrink-0 ${
+                        item.status === 'patient' ? 'bg-indigo-400' :
+                        item.status === 'lost' ? 'bg-red-400' :
+                        item.status === 'danger' ? 'bg-amber-400' :
+                        'bg-slate-600'
+                      }`} />
+                    </div>
+
+                    {/* Content */}
+                    <div className={`flex-1 rounded-2xl p-5 mb-3 border ${
+                      item.status === 'lost' ? 'border-red-500/20 bg-red-500/5' :
+                      item.status === 'danger' ? 'border-amber-500/20 bg-amber-500/5' :
+                      item.status === 'patient' ? 'border-indigo-500/20 bg-indigo-500/5' :
+                      'border-white/5 bg-white/3'
+                    }`}>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl shrink-0">{item.icon}</span>
+                        <div>
+                          <div className="flex items-center gap-3 mb-1 flex-wrap">
+                            <p className="font-semibold text-white text-sm">{item.title}</p>
+                            <span className="sm:hidden text-white/30 text-xs font-mono">{item.time} · {item.day}</span>
+                          </div>
+                          <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={200}>
+            <div className="mt-10 border border-indigo-500/20 bg-indigo-500/8 rounded-2xl p-6 text-center">
+              <p className="text-white font-semibold text-lg mb-2">15–20 таких ситуацій щотижня.</p>
+              <p className="text-white/50 text-sm">Це €750–10,000 прямих втрат щомісяця — залежно від ваших цін і послуг.</p>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* ── FLOW ── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <AnimateOnScroll>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Як це працює з DentAI
+              </h2>
+              <p className="text-slate-500 text-lg">Той самий пацієнт. Інший результат.</p>
+            </div>
+          </AnimateOnScroll>
+
+          {/* Flow steps */}
+          <AnimateOnScroll delay={100}>
+            <div className="relative">
+              {/* Desktop connector line */}
+              <div className="hidden lg:block absolute top-10 left-[10%] right-[10%] h-px bg-slate-200 z-0" />
+
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-2 relative z-10">
+                {[
+                  { icon: '💬', step: '1', title: 'Пацієнт пише', sub: 'WhatsApp / Instagram / Сайт', time: null, color: 'bg-slate-100 text-slate-600' },
+                  { icon: '⚡', step: '2', title: 'AI відповідає', sub: 'миттєво, 24/7', time: '2 сек', color: 'bg-indigo-600 text-white' },
+                  { icon: '🎯', step: '3', title: 'Уточнює потребу', sub: 'послуга, дата, час', time: '30 сек', color: 'bg-indigo-100 text-indigo-700' },
+                  { icon: '📅', step: '4', title: 'Записує пацієнта', sub: 'обирає зручний слот', time: '1 хв', color: 'bg-indigo-100 text-indigo-700' },
+                  { icon: '✅', step: '5', title: 'Запис підтверджено', sub: 'пацієнт отримує підтвердження', time: null, color: 'bg-emerald-600 text-white' },
+                ].map((item, i) => (
+                  <div key={i} className="flex flex-col items-center text-center">
+                    {/* Icon */}
+                    <div className={`w-20 h-20 rounded-2xl flex flex-col items-center justify-center mb-3 shadow-sm ${item.color}`}>
+                      <span className="text-2xl">{item.icon}</span>
+                    </div>
+                    {/* Time badge */}
+                    {item.time && (
+                      <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{item.time}</span>
+                    )}
+                    {!item.time && <div className="h-5 mb-2" />}
+                    <p className="font-bold text-slate-900 text-sm mb-1">{item.title}</p>
+                    <p className="text-slate-500 text-xs leading-tight">{item.sub}</p>
+
+                    {/* Mobile arrow */}
+                    {i < 4 && (
+                      <div className="lg:hidden text-slate-300 text-2xl my-2">↓</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnScroll>
+
+          <AnimateOnScroll delay={200}>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { label: 'Без участі адміністратора', icon: '🤖' },
+                { label: 'Будь-якої миті — навіть о 3 ночі', icon: '🌙' },
+                { label: 'Пацієнт записаний, не втрачений', icon: '🎉' },
+              ].map(({ label, icon }) => (
+                <div key={label} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
+                  <span className="text-xl">{icon}</span>
+                  <p className="text-slate-700 font-medium text-sm">{label}</p>
+                </div>
+              ))}
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
