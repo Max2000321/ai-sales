@@ -49,7 +49,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-56 bg-white border-r border-slate-200 flex flex-col shrink-0">
+    <aside className="hidden md:flex w-56 bg-white border-r border-slate-200 flex-col shrink-0">
       {/* Logo */}
       <div className="p-5 border-b border-slate-100">
         <Link href="/dashboard" className="flex items-center gap-2.5">

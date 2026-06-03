@@ -35,8 +35,8 @@ export default function ConversationsContent({ conversations }: { conversations:
   const dateLocale = lang === 'uk' ? 'uk' : lang === 'cz' ? 'cs' : 'en'
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
+    <div className="p-4 md:p-8">
+      <div className="mb-6 md:mb-8">
         <h1 className="text-2xl font-bold text-slate-900 mb-1">{t.title}</h1>
         <p className="text-slate-500 text-sm">{t.sub}</p>
       </div>
