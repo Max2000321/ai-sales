@@ -17,7 +17,7 @@ interface Message {
 
 export default function ChatInterface({ agent }: { agent: Agent }) {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: `Hi! I'm ${agent.name}. How can I help you today?` }
+    { role: 'assistant', content: `Привіт! Я ${agent.name}. Чим можу допомогти?` }
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -53,16 +53,19 @@ export default function ChatInterface({ agent }: { agent: Agent }) {
       if (data.conversationId) setConversationId(data.conversationId)
       setMessages(m => [...m, { role: 'assistant', content: data.reply }])
     } catch {
-      setMessages(m => [...m, { role: 'assistant', content: 'Something went wrong. Please try again.' }])
+      setMessages(m => [...m, { role: 'assistant', content: 'Щось пішло не так. Спробуйте ще раз.' }])
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col" style={{ height: 560 }}>
+    <div
+      className="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col"
+      style={{ height: 'min(560px, calc(100vh - 32px))' }}
+    >
       {/* Header */}
-      <div className="p-4 flex items-center gap-3" style={{ backgroundColor: agent.widget_color }}>
+      <div className="p-4 flex items-center gap-3 shrink-0" style={{ backgroundColor: agent.widget_color }}>
         <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
           <Bot className="w-5 h-5 text-white" />
         </div>
@@ -70,7 +73,7 @@ export default function ChatInterface({ agent }: { agent: Agent }) {
           <p className="text-white font-semibold text-sm">{agent.name}</p>
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <p className="text-white/80 text-xs">Online</p>
+            <p className="text-white/80 text-xs">Онлайн · відповідає миттєво</p>
           </div>
         </div>
       </div>
@@ -102,19 +105,19 @@ export default function ChatInterface({ agent }: { agent: Agent }) {
       </div>
 
       {/* Input */}
-      <form onSubmit={sendMessage} className="p-3 border-t border-slate-100 flex gap-2">
+      <form onSubmit={sendMessage} className="p-3 border-t border-slate-100 flex gap-2 shrink-0">
         <input
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Write a message..."
+          placeholder="Напишіть повідомлення..."
           disabled={loading}
           className="flex-1 bg-slate-100 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="w-10 h-10 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40"
+          className="w-10 h-10 rounded-xl flex items-center justify-center transition-opacity disabled:opacity-40 shrink-0"
           style={{ backgroundColor: agent.widget_color }}
         >
           <Send className="w-4 h-4 text-white" />

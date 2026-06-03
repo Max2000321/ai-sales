@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [resetSent, setResetSent] = useState(false)
+  const [showReset, setShowReset] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -21,7 +23,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      setError('Invalid email or password')
+      setError('Невірний email або пароль')
       setLoading(false)
     } else {
       router.push('/dashboard')
@@ -29,55 +31,107 @@ export default function LoginPage() {
     }
   }
 
+  async function handleReset(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email) { setError('Введіть email'); return }
+    setLoading(true)
+    const supabase = createClient()
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+    })
+    setResetSent(true)
+    setLoading(false)
+  }
+
   return (
     <div className="w-full max-w-sm">
       <div className="bg-white rounded-2xl border border-slate-200 p-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-1">Sign in</h1>
-        <p className="text-slate-500 text-sm mb-6">Welcome back</p>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="you@company.com"
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
+        {resetSent ? (
+          <div className="text-center py-4">
+            <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-bold text-slate-900 mb-2">Перевірте пошту</h2>
+            <p className="text-slate-500 text-sm">Ми надіслали посилання для відновлення пароля на {email}</p>
+            <button onClick={() => { setResetSent(false); setShowReset(false) }} className="mt-4 text-indigo-600 text-sm font-medium hover:underline">
+              Повернутись до входу
+            </button>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
-          </div>
-
-          {error && (
-            <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-lg">Invalid email or password</div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:opacity-60 text-sm"
-          >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
+        ) : showReset ? (
+          <>
+            <h1 className="text-2xl font-bold text-slate-900 mb-1">Відновлення пароля</h1>
+            <p className="text-slate-500 text-sm mb-6">Вкажіть ваш email — надішлемо посилання</p>
+            <form onSubmit={handleReset} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  placeholder="ваш@email.com"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+              {error && <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-lg">{error}</div>}
+              <button type="submit" disabled={loading} className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-60 text-sm">
+                {loading ? 'Надсилаємо...' : 'Надіслати посилання'}
+              </button>
+            </form>
+            <button onClick={() => setShowReset(false)} className="mt-4 text-slate-500 text-sm hover:underline w-full text-center">
+              ← Назад
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold text-slate-900 mb-1">Увійти</h1>
+            <p className="text-slate-500 text-sm mb-6">Ласкаво просимо назад</p>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  placeholder="ваш@email.com"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-sm font-medium text-slate-700">Пароль</label>
+                  <button type="button" onClick={() => setShowReset(true)} className="text-xs text-indigo-600 hover:underline">
+                    Забули пароль?
+                  </button>
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+              {error && <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-lg">{error}</div>}
+              <button type="submit" disabled={loading} className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:opacity-60 text-sm">
+                {loading ? 'Входимо...' : 'Увійти'}
+              </button>
+            </form>
+          </>
+        )}
       </div>
-      <p className="text-center text-sm text-slate-500 mt-4">
-        No account?{' '}
-        <Link href="/register" className="text-indigo-600 font-medium hover:underline">
-          Create one free
-        </Link>
-      </p>
+      {!showReset && !resetSent && (
+        <p className="text-center text-sm text-slate-500 mt-4">
+          Немає акаунту?{' '}
+          <Link href="/register" className="text-indigo-600 font-medium hover:underline">
+            14 днів безкоштовно →
+          </Link>
+        </p>
+      )}
     </div>
   )
 }
