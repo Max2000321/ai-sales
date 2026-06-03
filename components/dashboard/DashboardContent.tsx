@@ -96,37 +96,26 @@ export default function DashboardContent({ email, agents, totalConversations, to
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-slate-500">{t.agents}</span>
-            <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
-              <Bot className="w-4 h-4 text-indigo-500" />
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
+        {[
+          { label: t.agents, value: agents.length, sub: t.active, icon: Bot, iconBg: 'bg-indigo-50', iconColor: 'text-indigo-500' },
+          { label: t.conversations, value: totalConversations, sub: t.total, icon: MessageSquare, iconBg: 'bg-emerald-50', iconColor: 'text-emerald-500' },
+          { label: t.documents, value: totalDocs, sub: t.chunks, icon: BookOpen, iconBg: 'bg-amber-50', iconColor: 'text-amber-500' },
+        ].map(({ label, value, sub, icon: Icon, iconBg, iconColor }) => (
+          <div key={label} className="bg-white rounded-xl border border-slate-200 p-3 md:p-5">
+            <div className="hidden md:flex items-center justify-between mb-3">
+              <span className="text-sm text-slate-500">{label}</span>
+              <div className={`w-8 h-8 ${iconBg} rounded-lg flex items-center justify-center`}>
+                <Icon className={`w-4 h-4 ${iconColor}`} />
+              </div>
             </div>
-          </div>
-          <p className="text-3xl font-bold text-slate-900">{agents.length}</p>
-          <p className="text-xs text-slate-400 mt-1">{t.active}</p>
-        </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-slate-500">{t.conversations}</span>
-            <div className="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
-              <MessageSquare className="w-4 h-4 text-emerald-500" />
+            <div className={`w-7 h-7 ${iconBg} rounded-lg flex items-center justify-center mb-2 md:hidden`}>
+              <Icon className={`w-3.5 h-3.5 ${iconColor}`} />
             </div>
+            <p className="text-2xl md:text-3xl font-bold text-slate-900">{value}</p>
+            <p className="text-xs text-slate-400 mt-0.5 truncate">{label}</p>
           </div>
-          <p className="text-3xl font-bold text-slate-900">{totalConversations}</p>
-          <p className="text-xs text-slate-400 mt-1">{t.total}</p>
-        </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-slate-500">{t.documents}</span>
-            <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
-              <BookOpen className="w-4 h-4 text-amber-500" />
-            </div>
-          </div>
-          <p className="text-3xl font-bold text-slate-900">{totalDocs}</p>
-          <p className="text-xs text-slate-400 mt-1">{t.chunks}</p>
-        </div>
+        ))}
       </div>
 
       {/* Analytics link */}

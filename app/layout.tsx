@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SalesAI — AI Sales Employee for Your Business",
-  description: "Connect your knowledge base and let AI handle incoming sales inquiries 24/7.",
+  title: "DentAI — AI-адміністратор для стоматологічних клінік",
+  description: "DentAI відповідає пацієнтам у Instagram, Telegram і WhatsApp цілодобово та автоматично записує на прийом. Спробуйте 14 днів безкоштовно.",
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="uk" className="h-full">
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -51,13 +51,13 @@ export default function MobileNav() {
           <Link
             key={href}
             href={href}
-            className={`flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors ${
+            className={`flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors relative ${
               active ? 'text-indigo-600' : 'text-slate-400'
             }`}
           >
+            {active && <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-indigo-600 rounded-b-full" />}
             <Icon className={`w-5 h-5 ${active ? 'text-indigo-600' : 'text-slate-400'}`} />
             <span className="text-[10px] font-medium leading-none">{label}</span>
-            {active && <span className="absolute bottom-0 w-8 h-0.5 bg-indigo-600 rounded-t-full" />}
           </Link>
         )
       })}

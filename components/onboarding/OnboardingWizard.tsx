@@ -119,7 +119,7 @@ export default function OnboardingWizard() {
   const [skippedKnowledge, setSkippedKnowledge] = useState(false)
 
   const t = T[lang]
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-sales.vercel.app'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-sales-iota-three.vercel.app'
   const chatUrl = agentId ? `${appUrl}/chat/${agentId}` : ''
 
   const STEPS = [
