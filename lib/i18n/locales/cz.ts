@@ -108,6 +108,34 @@ export const cz: LandingDict = {
     ],
   },
 
+  integrations: {
+    badge: 'Integrace',
+    title: 'Funguje s vaším ordinačním systémem',
+    subtitle: 'DentAI se synchronizuje s MIS/CRM vaší ordinace — objednávky se objeví tam, kde už pracujete.',
+    microcopy: 'Přímá synchronizace. DentAI zapisuje rezervace přímo do vašeho aktivního lékařského kalendáře — bez ručního přenosu dat a bez dvojích objednávek.',
+    groups: [
+      { label: 'Česko / EU', systems: ['XDENT', 'Dentem'] },
+    ],
+  },
+
+  pdfAudit: {
+    triggerCta: 'Stáhnout personalizovaný PDF audit',
+    modalTitle: 'Personalizovaný PDF audit ztrát',
+    modalSubtitle: 'Zašleme vám e-mailem podrobný rozpis měsíčních ztrát vaší ordinace.',
+    nameLabel: 'Vaše jméno',
+    namePlaceholder: 'Jan Novák',
+    practiceLabel: 'Název ordinace',
+    practicePlaceholder: 'Smile Studio',
+    emailLabel: 'Firemní e-mail',
+    emailPlaceholder: 'jan@ordinace.cz',
+    submit: 'Získat audit',
+    submitting: 'Odesíláme...',
+    successTitle: 'Hotovo!',
+    successText: 'Váš personalizovaný audit už míří do vaší schránky.',
+    errorText: 'Něco se pokazilo. Zkuste to prosím znovu.',
+    close: 'Zavřít',
+  },
+
   dashboard: {
     title: 'Jeden přehled — plná kontrola',
     subtitle: 'Všechny dialogy, objednávky a analytika — na jednom místě.',
@@ -145,7 +173,7 @@ export const cz: LandingDict = {
     badge: 'Vyzkoušejte hned teď',
     title: 'Živé demo AI administrátora',
     subtitle: 'Toto je skutečné AI — stejné, které nainstalujete ve své ordinaci. Napište mu jako pacient: zeptejte se na ceny, objednejte se nebo přesuňte termín.',
-    bullets: ['Odpovídá za 2–3 sekundy', 'Mluví česky, ukrajinsky, anglicky', 'Nabízí konkrétní termíny', 'Nikdy neodmítne a je vždy zdvořilé'],
+    bullets: ['Odpovídá za 2–3 sekundy', 'Mluví česky, ukrajinsky, anglicky', 'Nabízí konkrétní termíny', 'Rozumí složité stomatologické terminologii — implantáty, korunky, aligners, dětská stomatologie', 'Triáž v reálném čase: rozpozná akutní bolest a okamžitě ji předá pohotovostnímu lékaři', 'Nikdy neodmítne a je vždy zdvořilé'],
   },
 
   scenarios: {
@@ -208,6 +236,8 @@ export const cz: LandingDict = {
       { q: 'Je systém v souladu s GDPR?', a: 'Ano. Všechna data pacientů jsou uložena na šifrovaných serverech v EU a zpracována v plném souladu s GDPR. Nikdy nepředáváme zdravotní data třetím stranám ani je nepoužíváme k trénování modelů.' },
       { q: 'S jakými kanály systém pracuje?', a: 'Chat widget na webu, Instagram Direct, Facebook Messenger, Telegram, WhatsApp a Viber — vše ovládáte z jednoho přehledu. Pacient píše, kde mu to vyhovuje, vy vidíte vše na jednom místě.' },
       { q: 'Mohu kontrolovat, co AI říká?', a: 'Plně. Nahrajete znalostní databázi — služby, ceny, podmínky, rozvrh. AI odpovídá pouze na základě vašich informací. Pokud něco neví, zdvořile odkáže pacienta na recepci.' },
+      { q: 'Jak AI nakládá s důvěrností zdravotních údajů pacientů?', a: 'Veškerá data pacientů jsou uložena a zpracována na koncově šifrovaných serverech v EU. Přístup je přísně omezen, data nikdy nesdílíme s třetími stranami ani je nepoužíváme k trénování modelů — plný soulad s GDPR a zdravotní legislativou.' },
+      { q: 'Co se stane, když pacient zadá údaje ve špatném formátu?', a: 'AI vede přirozený rozhovor a sama si poradí — spolehlivě rozpozná telefonní číslo, datum i službu i při překlepech ve formátu a v případě potřeby se zdvořile doptá. Pacient se nemusí přizpůsobovat žádné šabloně.' },
     ],
   },
 

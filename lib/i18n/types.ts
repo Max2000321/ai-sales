@@ -270,6 +270,39 @@ export interface FooterDict {
   badges: string
 }
 
+export interface IntegrationGroup {
+  /** Localized region label, e.g. "ЄС / Чехія" or "Україна / СНД". */
+  label: string
+  /** MIS / CRM product names (brand names, locale-invariant). */
+  systems: string[]
+}
+
+export interface IntegrationsDict {
+  badge: string
+  title: string
+  subtitle: string
+  microcopy: string
+  groups: IntegrationGroup[]
+}
+
+export interface PdfAuditDict {
+  triggerCta: string
+  modalTitle: string
+  modalSubtitle: string
+  nameLabel: string
+  namePlaceholder: string
+  practiceLabel: string
+  practicePlaceholder: string
+  emailLabel: string
+  emailPlaceholder: string
+  submit: string
+  submitting: string
+  successTitle: string
+  successText: string
+  errorText: string
+  close: string
+}
+
 export interface DemoChatDict {
   initial: string
   quickActions: { label: string; message: string }[]
@@ -293,6 +326,8 @@ export interface LandingDict {
   calculator: CalculatorDict
   flow: FlowDict
   howItWorks: HowItWorksDict
+  integrations: IntegrationsDict
+  pdfAudit: PdfAuditDict
   dashboard: DashboardDict
   channels: ChannelsDict
   demo: DemoDict

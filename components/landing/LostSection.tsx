@@ -1,12 +1,14 @@
 import { MessageCircle, BellOff, Search, UserX, Inbox } from 'lucide-react'
 import AnimateOnScroll from './AnimateOnScroll'
 import RevenueCalculator from './RevenueCalculator'
-import type { LostTimelineDict, CalculatorDict, Currency } from '@/lib/i18n/types'
+import type { LostTimelineDict, CalculatorDict, Currency, PdfAuditDict, Locale } from '@/lib/i18n/types'
 
 interface Props {
   dict: LostTimelineDict
   calculator: CalculatorDict
   currency: Currency
+  audit: PdfAuditDict
+  locale: Locale
 }
 
 // Visual config zipped by index to dict.steps.
@@ -32,7 +34,7 @@ function cardBorder(status: string) {
     : 'border-white/5 bg-white/3'
 }
 
-export default function LostSection({ dict, calculator, currency }: Props) {
+export default function LostSection({ dict, calculator, currency, audit, locale }: Props) {
   return (
     <section className="py-12 md:py-24 bg-slate-950">
       <div className="max-w-4xl mx-auto px-6">
@@ -86,7 +88,7 @@ export default function LostSection({ dict, calculator, currency }: Props) {
         {/* Interactive revenue-loss calculator */}
         <AnimateOnScroll delay={120}>
           <div className="mt-8">
-            <RevenueCalculator dict={calculator} currency={currency} />
+            <RevenueCalculator dict={calculator} currency={currency} audit={audit} locale={locale} />
           </div>
         </AnimateOnScroll>
       </div>

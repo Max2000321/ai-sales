@@ -2,13 +2,16 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, TrendingDown } from 'lucide-react'
+import { ArrowRight, TrendingDown, FileText } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
-import type { CalculatorDict, Currency } from '@/lib/i18n/types'
+import PdfAuditModal from './PdfAuditModal'
+import type { CalculatorDict, Currency, PdfAuditDict, Locale } from '@/lib/i18n/types'
 
 interface Props {
   dict: CalculatorDict
   currency: Currency
+  audit: PdfAuditDict
+  locale: Locale
 }
 
 const WORKING_DAYS = 30
@@ -27,9 +30,10 @@ function pct(value: number, min: number, max: number): number {
   return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100))
 }
 
-export default function RevenueCalculator({ dict, currency }: Props) {
+export default function RevenueCalculator({ dict, currency, audit, locale }: Props) {
   const [calls, setCalls] = useState(dict.callsDefault)
   const [check, setCheck] = useState(dict.checkDefault)
+  const [auditOpen, setAuditOpen] = useState(false)
 
   const target = Math.round(calls * WORKING_DAYS * CONVERSION * check)
 
@@ -123,15 +127,32 @@ export default function RevenueCalculator({ dict, currency }: Props) {
             {formatMoney(display, currency)}
           </div>
           <p className="text-white/40 text-sm mb-7">{dict.resultSuffix}</p>
-          <Link
-            href="/register"
-            className="btn-shine inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl font-semibold text-sm transition-colors w-full sm:w-auto"
-          >
-            {dict.cta}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-col gap-2.5">
+            <Link
+              href="/register"
+              className="btn-shine inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-xl font-semibold text-sm transition-colors"
+            >
+              {dict.cta}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setAuditOpen(true)}
+              className="inline-flex items-center justify-center gap-2 border border-white/25 text-white hover:bg-white/10 px-5 py-3 rounded-xl font-semibold text-sm transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              {audit.triggerCta}
+            </button>
+          </div>
         </div>
       </div>
+
+      <PdfAuditModal
+        dict={audit}
+        open={auditOpen}
+        onClose={() => setAuditOpen(false)}
+        context={{ calls, check, monthlyLoss: target, currency: currency.symbol, locale }}
+      />
     </div>
   )
 }

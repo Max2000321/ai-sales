@@ -108,6 +108,35 @@ export const en: LandingDict = {
     ],
   },
 
+  integrations: {
+    badge: 'Integrations',
+    title: 'Works with your practice management system',
+    subtitle: 'DentAI syncs with your clinic’s MIS/CRM — bookings land where you already work.',
+    microcopy: 'Direct Synchronization. DentAI inputs reservations directly into your active medical calendar with zero manual data transfer or double-bookings.',
+    groups: [
+      { label: 'Czechia / EU', systems: ['XDENT', 'Dentem'] },
+      { label: 'Ukraine / CIS', systems: ['DentalTap', 'ClinicIQ', 'Medods'] },
+    ],
+  },
+
+  pdfAudit: {
+    triggerCta: 'Download Personalized PDF Audit',
+    modalTitle: 'Personalized PDF Revenue Audit',
+    modalSubtitle: 'We’ll email a detailed breakdown of your clinic’s monthly losses.',
+    nameLabel: 'Your name',
+    namePlaceholder: 'John Smith',
+    practiceLabel: 'Dental practice name',
+    practicePlaceholder: 'Bright Smile Dental',
+    emailLabel: 'Corporate email',
+    emailPlaceholder: 'john@clinic.com',
+    submit: 'Get my audit',
+    submitting: 'Sending...',
+    successTitle: 'Done!',
+    successText: 'Your personalized audit is on its way to your inbox.',
+    errorText: 'Something went wrong. Please try again.',
+    close: 'Close',
+  },
+
   dashboard: {
     title: 'One dashboard — full control',
     subtitle: 'All conversations, bookings and analytics — in one place.',
@@ -145,7 +174,7 @@ export const en: LandingDict = {
     badge: 'Try it right now',
     title: 'Live AI administrator demo',
     subtitle: 'This is the real AI — the same one you will install in your clinic. Write to it like a patient: ask about prices, book an appointment or reschedule a visit.',
-    bullets: ['Responds in 2–3 seconds', 'Speaks Ukrainian, Czech, English', 'Suggests specific available slots', 'Never rude, never unavailable'],
+    bullets: ['Responds in 2–3 seconds', 'Speaks Ukrainian, Czech, English', 'Suggests specific available slots', 'Understands complex dental terminology — implants, crowns, aligners, pediatric dentistry', 'Real-time triage: detects acute pain and instantly flags it to on-call staff', 'Never rude, never unavailable'],
   },
 
   scenarios: {
@@ -208,6 +237,8 @@ export const en: LandingDict = {
       { q: 'Is the system GDPR-compliant?', a: 'Yes. All patient data is stored on encrypted EU servers and processed in full compliance with GDPR. We never share medical data with third parties or use it for model training.' },
       { q: 'Which channels does it work with?', a: 'Website chat widget, Instagram Direct, Facebook Messenger, Telegram, WhatsApp and Viber — all managed from one dashboard. Patients write wherever they prefer, you see everything in one place.' },
       { q: 'Can I control what the AI says?', a: "Fully. You upload your knowledge base — services, prices, conditions, schedule. The AI only answers based on your information. If it doesn't know something, it politely refers the patient to your staff." },
+      { q: 'How does the AI handle patient medical confidentiality?', a: 'All patient data is stored and processed on end-to-end encrypted EU data nodes. Access is strictly limited, data is never shared with third parties or used to train models — in full compliance with GDPR and medical regulations.' },
+      { q: 'What happens if a patient types something in an invalid format?', a: 'The AI holds a natural conversation and auto-corrects — it reliably understands a phone number, date or service even when the formatting is off, and politely re-asks if needed. Patients never have to match a rigid template.' },
     ],
   },
 

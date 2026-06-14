@@ -7,6 +7,7 @@ import Flow from './Flow'
 import HowItWorks from './HowItWorks'
 import DashboardPreview from './DashboardPreview'
 import Channels from './Channels'
+import Integrations from './Integrations'
 import Demo from './Demo'
 import Scenarios from './Scenarios'
 import Results from './Results'
@@ -30,11 +31,12 @@ export default function Landing({ dict }: Props) {
       <Hero dict={dict.hero} />
       <StatsBar stats={dict.stats} />
       <Problem dict={dict.problem} />
-      <LostSection dict={dict.lostTimeline} calculator={dict.calculator} currency={dict.currency} />
+      <LostSection dict={dict.lostTimeline} calculator={dict.calculator} currency={dict.currency} audit={dict.pdfAudit} locale={dict.locale} />
       <Flow dict={dict.flow} />
       <HowItWorks dict={dict.howItWorks} />
       <DashboardPreview dict={dict.dashboard} />
       <Channels dict={dict.channels} />
+      <Integrations dict={dict.integrations} />
       <Demo dict={dict.demo} chatDict={dict.demoChat} />
       <Scenarios dict={dict.scenarios} />
       <Results dict={dict.results} />
