@@ -57,12 +57,13 @@ export default function PdfAuditModal({ dict, open, onClose, context }: Props) {
     }
   }
 
+  // text-base (16px) keeps iOS Safari from auto-zooming on focus.
   const inputClass =
-    'w-full rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 bg-slate-100 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500'
+    'w-full rounded-xl px-4 py-3 text-base text-slate-900 placeholder-slate-400 bg-slate-100 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500'
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[60] flex items-end md:items-center justify-center p-0 md:p-4"
       style={{
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'auto' : 'none',
@@ -75,13 +76,12 @@ export default function PdfAuditModal({ dict, open, onClose, context }: Props) {
       {/* backdrop */}
       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose} />
 
-      {/* card */}
+      {/* card — bottom-sheet on mobile, centered dialog on desktop */}
       <div
-        className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-7"
-        style={{
-          transform: open ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.97)',
-          transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
+        className={`relative w-full md:max-w-md bg-white rounded-t-2xl md:rounded-2xl shadow-2xl p-6 sm:p-7 will-change-transform transition-transform duration-300 ease-out ${
+          open ? 'translate-y-0 md:scale-100' : 'translate-y-full md:translate-y-4 md:scale-95'
+        }`}
+        style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
       >
         <button onClick={onClose} aria-label={dict.close} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors">
           <X size={20} />

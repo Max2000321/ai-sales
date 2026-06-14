@@ -32,18 +32,23 @@ export default function Integrations({ dict }: Props) {
             <AnimateOnScroll key={group.label} delay={gi * 120}>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3 text-center md:text-left">{group.label}</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-                  {group.systems.map((sys) => (
-                    <div
-                      key={sys}
-                      className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3.5 hover:border-indigo-300 hover:shadow-sm transition-all"
-                    >
-                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white text-xs font-bold shrink-0">
-                        {monogram(sys)}
+                <div className="relative">
+                  {/* Mobile: horizontal snap-swipe row · Desktop: responsive grid */}
+                  <div className="flex md:grid md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none pb-1">
+                    {group.systems.map((sys) => (
+                      <div
+                        key={sys}
+                        className="snap-start shrink-0 w-40 md:w-auto flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3.5 hover:border-indigo-300 hover:shadow-sm transition-all"
+                      >
+                        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                          {monogram(sys)}
+                        </div>
+                        <span className="font-semibold text-slate-800 text-sm truncate">{sys}</span>
                       </div>
-                      <span className="font-semibold text-slate-800 text-sm truncate">{sys}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  {/* Right-edge fade hints there's more to swipe (mobile only) */}
+                  <div className="md:hidden pointer-events-none absolute top-0 right-0 bottom-1 w-12 bg-gradient-to-l from-slate-50 via-slate-50/60 to-transparent" />
                 </div>
               </div>
             </AnimateOnScroll>

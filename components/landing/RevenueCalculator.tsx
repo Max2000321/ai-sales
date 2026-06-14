@@ -92,7 +92,12 @@ export default function RevenueCalculator({ dict, currency, audit, locale }: Pro
               step={dict.callsStep}
               value={calls}
               onChange={(e) => setCalls(Number(e.target.value))}
-              style={{ background: `linear-gradient(to right, #6366f1 ${callsFill}%, #1e2540 ${callsFill}%)` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, #6366f1 ${callsFill}%, #1e2540 ${callsFill}%)`,
+                backgroundSize: '100% 8px',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
             />
             <p className="text-white/30 text-xs mt-2">{dict.callsHint}</p>
           </div>
@@ -112,7 +117,12 @@ export default function RevenueCalculator({ dict, currency, audit, locale }: Pro
               step={dict.checkStep}
               value={check}
               onChange={(e) => setCheck(Number(e.target.value))}
-              style={{ background: `linear-gradient(to right, #6366f1 ${checkFill}%, #1e2540 ${checkFill}%)` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, #6366f1 ${checkFill}%, #1e2540 ${checkFill}%)`,
+                backgroundSize: '100% 8px',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }}
             />
             <p className="text-white/30 text-xs mt-2">{dict.checkHint}</p>
           </div>

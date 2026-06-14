@@ -23,11 +23,11 @@ export default function Demo({ dict, chatDict }: Props) {
               <p className="text-white/60 text-lg leading-relaxed mb-8">{dict.subtitle}</p>
               <div className="space-y-3">
                 {dict.bullets.map((t) => (
-                  <div key={t} className="flex items-center gap-3 text-white/70 text-sm">
-                    <div className="w-5 h-5 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0">
+                  <div key={t} className="flex items-start gap-3 text-white/70 text-sm">
+                    <div className="w-5 h-5 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-3 h-3 text-emerald-400" />
                     </div>
-                    {t}
+                    <span className="min-w-0 break-words leading-relaxed">{t}</span>
                   </div>
                 ))}
               </div>
