@@ -273,6 +273,6 @@ export const en: LandingDict = {
     placeholder: 'Write a message...',
     online: 'replies instantly',
     error: 'Something went wrong. Please try again.',
-    tooltip: 'Try the AI administrator 👋',
+    tooltip: 'Try the AI administrator',
   },
 }

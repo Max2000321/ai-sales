@@ -272,6 +272,6 @@ export const cz: LandingDict = {
     placeholder: 'Napište zprávu...',
     online: 'odpovídá okamžitě',
     error: 'Něco se pokazilo. Zkuste to prosím znovu.',
-    tooltip: 'Vyzkoušejte AI administrátora 👋',
+    tooltip: 'Vyzkoušejte AI administrátora',
   },
 }

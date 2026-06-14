@@ -34,7 +34,7 @@ export default function Integrations({ dict }: Props) {
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-3 text-center md:text-left">{group.label}</p>
                 <div className="relative">
                   {/* Mobile: horizontal snap-swipe row · Desktop: responsive grid */}
-                  <div className="flex md:grid md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none pb-1">
+                  <div className="flex md:grid md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none pb-1 pr-6 md:pr-0">
                     {group.systems.map((sys) => (
                       <div
                         key={sys}
@@ -46,6 +46,8 @@ export default function Integrations({ dict }: Props) {
                         <span className="font-semibold text-slate-800 text-sm truncate">{sys}</span>
                       </div>
                     ))}
+                    {/* trailing spacer so the last badge never snaps flush to the edge */}
+                    <div aria-hidden className="shrink-0 w-1 md:hidden" />
                   </div>
                   {/* Right-edge fade hints there's more to swipe (mobile only) */}
                   <div className="md:hidden pointer-events-none absolute top-0 right-0 bottom-1 w-12 bg-gradient-to-l from-slate-50 via-slate-50/60 to-transparent" />

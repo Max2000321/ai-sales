@@ -29,14 +29,14 @@ export default function Faq({ dict }: Props) {
                   onClick={() => setOpen(open === i ? null : i)}
                   className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 transition-colors"
                 >
-                  <span className="font-medium text-slate-900 text-sm md:text-base pr-4 min-w-0 break-words">{faq.q}</span>
+                  <span className="font-medium text-slate-900 text-sm md:text-base pr-4 min-w-0 break-words whitespace-normal">{faq.q}</span>
                   <ChevronDown
                     className="w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200"
                     style={{ transform: open === i ? 'rotate(180deg)' : 'rotate(0deg)' }}
                   />
                 </button>
                 {open === i && (
-                  <div className="px-5 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 break-words">
+                  <div className="px-5 pb-4 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 min-w-0 break-words whitespace-normal">
                     {faq.a}
                   </div>
                 )}

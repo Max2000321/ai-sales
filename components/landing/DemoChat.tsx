@@ -24,7 +24,10 @@ export default function DemoChat({ dict }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    // Scroll only the message list, never the page — scrollIntoView would drag
+    // the whole window to this mid-page section on mount.
+    const container = bottomRef.current?.parentElement
+    if (container) container.scrollTop = container.scrollHeight
   }, [messages])
 
   async function send(text: string) {

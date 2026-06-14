@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react'
+import { MessageCircle, X, Send, Loader2, Sparkles } from 'lucide-react'
 import type { DemoChatDict } from '@/lib/i18n/types'
 
 interface Message {
@@ -187,8 +187,9 @@ export default function FloatingChat({ dict }: Props) {
 
       {/* ── Tooltip teaser ── */}
       {showTooltip && !isOpen && (
-        <div className="fixed bottom-[88px] right-4 sm:right-6 z-50 bg-white rounded-xl shadow-lg p-3 w-48 text-sm text-slate-700 border border-slate-100">
-          {dict.tooltip}
+        <div className="fixed bottom-[88px] right-4 sm:right-6 z-50 bg-white rounded-xl shadow-lg p-3 w-48 text-sm text-slate-700 border border-slate-100 flex items-start gap-2">
+          <Sparkles className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+          <span>{dict.tooltip}</span>
         </div>
       )}
 
