@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef, ReactNode } from 'react'
+import { useEffect, useRef, ReactNode, CSSProperties } from 'react'
 
 interface Props {
   children: ReactNode
   className?: string
+  /** Stagger delay in ms before the reveal transition starts. */
   delay?: number
 }
 
@@ -17,28 +18,21 @@ export default function AnimateOnScroll({ children, className = '', delay = 0 }:
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            el.style.opacity = '1'
-            el.style.transform = 'translateY(0)'
-          }, delay)
+          el.classList.add('is-visible')
           observer.unobserve(el)
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [delay])
+  }, [])
 
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        opacity: 0,
-        transform: 'translateY(24px)',
-        transition: 'opacity 0.6s ease, transform 0.6s ease',
-      }}
+      className={`animate-on-scroll ${className}`}
+      style={{ '--animation-delay': `${delay}ms` } as CSSProperties}
     >
       {children}
     </div>

@@ -1,14 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle2, Mail, Phone, MessageSquare } from 'lucide-react'
+import PhoneInput from '@/components/landing/PhoneInput'
+import { localeFromPathname, validatePhone } from '@/lib/validation/phone'
 
 export default function ContactPage() {
+  const pathname = usePathname()
+  const phoneLocale = localeFromPathname(pathname)
+
   const [form, setForm] = useState({ name: '', clinic: '', phone: '', email: '', message: '' })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [phoneValid, setPhoneValid] = useState(false)
+  const [phoneSubmitError, setPhoneSubmitError] = useState(false)
+  const phoneRef = useRef<HTMLInputElement>(null)
 
   function update(field: string, value: string) {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -16,6 +25,11 @@ export default function ContactPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!validatePhone(form.phone, phoneLocale)) {
+      setPhoneSubmitError(true)
+      phoneRef.current?.focus()
+      return
+    }
     setLoading(true)
     setError(false)
     try {
@@ -152,14 +166,15 @@ export default function ContactPage() {
 
                 <div>
                   <label className="block text-white/60 text-xs font-medium mb-1.5">Телефон *</label>
-                  <input
-                    type="tel"
-                    required
+                  <PhoneInput
+                    ref={phoneRef}
+                    locale={phoneLocale}
                     value={form.phone}
-                    onChange={e => update('phone', e.target.value)}
-                    placeholder="+380 XX XXX XX XX"
-                    className="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:ring-1 focus:ring-indigo-500 border border-white/10"
-                    style={{ background: '#1e2540' }}
+                    onChange={v => { update('phone', v); if (phoneSubmitError) setPhoneSubmitError(false) }}
+                    onValidChange={setPhoneValid}
+                    forceError={phoneSubmitError}
+                    required
+                    className="w-full rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:ring-1 focus:ring-indigo-500 border border-white/10 bg-[#1e2540]"
                   />
                 </div>
 
@@ -190,8 +205,8 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 text-white py-3 rounded-xl font-semibold text-sm transition-colors"
+                  disabled={loading || !phoneValid}
+                  className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold text-sm transition-colors"
                 >
                   {loading ? 'Відправляємо...' : 'Відправити заявку'}
                 </button>

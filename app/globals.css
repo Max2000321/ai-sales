@@ -20,3 +20,107 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #e2e8f0 transparent;
 }
+
+/* ── Scroll reveal (AnimateOnScroll) ───────────────────────────── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease-out;
+  transition-delay: var(--animation-delay, 0ms);
+  will-change: opacity, transform;
+}
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── CTA shine effect ──────────────────────────────────────────── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.4s ease;
+  pointer-events: none;
+}
+.btn-shine:hover::after {
+  left: 140%;
+}
+
+/* ── Respect reduced-motion preferences ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .btn-shine::after {
+    transition: none;
+  }
+}
+
+/* ── Revenue calculator range sliders ──────────────────────────── */
+.dentai-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: transparent; /* track painted via inline gradient */
+  cursor: pointer;
+  outline: none;
+}
+.dentai-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #4f46e5;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-top: -8px; /* center on 8px track */
+}
+.dentai-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+}
+.dentai-range:active::-webkit-slider-thumb {
+  transform: scale(1.05);
+}
+.dentai-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 3px solid #4f46e5;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+  transition: transform 0.15s ease;
+}
+.dentai-range::-moz-range-thumb:hover {
+  transform: scale(1.12);
+}
+.dentai-range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 9999px;
+}
+.dentai-range::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+}
+.dentai-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.25);
+}

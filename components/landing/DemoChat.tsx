@@ -2,54 +2,19 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Send, Loader2 } from 'lucide-react'
+import type { DemoChatDict } from '@/lib/i18n/types'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
 }
 
-const CONTENT = {
-  uk: {
-    initial: "Добрий день! Я AI-адміністратор клініки Ivory Dental. Можу записати вас на прийом, розповісти про послуги та ціни. Чим можу допомогти?",
-    quickActions: [
-      { label: "Записатись", message: "Хочу записатись на прийом" },
-      { label: "Дізнатись ціни", message: "Які у вас ціни на послуги?" },
-      { label: "Перенести прийом", message: "Хочу перенести мій запис на інший час" },
-    ],
-    placeholder: "Напишіть запитання...",
-    online: "відповідає миттєво",
-    error: "Вибачте, сталася помилка. Спробуйте ще раз.",
-  },
-  en: {
-    initial: "Hello! I'm the AI administrator for Ivory Dental Clinic. I can book your appointment and answer any questions about our services and prices. How can I help?",
-    quickActions: [
-      { label: "Book appointment", message: "I'd like to book an appointment" },
-      { label: "See prices", message: "What are your prices for services?" },
-      { label: "Reschedule", message: "I'd like to reschedule my appointment" },
-    ],
-    placeholder: "Write a message...",
-    online: "replies instantly",
-    error: "Something went wrong. Please try again.",
-  },
-  cz: {
-    initial: "Dobrý den! Jsem AI administrátor ordinace Ivory Dental. Mohu vám zarezervovat schůzku a odpovědět na otázky o našich službách a cenách. Jak vám mohu pomoci?",
-    quickActions: [
-      { label: "Objednat se", message: "Chci si objednat termín" },
-      { label: "Zjistit ceny", message: "Jaké jsou vaše ceny za služby?" },
-      { label: "Přeobjednat", message: "Chci přesunout svůj termín" },
-    ],
-    placeholder: "Napište zprávu...",
-    online: "odpovídá okamžitě",
-    error: "Něco se pokazilo. Zkuste to prosím znovu.",
-  },
-}
-
 interface Props {
-  lang?: 'uk' | 'en' | 'cz'
+  dict: DemoChatDict
 }
 
-export default function DemoChat({ lang = 'uk' }: Props) {
-  const c = CONTENT[lang] ?? CONTENT['uk']
+export default function DemoChat({ dict }: Props) {
+  const c = dict
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: c.initial }
   ])
