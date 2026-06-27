@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Send, Loader2 } from 'lucide-react'
-import type { DemoChatDict } from '@/lib/i18n/types'
+import type { DemoChatDict, Locale } from '@/lib/i18n/types'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -11,9 +11,10 @@ interface Message {
 
 interface Props {
   dict: DemoChatDict
+  locale: Locale
 }
 
-export default function DemoChat({ dict }: Props) {
+export default function DemoChat({ dict, locale }: Props) {
   const c = dict
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: c.initial }
@@ -46,6 +47,7 @@ export default function DemoChat({ dict }: Props) {
         body: JSON.stringify({
           message: text,
           history: messages.map(m => ({ role: m.role, content: m.content })),
+          locale,
         }),
       })
       if (!res.ok) throw new Error('API error')

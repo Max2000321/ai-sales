@@ -1,14 +1,15 @@
 import { Zap, Check } from 'lucide-react'
 import AnimateOnScroll from './AnimateOnScroll'
 import DemoChat from './DemoChat'
-import type { DemoDict, DemoChatDict } from '@/lib/i18n/types'
+import type { DemoDict, DemoChatDict, Locale } from '@/lib/i18n/types'
 
 interface Props {
   dict: DemoDict
   chatDict: DemoChatDict
+  locale: Locale
 }
 
-export default function Demo({ dict, chatDict }: Props) {
+export default function Demo({ dict, chatDict, locale }: Props) {
   return (
     <section id="demo" className="py-12 md:py-24" style={{ background: '#0a0e1a' }}>
       <div className="max-w-6xl mx-auto px-6">
@@ -34,7 +35,7 @@ export default function Demo({ dict, chatDict }: Props) {
             </div>
           </AnimateOnScroll>
           <AnimateOnScroll delay={150}>
-            <DemoChat dict={chatDict} />
+            <DemoChat dict={chatDict} locale={locale} />
           </AnimateOnScroll>
         </div>
       </div>

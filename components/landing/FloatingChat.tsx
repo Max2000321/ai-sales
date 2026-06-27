@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { MessageCircle, X, Send, Loader2, Sparkles } from 'lucide-react'
-import type { DemoChatDict } from '@/lib/i18n/types'
+import type { DemoChatDict, Locale } from '@/lib/i18n/types'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -11,9 +11,10 @@ interface Message {
 
 interface Props {
   dict: DemoChatDict
+  locale: Locale
 }
 
-export default function FloatingChat({ dict }: Props) {
+export default function FloatingChat({ dict, locale }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   // Seed with the AI greeting (shown without an API call); counts as 1 unread.
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: dict.initial }])
@@ -69,7 +70,7 @@ export default function FloatingChat({ dict }: Props) {
       const res = await fetch('/api/demo-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: trimmed, history: history.slice(-8) }),
+        body: JSON.stringify({ message: trimmed, history: history.slice(-8), locale }),
       })
       if (!res.ok) throw new Error('API error')
       const data = await res.json()

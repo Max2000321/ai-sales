@@ -37,7 +37,7 @@ export default function Landing({ dict }: Props) {
       <DashboardPreview dict={dict.dashboard} />
       <Channels dict={dict.channels} />
       <Integrations dict={dict.integrations} />
-      <Demo dict={dict.demo} chatDict={dict.demoChat} />
+      <Demo dict={dict.demo} chatDict={dict.demoChat} locale={dict.locale} />
       <Scenarios dict={dict.scenarios} />
       <Results dict={dict.results} />
       <Testimonials dict={dict.testimonials} />
@@ -46,7 +46,7 @@ export default function Landing({ dict }: Props) {
       <Faq dict={dict.faq} />
       <FinalCta dict={dict.finalCta} />
       <Footer dict={dict.footer} />
-      <FloatingChat dict={dict.demoChat} />
+      <FloatingChat dict={dict.demoChat} locale={dict.locale} />
     </div>
   )
 }
