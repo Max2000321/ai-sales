@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase'
 import { Bot, Save, Loader2, Trash2 } from 'lucide-react'
 import { useLang } from '@/components/dashboard/LangProvider'
 import TelegramConnect from '@/components/dashboard/TelegramConnect'
+import InstagramConnect from '@/components/dashboard/InstagramConnect'
 
 const T = {
   uk: {
@@ -170,8 +171,9 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            {/* Telegram channel — only for an existing (saved) agent */}
+            {/* Channels — only for an existing (saved) agent */}
             {editing && <TelegramConnect agentId={editing.id} lang={lang} />}
+            {editing && <InstagramConnect agentId={editing.id} lang={lang} />}
           </div>
         )}
       </div>
