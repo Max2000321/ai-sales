@@ -45,7 +45,9 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify({
       url: webhookUrl,
       secret_token: webhookSecret(botToken),
-      allowed_updates: ['message'],
+      // 'message' = standalone bot DMs; 'business_*' = bot connected to a
+      // manager's personal account via Telegram Business.
+      allowed_updates: ['message', 'business_connection', 'business_message'],
       drop_pending_updates: true,
     }),
   }).then(r => r.json()).catch(() => null)

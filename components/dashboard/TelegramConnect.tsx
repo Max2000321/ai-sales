@@ -17,6 +17,7 @@ const T: Record<Lang, Record<string, string>> = {
     disconnect: 'Відключити',
     connected: 'Підключено',
     open: 'Відкрити бота',
+    businessHint: 'Щоб AI відповідав у вашому особистому Telegram: Налаштування → Telegram для бізнесу → Чат-боти → оберіть цього бота (потрібен Telegram Premium).',
     errInvalid: 'Невірний токен бота',
     errGeneric: 'Не вдалося підключити. Спробуйте ще раз.',
   },
@@ -30,6 +31,7 @@ const T: Record<Lang, Record<string, string>> = {
     disconnect: 'Disconnect',
     connected: 'Connected',
     open: 'Open bot',
+    businessHint: 'To have the AI reply in your personal Telegram: Settings → Telegram Business → Chatbots → select this bot (Telegram Premium required).',
     errInvalid: 'Invalid bot token',
     errGeneric: 'Could not connect. Try again.',
   },
@@ -43,6 +45,7 @@ const T: Record<Lang, Record<string, string>> = {
     disconnect: 'Odpojit',
     connected: 'Připojeno',
     open: 'Otevřít bota',
+    businessHint: 'Aby AI odpovídala ve vašem osobním Telegramu: Nastavení → Telegram pro firmy → Chatboti → vyberte tohoto bota (vyžaduje Telegram Premium).',
     errInvalid: 'Neplatný token bota',
     errGeneric: 'Nepodařilo se připojit. Zkuste to znovu.',
   },
@@ -134,18 +137,21 @@ export default function TelegramConnect({ agentId, lang }: { agentId: string; la
       <p className="text-slate-500 text-sm mb-4">{t.sub}</p>
 
       {enabled ? (
-        <div className="flex items-center gap-3">
-          {botUsername && (
-            <a href={`https://t.me/${botUsername}`} target="_blank" rel="noreferrer"
-              className="text-sm text-sky-600 font-medium hover:underline">
-              @{botUsername} · {t.open}
-            </a>
-          )}
-          <button onClick={disconnect} disabled={loading}
-            className="ml-auto flex items-center gap-2 text-red-500 hover:text-red-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50">
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Link2Off className="w-4 h-4" />}
-            {t.disconnect}
-          </button>
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            {botUsername && (
+              <a href={`https://t.me/${botUsername}`} target="_blank" rel="noreferrer"
+                className="text-sm text-sky-600 font-medium hover:underline">
+                @{botUsername} · {t.open}
+              </a>
+            )}
+            <button onClick={disconnect} disabled={loading}
+              className="ml-auto flex items-center gap-2 text-red-500 hover:text-red-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Link2Off className="w-4 h-4" />}
+              {t.disconnect}
+            </button>
+          </div>
+          <p className="text-xs text-slate-400 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2">{t.businessHint}</p>
         </div>
       ) : (
         <>
