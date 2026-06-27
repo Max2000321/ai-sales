@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 import { Bot, Save, Loader2, Trash2 } from 'lucide-react'
 import { useLang } from '@/components/dashboard/LangProvider'
+import TelegramConnect from '@/components/dashboard/TelegramConnect'
 
 const T = {
   uk: {
@@ -168,6 +169,9 @@ export default function SettingsPage() {
                 </div>
               </div>
             </div>
+
+            {/* Telegram channel — only for an existing (saved) agent */}
+            {editing && <TelegramConnect agentId={editing.id} lang={lang} />}
           </div>
         )}
       </div>
