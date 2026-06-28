@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase-admin'
-import { generateSalesResponse } from '@/lib/anthropic'
+import { generateAgentReply, type ChatTurn } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
+import { sendChatLead } from '@/lib/leads'
 import { GRAPH, verifyMetaSignature } from '@/lib/meta'
 
 // ── GET: Meta webhook verification handshake ──
@@ -76,14 +77,49 @@ export async function POST(req: NextRequest) {
         .from('knowledge_chunks')
         .select('content')
         .eq('agent_id', channel.agent_id)
-
       const relevant = findRelevantChunks(text, (allChunks || []).map((c: { content: string }) => c.content))
+
+      // Resolve conversation + load history (memory across the dialog).
+      const visitorId = `ig:${senderId}`
+      let { data: conv } = await admin
+        .from('conversations')
+        .select('id')
+        .eq('agent_id', channel.agent_id)
+        .eq('visitor_id', visitorId)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+      if (!conv) {
+        const ins = await admin.from('conversations')
+          .insert({ agent_id: channel.agent_id, visitor_id: visitorId }).select('id').single()
+        conv = ins.data
+      }
+      let history: ChatTurn[] = []
+      if (conv) {
+        const { data: prior } = await admin
+          .from('messages').select('role, content').eq('conversation_id', conv.id).order('created_at', { ascending: true })
+        history = (prior || []) as ChatTurn[]
+      }
 
       let reply: string
       try {
-        reply = await generateSalesResponse(text, relevant, agent.name, agent.system_prompt)
+        reply = await generateAgentReply({
+          message: text,
+          history,
+          knowledgeChunks: relevant,
+          agentName: agent.name,
+          systemPrompt: agent.system_prompt,
+          onLead: lead => sendChatLead({
+            name: lead.patient_name,
+            phone: lead.patient_phone,
+            channel: 'Instagram',
+            summary: lead.summary,
+            sos: lead.sos,
+            agentName: agent.name,
+          }),
+        })
       } catch (e) {
-        console.error('instagram generateSalesResponse failed:', e)
+        console.error('instagram generateAgentReply failed:', e)
         continue
       }
 
@@ -91,20 +127,6 @@ export async function POST(req: NextRequest) {
 
       // Log (best-effort).
       try {
-        const visitorId = `ig:${senderId}`
-        let { data: conv } = await admin
-          .from('conversations')
-          .select('id')
-          .eq('agent_id', channel.agent_id)
-          .eq('visitor_id', visitorId)
-          .order('updated_at', { ascending: false })
-          .limit(1)
-          .maybeSingle()
-        if (!conv) {
-          const ins = await admin.from('conversations')
-            .insert({ agent_id: channel.agent_id, visitor_id: visitorId }).select('id').single()
-          conv = ins.data
-        }
         if (conv) {
           await admin.from('messages').insert([
             { conversation_id: conv.id, role: 'user', content: text },

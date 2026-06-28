@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
-import { generateSalesResponse } from '@/lib/anthropic'
+import { createAdminClient } from '@/lib/supabase-admin'
+import { generateAgentReply } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
+import { sendChatLead } from '@/lib/leads'
 
 export async function POST(req: NextRequest) {
   const { agentId, message, conversationId, visitorId } = await req.json()
@@ -10,7 +11,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
   }
 
-  const supabase = await createServerSupabaseClient()
+  // Service role: the public chat widget has no auth session, and conversations
+  // have no public SELECT policy — admin lets us persist + read back history.
+  const supabase = createAdminClient()
 
   const { data: agent } = await supabase
     .from('agents')
@@ -30,6 +33,8 @@ export async function POST(req: NextRequest) {
     (allChunks || []).map(c => c.content)
   )
 
+  // Resolve the conversation, then load prior turns as history (before logging
+  // the current message) so the agent has memory across the dialog.
   let convId = conversationId
   if (!convId) {
     const vid = visitorId || crypto.randomUUID()
@@ -41,11 +46,32 @@ export async function POST(req: NextRequest) {
     convId = conv?.id
   }
 
+  let history: { role: 'user' | 'assistant'; content: string }[] = []
   if (convId) {
+    const { data: prior } = await supabase
+      .from('messages')
+      .select('role, content')
+      .eq('conversation_id', convId)
+      .order('created_at', { ascending: true })
+    history = (prior || []) as { role: 'user' | 'assistant'; content: string }[]
     await supabase.from('messages').insert({ conversation_id: convId, role: 'user', content: message })
   }
 
-  const reply = await generateSalesResponse(message, relevantChunks, agent.name, agent.system_prompt)
+  const reply = await generateAgentReply({
+    message,
+    history,
+    knowledgeChunks: relevantChunks,
+    agentName: agent.name,
+    systemPrompt: agent.system_prompt,
+    onLead: lead => sendChatLead({
+      name: lead.patient_name,
+      phone: lead.patient_phone,
+      channel: 'Web',
+      summary: lead.summary,
+      sos: lead.sos,
+      agentName: agent.name,
+    }),
+  })
 
   if (convId) {
     await supabase.from('messages').insert({ conversation_id: convId, role: 'assistant', content: reply })
