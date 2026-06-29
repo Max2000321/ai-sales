@@ -78,7 +78,7 @@ export const en: LandingDict = {
     checkLabel: 'Average patient value',
     checkHint: 'value of a typical visit',
     conversionNote: 'We assume 30% of inquiries would have booked if answered instantly.',
-    resultLabel: 'You lose every month',
+    resultLabel: 'Hidden losses of the clinic:',
     resultSuffix: 'in missed revenue',
     cta: 'Stop losing revenue — book a demo',
     callsMin: 1, callsMax: 50, callsDefault: 5, callsStep: 1,
@@ -204,7 +204,7 @@ export const en: LandingDict = {
     subtitle: 'Real feedback from dental clinic owners',
     items: [
       { name: 'Olena Kovalenko', role: 'Clinic Owner', clinic: 'Perlyna Dental, Kyiv', text: 'In the first month we received 43 additional bookings that previously just disappeared after 7 PM. Our receptionist can finally focus on patients at the front desk instead of answering the same questions across 5 messengers simultaneously.', initials: 'OK' },
-      { name: 'Martin Novák', role: 'Head Dentist', clinic: 'DentalCare Praha, Prague', text: 'Our receptionists were handling 80+ messages a day. Now the AI handles 90% of inquiries automatically. Appointment occupancy increased by 35% in 6 weeks. Best investment of the year.', initials: 'MN' },
+      { name: 'Jan N.', role: 'clinic owner', clinic: 'Prague (translated from Czech)', text: 'Our receptionists handled 80+ messages daily, and some were lost in the evening. After integrating DentAI, we stopped losing night leads for implants. The system paid for itself in the first week.', initials: 'JN' },
       { name: 'Iryna Petrenko', role: 'Network Director', clinic: 'SmilePlus — 3 clinics, Lviv', text: 'We started with one clinic. Within a week we connected all three. Patients are amazed to get a reply at 2 AM. Our Instagram conversion doubled in the first month.', initials: 'IP' },
     ],
   },
@@ -213,6 +213,7 @@ export const en: LandingDict = {
     title: 'Simple pricing',
     subtitle: 'A receptionist costs €1,500–3,000/mo. We cost 10–30× less.',
     footnote: "Not sure which plan fits? Contact us — we'll figure it out together.",
+    limitNote: '*What happens if the dialogue limit is reached before the end of the month? The bot will not turn off. The system will politely warn you, and the cost of each additional dialogue will be just €0.05, or you can upgrade your plan in one click.',
     plans: [
       { name: 'Starter', price: '€79', period: '/mo', desc: 'Single clinic', features: ['1 AI administrator', '2 channels (website + 1 messenger)', '500 conversations/mo', 'Appointment booking', 'Support 9–18'], highlight: false, cta: 'Book a demo', ctaHref: '/register', trialNote: '14 days free — no credit card' },
       { name: 'Clinic', price: '€179', period: '/mo', desc: 'Most popular', features: ['1 AI administrator', 'All 6 channels', '3,000 conversations/mo', 'Book, reschedule & cancel', 'Analytics & reports', '24/7 support'], highlight: true, cta: 'Book a demo', ctaHref: '/register', popularBadge: 'Most popular', trialNote: '14 days free — no credit card' },

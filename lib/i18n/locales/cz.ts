@@ -78,11 +78,11 @@ export const cz: LandingDict = {
     checkLabel: 'Průměrná hodnota pacienta',
     checkHint: 'cena typické návštěvy',
     conversionNote: 'Předpokládáme, že 30 % dotazů by se objednalo, kdyby ordinace odpověděla okamžitě.',
-    resultLabel: 'Každý měsíc ztrácíte',
+    resultLabel: 'Skryté ztráty kliniky:',
     resultSuffix: 'ušlého příjmu',
     cta: 'Zastavit ztráty — rezervovat demo',
     callsMin: 1, callsMax: 50, callsDefault: 5, callsStep: 1,
-    checkMin: 1000, checkMax: 15000, checkDefault: 4000, checkStep: 500,
+    checkMin: 1000, checkMax: 15000, checkDefault: 3000, checkStep: 500,
   },
 
   flow: {
@@ -202,7 +202,7 @@ export const cz: LandingDict = {
     title: 'Co říkají ordinace',
     subtitle: 'Skutečné reference od majitelů stomatologií',
     items: [
-      { name: 'Martin Novák', role: 'Hlavní lékař', clinic: 'DentalCare Praha', text: 'Naše recepční zpracovávaly 80+ zpráv denně. Nyní AI zvládá 90 % dotazů automaticky. Obsazenost ordinace vzrostla o 35 % za 6 týdnů. Nejlepší investice za poslední rok.', initials: 'MN' },
+      { name: 'Jan N.', role: 'majitel kliniky', clinic: 'Praha', text: 'Naši recepční zpracovávaly 80+ zpráv denně a část z nich se večer ztrácela. Po nasazení DentAI jsme přestali ztrácet noční poptávky na implantáty. Systém se zaplatil už v prvním týdnu.', initials: 'JN' },
       { name: 'Petra Horáková', role: 'Majitelka ordinace', clinic: 'Smile Studio Brno', text: 'Ztratit pacienta jen proto, že nepřijmeme zprávu po 18. hodině, je frustrující. DentAI to vyřešil okamžitě. Nyní dostávám ráno hotový seznam objednaných pacientů z večera.', initials: 'PH' },
       { name: 'Tomáš Dvořák', role: 'Ředitel sítě', clinic: 'DentalGroup — 4 ordinace', text: 'Nasadili jsme DentAI do všech čtyř ordinací najednou. Integrace s naším rezervačním systémem trvala jeden den. Konverze z Instagramu se zvýšila dvojnásobně.', initials: 'TD' },
     ],
@@ -212,6 +212,7 @@ export const cz: LandingDict = {
     title: 'Přehledný ceník',
     subtitle: 'Recepční stojí 35 000–60 000 Kč/měsíc. My stojíme 10–30× méně.',
     footnote: 'Nejste si jistí, který plán je pro vás? Kontaktujte nás — vybereme společně.',
+    limitNote: '*Co se stane, když limit dialogů vyprší před koncem měsíce? Bot se nevypne. Systém vás zdvořile upozorní a cena za každý další dialog bude pouhé 1 Kč, nebo můžete jedním kliknutím přejít na vyšší tarif.',
     plans: [
       { name: 'Start', price: '1 990 Kč', period: '/měs', desc: 'Pro jednu ordinaci', features: ['1 AI administrátor', '2 kanály (web + 1 messenger)', '500 dialogů/měs', 'Objednávání na termíny', 'Podpora 9–18'], highlight: false, cta: 'Rezervovat demo', ctaHref: '/register', trialNote: '14 dní zdarma — bez karty' },
       { name: 'Ordinace', price: '4 490 Kč', period: '/měs', desc: 'Nejoblíbenější volba', features: ['1 AI administrátor', 'Všech 6 kanálů', '3 000 dialogů/měs', 'Objednání + přeobjednání + zrušení', 'Analytika a reporty', 'Podpora 24/7'], highlight: true, cta: 'Rezervovat demo', ctaHref: '/register', popularBadge: 'Nejoblíbenější', trialNote: '14 dní zdarma — bez karty' },

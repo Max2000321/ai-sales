@@ -68,6 +68,9 @@ export default function Pricing({ dict }: Props) {
             </AnimateOnScroll>
           ))}
         </div>
+        <AnimateOnScroll delay={150}>
+          <p className="text-xs text-slate-400 italic mt-8 max-w-2xl mx-auto text-center leading-relaxed">{dict.limitNote}</p>
+        </AnimateOnScroll>
         <AnimateOnScroll delay={200}>
           <p className="text-center text-slate-400 text-sm mt-6">{dict.footnote}</p>
         </AnimateOnScroll>

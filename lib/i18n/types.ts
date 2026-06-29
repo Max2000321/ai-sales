@@ -230,6 +230,8 @@ export interface PricingDict {
   title: string
   subtitle: string
   footnote: string
+  /** Disclaimer about per-dialogue overage shown under the plan cards. */
+  limitNote: string
   plans: PricingPlan[]
 }
 
