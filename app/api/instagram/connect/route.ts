@@ -3,11 +3,13 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { createAdminClient } from '@/lib/supabase-admin'
 import { GRAPH, signState } from '@/lib/meta'
 
+// Must match exactly the permissions added to the Meta app's Instagram
+// (Facebook login) use case — pages_manage_metadata is NOT among them and
+// makes the OAuth dialog reject the request with "Invalid Scopes".
 const SCOPES = [
   'instagram_basic',
   'instagram_manage_messages',
   'pages_show_list',
-  'pages_manage_metadata',
   'pages_read_engagement',
   'business_management',
 ].join(',')
