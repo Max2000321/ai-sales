@@ -38,10 +38,43 @@ const CAPTURE_LEAD_TOOL: Anthropic.Tool = {
   strict: true,
 }
 
+const DEFAULT_STOP_MEDS =
+  'Я — виртуальный ассистент и не могу назначать лечение. Чтобы помочь вам безопасно, необходим осмотр врача.'
+
+/** Build the ${...} substitution map from an agent record's config columns. */
+export function promptVarsFromAgent(agent: {
+  clinic_phone?: string | null
+  consultation_duration?: string | null
+  treatment_duration?: string | null
+  cancellation_policy?: string | null
+  stop_meds_text?: string | null
+}): Record<string, string> {
+  return {
+    clinic_phone: agent.clinic_phone || '',
+    consultation_duration: agent.consultation_duration || '',
+    treatment_duration: agent.treatment_duration || '',
+    cancellation_policy: agent.cancellation_policy || '',
+    stop_meds_text: agent.stop_meds_text || DEFAULT_STOP_MEDS,
+  }
+}
+
+/** Substitute ${key} placeholders in a prompt with per-clinic config values. */
+function fillPromptVars(text: string, vars?: Record<string, string>): string {
+  if (!vars) return text
+  return text.replace(/\$\{(\w+)\}/g, (m, key) => {
+    if (key in vars) {
+      const v = (vars[key] ?? '').trim()
+      return v || '(уточните у администратора)'
+    }
+    return m
+  })
+}
+
 /**
  * Generate an agent reply with full conversation history and optional lead
  * capture. When onLead is provided, the model is given the capture_lead tool;
  * its tool call fires onLead and the patient only ever sees plain text.
+ * promptVars fills ${clinic_phone}-style placeholders with per-clinic config.
  */
 export async function generateAgentReply(opts: {
   message: string
@@ -49,14 +82,16 @@ export async function generateAgentReply(opts: {
   knowledgeChunks: string[]
   agentName: string
   systemPrompt: string
+  promptVars?: Record<string, string>
   onLead?: (lead: LeadCapture) => Promise<unknown>
 }): Promise<string> {
-  const { message, history = [], knowledgeChunks, agentName, systemPrompt, onLead } = opts
+  const { message, history = [], knowledgeChunks, agentName, systemPrompt, promptVars, onLead } = opts
 
+  const filledPrompt = fillPromptVars(systemPrompt, promptVars)
   const context = knowledgeChunks.length > 0
     ? `\n\nКонтекст из базы знаний компании:\n${knowledgeChunks.join('\n\n---\n\n')}`
     : ''
-  const system = `${systemPrompt}${context}\n\nKeep answers short and conversational — 2-4 sentences max. No markdown, no tables, no bullet points. Plain text only.`
+  const system = `${filledPrompt}${context}\n\nKeep answers short and conversational — 2-4 sentences max. No markdown, no tables, no bullet points. Plain text only.`
 
   const messages: Anthropic.MessageParam[] = [
     ...history.slice(-10).map(h => ({ role: h.role, content: h.content })),

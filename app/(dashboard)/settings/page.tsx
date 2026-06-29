@@ -16,6 +16,8 @@ const T = {
     descLabel: 'Опис', descPlaceholder: 'Короткий опис агента',
     promptLabel: 'Системний промпт',
     colorLabel: 'Колір віджету',
+    ctxTitle: 'Контекст клініки', ctxHint: 'Підставляється в промпт замість $\{...\}',
+    phoneLabel: 'Телефон клініки', consultLabel: 'Консультація (хв)', treatLabel: 'Лікування (хв)', cancelLabel: 'Скасування за (год)', stopMedsLabel: 'Фраза-відмова про ліки',
     createBtn: 'Створити', saveBtn: 'Зберегти', deleteBtn: 'Видалити', cancelBtn: 'Скасувати',
   },
   en: {
@@ -26,6 +28,8 @@ const T = {
     descLabel: 'Description', descPlaceholder: 'Brief description of the agent',
     promptLabel: 'System prompt',
     colorLabel: 'Widget color',
+    ctxTitle: 'Clinic context', ctxHint: 'Substituted into the prompt in place of $\{...\}',
+    phoneLabel: 'Clinic phone', consultLabel: 'Consultation (min)', treatLabel: 'Treatment (min)', cancelLabel: 'Cancellation notice (h)', stopMedsLabel: 'Meds refusal phrase',
     createBtn: 'Create', saveBtn: 'Save', deleteBtn: 'Delete', cancelBtn: 'Cancel',
   },
   cz: {
@@ -36,29 +40,39 @@ const T = {
     descLabel: 'Popis', descPlaceholder: 'Krátký popis agenta',
     promptLabel: 'Systémový prompt',
     colorLabel: 'Barva widgetu',
+    ctxTitle: 'Kontext ordinace', ctxHint: 'Dosadí se do promptu místo $\{...\}',
+    phoneLabel: 'Telefon ordinace', consultLabel: 'Konzultace (min)', treatLabel: 'Ošetření (min)', cancelLabel: 'Storno do (h)', stopMedsLabel: 'Věta o odmítnutí léků',
     createBtn: 'Vytvořit', saveBtn: 'Uložit', deleteBtn: 'Smazat', cancelBtn: 'Zrušit',
   },
 }
 
-const DEFAULT_PROMPT = `Ты — профессиональный, заботливый и квалифицированный AI-администратор стоматологической клиники. Твоя цель — помогать пациентам: отвечать на вопросы по услугам, ценам и графику и помогать подобрать удобное время для визита.
+const DEFAULT_PROMPT = `Ты — профессиональный, заботливый и квалифицированный AI-администратор стоматологической клиники. Твоя главная цель — помогать пациентам: отвечать на вопросы по прайсу и графику и собирать контактные данные для записи на приём.
 
-ЯЗЫК: всегда отвечай на том языке, на котором пишет пациент (украинский → украинский, русский → русский, чешский → чешский, английский → английский).
+КОНТЕКСТ КЛИНИКИ:
+- Телефон клиники для связи: \${clinic_phone}
+- Длительность первичной консультации: \${consultation_duration} минут.
+- Длительность стандартного лечения (кариес/пломба): \${treatment_duration} минут.
+- Отмена или перенос визита возможны не позднее чем за \${cancellation_policy} часа(ов) до приёма.
 
-1. ОСТРАЯ БОЛЬ (ТРИАЖ): если пациент жалуется на острую боль, сильный отёк, кровотечение или травму зуба — НЕ предлагай обычную запись. Сообщи: «Если это острая боль, мы примем вас без очереди сегодня» и предложи ближайшее свободное время. Отметь обращение как срочное и сообщи пациенту, что передаёшь его администратору для немедленной связи.
+ЯЗЫК: всегда отвечай на том языке, на котором пишет пациент.
 
-2. МЕДИЦИНСКИЕ ОГРАНИЧЕНИЯ: тебе категорически запрещено ставить диагнозы, назначать лекарства (антибиотики, обезболивающие) и комментировать чужое лечение. На вопросы «что выпить?» или «что это может быть?» отвечай строго: «Я — виртуальный ассистент и не могу назначать лечение. Чтобы помочь вам безопасно, необходим осмотр врача. Давайте я подберу удобное время для визита?»
+1. ОСТРАЯ БОЛЬ (ТРИАЖ): при острой боли, сильном отёке, кровотечении или травме зуба НЕ предлагай обычную запись. Сообщи: «Если это острая боль, мы примем вас без очереди сегодня» и предложи ближайшее свободное время. Как только пациент подтвердит готовность прийти или оставит контакты — немедленно вызови инструмент capture_lead со значением sos: true.
 
-3. ЗАПИСЬ НА ПРИЁМ (ВАЖНО): ты НЕ вносишь запись в систему самостоятельно. Ты помогаешь подобрать удобное время и передаёшь данные администратору для подтверждения. Никогда не говори, что приём окончательно записан — говори «передам администратору, он подтвердит вашу запись». Ориентиры длительности, если иное не указано в базе знаний: первичная консультация — 30 минут; лечение кариеса / установка пломбы — 1 час. Соблюдай возрастные ограничения врачей, если они указаны в базе.
+2. МЕДИЦИНСКИЕ ОГРАНИЧЕНИЯ: тебе категорически запрещено ставить диагнозы, назначать лекарства (антибиотики, обезболивающие) и комментировать чужое лечение. На вопросы «что выпить?» или «что это может быть?» отвечай строго: «\${stop_meds_text}» Затем предложи очный осмотр врача и собери контактные данные.
 
-4. ОТМЕНЫ И ПРЕДОПЛАТЫ: предупреждай, что отмена или перенос визита возможны не позднее чем за 24 часа до приёма. Для дорогостоящих процедур (имплантация, брекеты) вежливо сообщай о возможной частичной предоплате, если это указано в базе знаний.
+3. ЗАХВАТ ЛИДОВ (инструмент capture_lead): как только пациент назвал своё имя И номер телефона — ты обязан вызвать инструмент capture_lead. Не выводи параметры вызова инструмента текстом в чат. В поле summary передавай краткую суть обращения (например: «Острая боль, нижний левый зуб» или «Запись на консультацию по брекетам»). Никогда не утверждай, что приём окончательно записан — после сбора данных вежливо сообщи, что информация передана администратору и он свяжется для финального подтверждения.
 
-5. ТОН И СТИЛЬ: общайся вежливо, эмпатично, но лаконично. Не используй сложные медицинские термины, если пациент о них не спросил. Пиши короткими абзацами, удобными для чтения в мессенджерах.
+4. ТОН И СТИЛЬ: общайся вежливо, эмпатично, но лаконично. Не используй сложные медицинские термины, если пациент о них не спросил. Пиши короткими абзацами, удобными для чтения в мессенджерах.
 
-Используй информацию о ценах, врачах и услугах ТОЛЬКО из базы знаний. Если ответа на вопрос в базе нет, отвечай: «Я уточню этот вопрос у администратора, и мы свяжемся с вами в ближайшее время». Не выдумывай цены, имена врачей или услуги.`
+Используй информацию о ценах, графике работы и услугах ТОЛЬКО из базы знаний. Если ответа на вопрос в базе нет, отвечай: «Я уточню этот вопрос у администратора, и мы свяжемся с вами в ближайшее время». Не выдумывай цены, имена врачей или услуги.`
 
 const COLORS = ['#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
-interface Agent { id: string; name: string; description: string; system_prompt: string; widget_color: string }
+interface Agent {
+  id: string; name: string; description: string; system_prompt: string; widget_color: string
+  clinic_phone?: string; consultation_duration?: string; treatment_duration?: string
+  cancellation_policy?: string; stop_meds_text?: string
+}
 
 export default function SettingsPage() {
   const { lang } = useLang()
@@ -83,7 +97,13 @@ export default function SettingsPage() {
     setSaving(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    await supabase.from('agents').insert({ user_id: user!.id, name: newAgent.name, description: newAgent.description, system_prompt: newAgent.system_prompt, widget_color: newAgent.widget_color })
+    await supabase.from('agents').insert({
+      user_id: user!.id, name: newAgent.name, description: newAgent.description,
+      system_prompt: newAgent.system_prompt, widget_color: newAgent.widget_color,
+      clinic_phone: newAgent.clinic_phone, consultation_duration: newAgent.consultation_duration,
+      treatment_duration: newAgent.treatment_duration, cancellation_policy: newAgent.cancellation_policy,
+      stop_meds_text: newAgent.stop_meds_text,
+    })
     await loadAgents()
     setCreating(false)
     setNewAgent({ name: '', description: '', system_prompt: DEFAULT_PROMPT, widget_color: '#6366f1' })
@@ -94,7 +114,12 @@ export default function SettingsPage() {
     if (!editing) return
     setSaving(true)
     const supabase = createClient()
-    await supabase.from('agents').update({ name: editing.name, description: editing.description, system_prompt: editing.system_prompt, widget_color: editing.widget_color }).eq('id', editing.id)
+    await supabase.from('agents').update({
+      name: editing.name, description: editing.description, system_prompt: editing.system_prompt,
+      widget_color: editing.widget_color, clinic_phone: editing.clinic_phone,
+      consultation_duration: editing.consultation_duration, treatment_duration: editing.treatment_duration,
+      cancellation_policy: editing.cancellation_policy, stop_meds_text: editing.stop_meds_text,
+    }).eq('id', editing.id)
     await loadAgents()
     setEditing(null)
     setSaving(false)
@@ -168,6 +193,33 @@ export default function SettingsPage() {
                     ))}
                   </div>
                 </div>
+                <div className="border-t border-slate-100 pt-4">
+                  <p className="text-sm font-semibold text-slate-800">{t.ctxTitle}</p>
+                  <p className="text-xs text-slate-400 mb-3">{t.ctxHint}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 mb-1">{t.phoneLabel}</label>
+                      <input type="text" value={form.clinic_phone || ''} onChange={e => setForm({ clinic_phone: e.target.value })} placeholder="+380…" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 mb-1">{t.cancelLabel}</label>
+                      <input type="text" value={form.cancellation_policy || ''} onChange={e => setForm({ cancellation_policy: e.target.value })} placeholder="24" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 mb-1">{t.consultLabel}</label>
+                      <input type="text" value={form.consultation_duration || ''} onChange={e => setForm({ consultation_duration: e.target.value })} placeholder="30" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 mb-1">{t.treatLabel}</label>
+                      <input type="text" value={form.treatment_duration || ''} onChange={e => setForm({ treatment_duration: e.target.value })} placeholder="60" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <label className="block text-xs font-medium text-slate-600 mb-1">{t.stopMedsLabel}</label>
+                    <textarea value={form.stop_meds_text || ''} onChange={e => setForm({ stop_meds_text: e.target.value })} rows={2} placeholder="Я — виртуальный ассистент и не могу назначать лечение…" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none" />
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3 pt-2">
                   <button onClick={creating ? createAgent : saveAgent} disabled={saving} className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors">
                     {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}

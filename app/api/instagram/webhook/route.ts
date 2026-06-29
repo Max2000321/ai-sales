@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase-admin'
-import { generateAgentReply, type ChatTurn } from '@/lib/anthropic'
+import { generateAgentReply, promptVarsFromAgent, type ChatTurn } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
 import { GRAPH, verifyMetaSignature } from '@/lib/meta'
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 
       const { data: agent } = await admin
         .from('agents')
-        .select('name, system_prompt')
+        .select('*')
         .eq('id', channel.agent_id)
         .single()
       if (!agent) continue
@@ -109,6 +109,7 @@ export async function POST(req: NextRequest) {
           knowledgeChunks: relevant,
           agentName: agent.name,
           systemPrompt: agent.system_prompt,
+          promptVars: promptVarsFromAgent(agent),
           onLead: lead => sendChatLead({
             name: lead.patient_name,
             phone: lead.patient_phone,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase-admin'
-import { generateAgentReply } from '@/lib/anthropic'
+import { generateAgentReply, promptVarsFromAgent } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
 
@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
     knowledgeChunks: relevantChunks,
     agentName: agent.name,
     systemPrompt: agent.system_prompt,
+    promptVars: promptVarsFromAgent(agent),
     onLead: lead => sendChatLead({
       name: lead.patient_name,
       phone: lead.patient_phone,

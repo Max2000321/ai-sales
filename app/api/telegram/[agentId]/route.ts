@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createHash } from 'crypto'
 import { createAdminClient } from '@/lib/supabase-admin'
-import { generateAgentReply, type ChatTurn } from '@/lib/anthropic'
+import { generateAgentReply, promptVarsFromAgent, type ChatTurn } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
 
@@ -46,7 +46,7 @@ async function answer(
 ) {
   const { data: agent } = await admin
     .from('agents')
-    .select('name, system_prompt')
+    .select('*')
     .eq('id', agentId)
     .single()
   if (!agent) return
@@ -88,6 +88,7 @@ async function answer(
       knowledgeChunks: relevant,
       agentName: agent.name,
       systemPrompt: agent.system_prompt,
+      promptVars: promptVarsFromAgent(agent),
       onLead: lead => sendChatLead({
         name: lead.patient_name,
         phone: lead.patient_phone,
