@@ -51,18 +51,25 @@ export async function GET(req: NextRequest) {
     const userToken = longRes.access_token || tokRes.access_token
 
     // 3. find a Page with a connected Instagram business account
+    // Meta exposes the linked IG account under either field depending on how
+    // the page was connected — check both.
+    type IgRef = { id?: string; username?: string }
+    type Pg = { id: string; name?: string; access_token: string; instagram_business_account?: IgRef; connected_instagram_account?: IgRef }
     const pages = await fetch(`${GRAPH}/me/accounts?` + new URLSearchParams({
-      fields: 'id,name,access_token,instagram_business_account{id,username}',
+      fields: 'id,name,access_token,instagram_business_account{id,username},connected_instagram_account{id,username}',
       access_token: userToken,
     })).then(r => r.json())
 
-    const page = (pages.data || []).find((p: { instagram_business_account?: { id?: string } }) => p.instagram_business_account?.id)
+    const page = (pages.data || []).find(
+      (p: Pg) => p.instagram_business_account?.id || p.connected_instagram_account?.id
+    ) as Pg | undefined
     if (!page) return back(origin, 'error', 'no_ig_account')
 
+    const ig = page.instagram_business_account?.id ? page.instagram_business_account : page.connected_instagram_account
     const pageId: string = page.id
     const pageToken: string = page.access_token
-    const igId: string = page.instagram_business_account.id
-    const igUsername: string = page.instagram_business_account.username || ''
+    const igId: string = ig!.id!
+    const igUsername: string = ig!.username || ''
 
     // 4. subscribe the Page to message webhooks
     const sub = await fetch(`${GRAPH}/${pageId}/subscribed_apps?` + new URLSearchParams({
