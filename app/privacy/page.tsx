@@ -9,7 +9,7 @@ type Lang = 'uk' | 'en' | 'cz'
 const CONTENT = {
   uk: {
     title: 'Політика конфіденційності',
-    updated: 'Остання редакція: 1 червня 2026 року',
+    updated: 'Остання редакція: 29 червня 2026 року',
     backHome: 'На головну',
     sections: [
       {
@@ -53,6 +53,12 @@ Supabase (supabase.com) — зберігання бази даних, автор
 Anthropic (anthropic.com) — AI-модель Claude для генерації відповідей. Повідомлення обробляються через API. Anthropic не зберігає дані діалогів для навчання моделей без явної згоди.
 
 Vercel (vercel.com) — хостинг та деплой застосунку. Відповідність GDPR підтверджена.
+
+Resend (resend.com) — доставка транзакційних email-сповіщень про нові заявки на вашу адресу.
+
+Telegram (telegram.org) — доставка повідомлень, якщо ви підключаєте Telegram-бота. Повідомлення пацієнтів передаються через Telegram Bot API для формування відповіді.
+
+Meta Platforms / Instagram (meta.com) — доставка повідомлень, якщо ви підключаєте Instagram Direct. Зміст повідомлень з директу обробляється для генерації відповіді AI відповідно до політик Meta.
 
 Всі обробники підписали Угоди про обробку даних (DPA) відповідно до вимог GDPR.`,
       },
@@ -114,7 +120,7 @@ Email: privacy@dentai.app
 
   en: {
     title: 'Privacy Policy',
-    updated: 'Last updated: June 1, 2026',
+    updated: 'Last updated: June 29, 2026',
     backHome: 'Back to home',
     sections: [
       {
@@ -158,6 +164,12 @@ Supabase (supabase.com) — database storage and authentication. Servers located
 Anthropic (anthropic.com) — Claude AI model for generating responses. Messages are processed via API. Anthropic does not retain conversation data for model training without explicit consent.
 
 Vercel (vercel.com) — application hosting and deployment. GDPR-compliant.
+
+Resend (resend.com) — delivery of transactional email notifications about new leads to your address.
+
+Telegram (telegram.org) — message delivery when you connect a Telegram bot. Patient messages are processed via the Telegram Bot API to generate a reply.
+
+Meta Platforms / Instagram (meta.com) — message delivery when you connect Instagram Direct. Direct message content is processed to generate AI replies in accordance with Meta's platform policies.
 
 All processors have signed Data Processing Agreements (DPA) as required by GDPR.`,
       },
@@ -219,7 +231,7 @@ If you believe your rights have been violated, you have the right to lodge a com
 
   cz: {
     title: 'Zásady ochrany osobních údajů',
-    updated: 'Poslední aktualizace: 1. června 2026',
+    updated: 'Poslední aktualizace: 29. června 2026',
     backHome: 'Zpět na hlavní stránku',
     sections: [
       {
@@ -263,6 +275,12 @@ Supabase (supabase.com) — databázové úložiště a autentizace. Servery v E
 Anthropic (anthropic.com) — AI model Claude pro generování odpovědí. Zprávy jsou zpracovávány přes API. Anthropic neuchovává data konverzací pro trénování modelů bez výslovného souhlasu.
 
 Vercel (vercel.com) — hosting a nasazení aplikace. Soulad s GDPR potvrzen.
+
+Resend (resend.com) — doručování transakčních e-mailových oznámení o nových poptávkách na vaši adresu.
+
+Telegram (telegram.org) — doručování zpráv, pokud připojíte Telegram bota. Zprávy pacientů jsou zpracovávány přes Telegram Bot API pro vytvoření odpovědi.
+
+Meta Platforms / Instagram (meta.com) — doručování zpráv, pokud připojíte Instagram Direct. Obsah zpráv z direktu je zpracováván pro generování odpovědí AI v souladu se zásadami platformy Meta.
 
 Všichni zpracovatelé podepsali Smlouvy o zpracování údajů (DPA) dle požadavků GDPR.`,
       },
