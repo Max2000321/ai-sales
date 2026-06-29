@@ -71,12 +71,19 @@ export async function GET(req: NextRequest) {
     const igId: string = ig!.id!
     const igUsername: string = ig!.username || ''
 
-    // 4. subscribe the Page to message webhooks
-    const sub = await fetch(`${GRAPH}/${pageId}/subscribed_apps?` + new URLSearchParams({
-      subscribed_fields: 'messages',
-      access_token: pageToken,
-    }), { method: 'POST' }).then(r => r.json())
-    if (!sub.success) return back(origin, 'error', 'subscribe_failed')
+    // 4. Best-effort page subscription. Instagram messaging is delivered via the
+    // app-level Instagram webhook subscription, so this isn't strictly required
+    // and needs pages_manage_metadata (which the IG messaging use case doesn't
+    // grant). Don't fail the connection if it doesn't go through — just log.
+    try {
+      const sub = await fetch(`${GRAPH}/${pageId}/subscribed_apps?` + new URLSearchParams({
+        subscribed_fields: 'messages',
+        access_token: pageToken,
+      }), { method: 'POST' }).then(r => r.json())
+      if (!sub.success) console.warn('instagram subscribed_apps not successful:', JSON.stringify(sub))
+    } catch (e) {
+      console.warn('instagram subscribed_apps failed:', e)
+    }
 
     // 5. persist (service role: agent_channels is owner-only)
     const admin = createAdminClient()
