@@ -12,7 +12,6 @@ import Demo from './Demo'
 import Scenarios from './Scenarios'
 import Results from './Results'
 import Testimonials from './Testimonials'
-import LtvCalculator from './ltv-calculator'
 import Pricing from './Pricing'
 import Trust from './Trust'
 import Faq from './Faq'
@@ -42,11 +41,6 @@ export default function Landing({ dict }: Props) {
       <Scenarios dict={dict.scenarios} />
       <Results dict={dict.results} />
       <Testimonials dict={dict.testimonials} />
-      <section className="py-12 md:py-24 bg-slate-950">
-        <div className="max-w-4xl mx-auto px-6">
-          <LtvCalculator />
-        </div>
-      </section>
       <Pricing dict={dict.pricing} />
       <Trust items={dict.trust} />
       <Faq dict={dict.faq} />

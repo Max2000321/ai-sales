@@ -93,9 +93,14 @@ export interface CalculatorDict {
   callsHint: string
   checkLabel: string
   checkHint: string
+  windowLabel: string
+  windowHint: string
   conversionNote: string
-  resultLabel: string
-  resultSuffix: string
+  monthlyLabel: string
+  monthlySuffix: string
+  /** Indexed by (retentionYears - 1) — window is fixed to a 1-3 year slider. */
+  ltvLabelByYears: [string, string, string]
+  ltvSuffix: string
   cta: string
   /** Slider bounds & defaults are locale-specific (different currency scales). */
   callsMin: number
