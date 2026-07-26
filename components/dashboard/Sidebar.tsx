@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Bot, LayoutDashboard, BookOpen, MessageSquare, Settings, Code2, LogOut, BarChart2 } from 'lucide-react'
+import { Bot, LayoutDashboard, BookOpen, MessageSquare, Settings, Code2, LogOut, BarChart2, Sparkles } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { useLang } from './LangProvider'
 
@@ -14,6 +14,7 @@ const NAV = {
     { href: '/conversations', icon: MessageSquare, label: 'Розмови' },
     { href: '/embed', icon: Code2, label: 'Вбудувати' },
     { href: '/settings', icon: Settings, label: 'Налаштування' },
+    { href: '/settings/ai-persona', icon: Sparkles, label: 'AI-персона' },
   ],
   en: [
     { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -22,6 +23,7 @@ const NAV = {
     { href: '/conversations', icon: MessageSquare, label: 'Conversations' },
     { href: '/embed', icon: Code2, label: 'Embed' },
     { href: '/settings', icon: Settings, label: 'Settings' },
+    { href: '/settings/ai-persona', icon: Sparkles, label: 'AI persona' },
   ],
   cz: [
     { href: '/dashboard', icon: LayoutDashboard, label: 'Přehled' },
@@ -30,6 +32,7 @@ const NAV = {
     { href: '/conversations', icon: MessageSquare, label: 'Konverzace' },
     { href: '/embed', icon: Code2, label: 'Vložit' },
     { href: '/settings', icon: Settings, label: 'Nastavení' },
+    { href: '/settings/ai-persona', icon: Sparkles, label: 'AI persona' },
   ],
 }
 

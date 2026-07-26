@@ -1,4 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { buildPersonaAddendum, type AiScenario, type AiTone } from '@/lib/ai/persona'
+
+export type { AiScenario, AiTone }
 
 export const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY!,
@@ -82,15 +85,17 @@ export async function generateAgentReply(opts: {
   knowledgeChunks: string[]
   systemPrompt: string
   promptVars?: Record<string, string>
+  persona?: { tone?: AiTone | null; scenarios?: AiScenario[] | null }
   onLead?: (lead: LeadCapture) => Promise<unknown>
 }): Promise<string> {
-  const { message, history = [], knowledgeChunks, systemPrompt, promptVars, onLead } = opts
+  const { message, history = [], knowledgeChunks, systemPrompt, promptVars, persona, onLead } = opts
 
   const filledPrompt = fillPromptVars(systemPrompt, promptVars)
   const context = knowledgeChunks.length > 0
     ? `\n\nКонтекст из базы знаний компании:\n${knowledgeChunks.join('\n\n---\n\n')}`
     : ''
-  const system = `${filledPrompt}${context}\n\nKeep answers short and conversational — 2-4 sentences max. No markdown, no tables, no bullet points. Plain text only.`
+  const personaAddendum = buildPersonaAddendum(persona?.tone, persona?.scenarios)
+  const system = `${filledPrompt}${context}${personaAddendum}\n\nKeep answers short and conversational — 2-4 sentences max. No markdown, no tables, no bullet points. Plain text only.`
 
   const messages: Anthropic.MessageParam[] = [
     ...history.slice(-10).map(h => ({ role: h.role, content: h.content })),

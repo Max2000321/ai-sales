@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/recovery/send",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}
