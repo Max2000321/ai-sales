@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendTransactionalEmail } from '@/lib/notify'
+import { checkRateLimit, clientIp } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
+  const allowed = await checkRateLimit(`contact:${clientIp(req)}`, 60, 5)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   const { name, clinic, phone, email, message } = await req.json()
 
   if (!name || !email || !phone) {

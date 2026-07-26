@@ -4,6 +4,7 @@ import { generateAgentReply, promptVarsFromAgent, type ChatTurn } from '@/lib/an
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
 import { GRAPH, verifyMetaSignature } from '@/lib/meta'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 // ── GET: Meta webhook verification handshake ──
 export async function GET(req: NextRequest) {
@@ -57,6 +58,10 @@ export async function POST(req: NextRequest) {
       const igAccountId = event.recipient?.id // our clinic's IG business account
       // Skip echoes (the clinic's own outgoing messages) and non-text events.
       if (!text || !senderId || !igAccountId || event.message?.is_echo) continue
+
+      // Defense in depth against one sender flooding the AI pipeline —
+      // signature verification already blocks spoofed requests.
+      if (!(await checkRateLimit(`ig:${senderId}`, 60, 10))) continue
 
       const { data: channel } = await admin
         .from('agent_channels')

@@ -3,12 +3,20 @@ import { createAdminClient } from '@/lib/supabase-admin'
 import { generateAgentReply, promptVarsFromAgent } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
+import { checkRateLimit, clientIp } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
   const { agentId, message, conversationId, visitorId } = await req.json()
 
   if (!agentId || !message) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+  }
+
+  // Public, unauthenticated endpoint — cap per-IP volume to protect against
+  // abuse driving up Anthropic spend.
+  const allowed = await checkRateLimit(`chat:${clientIp(req)}`, 60, 20)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
   }
 
   // Service role: the public chat widget has no auth session, and conversations

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendTransactionalEmail } from '@/lib/notify'
+import { checkRateLimit, clientIp } from '@/lib/rate-limit'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -16,6 +17,11 @@ interface LeadBody {
 }
 
 export async function POST(req: NextRequest) {
+  const allowed = await checkRateLimit(`leads:${clientIp(req)}`, 60, 5)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   let body: LeadBody
   try {
     body = (await req.json()) as LeadBody

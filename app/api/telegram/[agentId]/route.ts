@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase-admin'
 import { generateAgentReply, promptVarsFromAgent, type ChatTurn } from '@/lib/anthropic'
 import { findRelevantChunks } from '@/lib/knowledge'
 import { sendChatLead } from '@/lib/leads'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 function webhookSecret(botToken: string): string {
   return createHash('sha256').update(botToken).digest('hex')
@@ -42,6 +43,10 @@ async function answer(
   text: string,
   businessConnectionId?: string,
 ) {
+  // Defense in depth against one chat flooding the AI pipeline — the
+  // per-bot secret token already blocks spoofed requests.
+  if (!(await checkRateLimit(`tg:${chatId}`, 60, 10))) return
+
   const { data: agent } = await admin
     .from('agents')
     .select('*')
