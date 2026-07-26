@@ -4,6 +4,7 @@ import Sidebar from '@/components/dashboard/Sidebar'
 import MobileNav from '@/components/dashboard/MobileNav'
 import MobileHeader from '@/components/dashboard/MobileHeader'
 import RecoveryAlertBanner from '@/components/dashboard/RecoveryAlertBanner'
+import NotificationFailureBanner from '@/components/dashboard/NotificationFailureBanner'
 import { LangProvider } from '@/components/dashboard/LangProvider'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -19,6 +20,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <main className="flex-1 overflow-auto pb-16 md:pb-0">
           <MobileHeader />
           <RecoveryAlertBanner />
+          <NotificationFailureBanner />
           {children}
         </main>
       </div>

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { sendTransactionalEmail } from '@/lib/notify'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -51,14 +52,7 @@ export async function POST(req: NextRequest) {
   }
   console.info('[lead]', JSON.stringify(payload))
 
-  const apiKey = process.env.RESEND_API_KEY
   const toEmail = process.env.CONTACT_EMAIL || 'hello@dentai.app'
-
-  // No mail provider configured (e.g. local dev) — lead is captured & logged, not delivered.
-  if (!apiKey) {
-    console.warn('RESEND_API_KEY not set — lead not emailed', { tag, email: cleanEmail })
-    return NextResponse.json({ success: true, delivered: false }, { status: 201 })
-  }
 
   const lossLine = monthlyLoss != null
     ? `${monthlyLoss}${currency ? ' ' + currency : ''}`
@@ -78,24 +72,18 @@ export async function POST(req: NextRequest) {
     <p style="margin-top:24px;color:#888;font-size:12px">Відправлено з dentai.app — lead pipeline</p>
   `
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'DentAI <onboarding@resend.dev>',
-      to: [toEmail],
-      reply_to: cleanEmail,
-      subject: `DentAI lead [${tag}]: ${cleanName} — ${practice || 'без назви'}`,
-      html,
-    }),
+  const delivered = await sendTransactionalEmail({
+    to: [toEmail],
+    replyTo: cleanEmail,
+    subject: `DentAI lead [${tag}]: ${cleanName} — ${practice || 'без назви'}`,
+    html,
+    kind: 'lead_form',
+    payload,
   })
 
-  if (!res.ok) {
-    const err = await res.text()
-    console.error('Resend error (leads):', err)
+  if (!delivered) {
+    // The lead is already durably logged (console + notification_failures)
+    // by sendTransactionalEmail — still tell the client delivery failed.
     return NextResponse.json({ success: false, delivered: false, error: 'Email send failed' }, { status: 500 })
   }
 

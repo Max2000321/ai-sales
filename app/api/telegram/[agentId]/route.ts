@@ -94,6 +94,7 @@ async function answer(
         summary: lead.summary,
         sos: lead.sos,
         agentName: agent.name,
+        agentId: agent.id,
       }),
     })
   } catch (e) {

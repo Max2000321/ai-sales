@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { sendTransactionalEmail } from '@/lib/notify'
 
 export async function POST(req: NextRequest) {
   const { name, clinic, phone, email, message } = await req.json()
@@ -7,14 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  const apiKey = process.env.RESEND_API_KEY
   const toEmail = process.env.CONTACT_EMAIL || 'hello@dentai.app'
-
-  if (!apiKey) {
-    // No API key configured — still return success (silent fail in dev)
-    console.warn('RESEND_API_KEY not set')
-    return NextResponse.json({ ok: true })
-  }
 
   const html = `
     <h2>Нова заявка з сайту DentAI — тариф «Мережа»</h2>
@@ -28,24 +22,16 @@ export async function POST(req: NextRequest) {
     <p style="margin-top:24px;color:#888;font-size:12px">Відправлено з dentai.app/contact</p>
   `
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'DentAI <onboarding@resend.dev>',
-      to: [toEmail],
-      reply_to: email,
-      subject: `Нова заявка: ${name} — ${clinic || 'без назви'}`,
-      html,
-    }),
+  const delivered = await sendTransactionalEmail({
+    to: [toEmail],
+    replyTo: email,
+    subject: `Нова заявка: ${name} — ${clinic || 'без назви'}`,
+    html,
+    kind: 'contact_form',
+    payload: { name, clinic, phone, email, message },
   })
 
-  if (!res.ok) {
-    const err = await res.text()
-    console.error('Resend error:', err)
+  if (!delivered) {
     return NextResponse.json({ error: 'Email send failed' }, { status: 500 })
   }
 
