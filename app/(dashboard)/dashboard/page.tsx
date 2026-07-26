@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import DashboardContent from '@/components/dashboard/DashboardContent'
 
@@ -42,7 +43,7 @@ export default async function DashboardPage() {
       agents={agents ?? []}
       totalConversations={totalConversations ?? 0}
       totalDocs={totalDocs ?? 0}
-      recentConversations={(recentConversations ?? []) as any}
+      recentConversations={(recentConversations ?? []) as unknown as ComponentProps<typeof DashboardContent>['recentConversations']}
     />
   )
 }

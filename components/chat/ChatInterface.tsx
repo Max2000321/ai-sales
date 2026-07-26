@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useId } from 'react'
 import { Bot, Send, Loader2 } from 'lucide-react'
 
 interface Agent {
@@ -23,7 +23,7 @@ export default function ChatInterface({ agent }: { agent: Agent }) {
   const [loading, setLoading] = useState(false)
   const [conversationId, setConversationId] = useState<string | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
-  const visitorId = useRef(Math.random().toString(36).slice(2))
+  const visitorId = useId()
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -46,7 +46,7 @@ export default function ChatInterface({ agent }: { agent: Agent }) {
           agentId: agent.id,
           message: text,
           conversationId,
-          visitorId: visitorId.current,
+          visitorId,
         }),
       })
       const data = await res.json()

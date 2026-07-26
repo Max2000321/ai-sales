@@ -63,11 +63,14 @@ export default function InstagramConnect({ agentId, lang }: { agentId: string; l
     return () => { active = false }
   }, [agentId])
 
-  // Surface the OAuth round-trip result (?ig=ok|error).
+  // Surface the OAuth round-trip result (?ig=ok|error). Must read
+  // window.location in an effect (client-only), so the resulting setState
+  // can't be moved out of it.
   useEffect(() => {
     const p = new URLSearchParams(window.location.search)
     const ig = p.get('ig')
     if (!ig) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (ig === 'ok') setFlash({ kind: 'ok', text: t.okMsg })
     else setFlash({ kind: 'error', text: `${t.errMsg} (${p.get('ig_detail') || ''})` })
     const u = new URL(window.location.href)

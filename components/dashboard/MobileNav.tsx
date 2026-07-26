@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, BookOpen, MessageSquare, Settings, BarChart2, LogOut } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { LayoutDashboard, BookOpen, MessageSquare, Settings, BarChart2 } from 'lucide-react'
 import { useLang } from './LangProvider'
-import { createClient } from '@/lib/supabase'
 
 const NAV = {
   uk: [
@@ -32,16 +31,8 @@ const NAV = {
 
 export default function MobileNav() {
   const pathname = usePathname()
-  const router = useRouter()
   const { lang } = useLang()
   const navItems = NAV[lang]
-
-  async function handleLogout() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push('/login')
-    router.refresh()
-  }
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 flex items-stretch h-16 safe-area-bottom" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>

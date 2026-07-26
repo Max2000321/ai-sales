@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import ConversationsContent from '@/components/dashboard/ConversationsContent'
 
@@ -17,5 +18,5 @@ export default async function ConversationsPage() {
         .limit(50)
     : { data: [] }
 
-  return <ConversationsContent conversations={(conversations ?? []) as any} />
+  return <ConversationsContent conversations={(conversations ?? []) as unknown as ComponentProps<typeof ConversationsContent>['conversations']} />
 }

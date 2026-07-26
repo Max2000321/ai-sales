@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { createClient } from '@/lib/supabase'
 import { Upload, Trash2, BookOpen, FileText, Loader2 } from 'lucide-react'
 import { useLang } from '@/components/dashboard/LangProvider'
@@ -50,24 +50,29 @@ export default function KnowledgePage() {
   const [sourceName, setSourceName] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => { loadAgents() }, [])
-  useEffect(() => { if (selectedAgent) loadChunks() }, [selectedAgent])
-
-  async function loadAgents() {
+  const loadAgents = useCallback(async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     const { data } = await supabase.from('agents').select('id, name').eq('user_id', user!.id)
     setAgents(data || [])
     if (data?.[0]) setSelectedAgent(data[0].id)
-  }
+  }, [])
 
-  async function loadChunks() {
+  const loadChunks = useCallback(async () => {
     setLoading(true)
     const supabase = createClient()
     const { data } = await supabase.from('knowledge_chunks').select('*').eq('agent_id', selectedAgent).order('created_at', { ascending: false })
     setChunks(data || [])
     setLoading(false)
-  }
+  }, [selectedAgent])
+
+  // Data fetching from Supabase on mount / when the selected agent changes —
+  // the setState calls happen inside the async fetch, not synchronously in
+  // the effect body, so this is the standard "fetch on dependency change" effect.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { loadAgents() }, [loadAgents])
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { if (selectedAgent) loadChunks() }, [selectedAgent, loadChunks])
 
   async function uploadText() {
     if (!faqText.trim() || !sourceName.trim() || !selectedAgent) return

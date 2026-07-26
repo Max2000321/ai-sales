@@ -80,12 +80,11 @@ export async function generateAgentReply(opts: {
   message: string
   history?: ChatTurn[]
   knowledgeChunks: string[]
-  agentName: string
   systemPrompt: string
   promptVars?: Record<string, string>
   onLead?: (lead: LeadCapture) => Promise<unknown>
 }): Promise<string> {
-  const { message, history = [], knowledgeChunks, agentName, systemPrompt, promptVars, onLead } = opts
+  const { message, history = [], knowledgeChunks, systemPrompt, promptVars, onLead } = opts
 
   const filledPrompt = fillPromptVars(systemPrompt, promptVars)
   const context = knowledgeChunks.length > 0
@@ -144,5 +143,5 @@ export async function generateSalesResponse(
   agentName: string,
   systemPrompt: string
 ): Promise<string> {
-  return generateAgentReply({ message: userMessage, knowledgeChunks, agentName, systemPrompt })
+  return generateAgentReply({ message: userMessage, knowledgeChunks, systemPrompt })
 }

@@ -61,7 +61,6 @@ export async function POST(req: NextRequest) {
     message,
     history,
     knowledgeChunks: relevantChunks,
-    agentName: agent.name,
     systemPrompt: agent.system_prompt,
     promptVars: promptVarsFromAgent(agent),
     onLead: lead => sendChatLead({

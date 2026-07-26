@@ -113,7 +113,7 @@ export default function DashboardContent({ email, agents, totalConversations, to
               <Icon className={`w-3.5 h-3.5 ${iconColor}`} />
             </div>
             <p className="text-2xl md:text-3xl font-bold text-slate-900">{value}</p>
-            <p className="text-xs text-slate-400 mt-0.5 truncate">{label}</p>
+            <p className="text-xs text-slate-400 mt-0.5 truncate">{label} · {sub}</p>
           </div>
         ))}
       </div>

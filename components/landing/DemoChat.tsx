@@ -21,7 +21,6 @@ export default function DemoChat({ dict, locale }: Props) {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [hasError, setHasError] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -33,7 +32,6 @@ export default function DemoChat({ dict, locale }: Props) {
 
   async function send(text: string) {
     if (!text.trim() || loading) return
-    setHasError(false)
     const userMsg: Message = { role: 'user', content: text }
     const next = [...messages, userMsg]
     setMessages(next)
@@ -55,7 +53,6 @@ export default function DemoChat({ dict, locale }: Props) {
       if (!data.reply) throw new Error('Empty reply')
       setMessages(m => [...m, { role: 'assistant', content: data.reply }])
     } catch {
-      setHasError(true)
       setMessages(m => [...m, { role: 'assistant', content: c.error }])
     } finally {
       setLoading(false)

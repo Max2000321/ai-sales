@@ -33,11 +33,9 @@ async function sendTyping(botToken: string, chatId: number, businessConnectionId
   }).catch(() => null)
 }
 
-interface AdminClient { from: (t: string) => any }
-
 /** Generate the agent reply (with history + lead capture) and send it back. */
 async function answer(
-  admin: AdminClient,
+  admin: ReturnType<typeof createAdminClient>,
   agentId: string,
   botToken: string,
   chatId: number,
@@ -86,7 +84,6 @@ async function answer(
       message: text,
       history,
       knowledgeChunks: relevant,
-      agentName: agent.name,
       systemPrompt: agent.system_prompt,
       promptVars: promptVarsFromAgent(agent),
       onLead: lead => sendChatLead({
