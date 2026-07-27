@@ -224,7 +224,7 @@ export const cz: LandingDict = {
   trust: [
     { title: 'V souladu s GDPR', body: 'Data pacientů jsou uložena na šifrovaných serverech v EU. Plný soulad s legislativou o zdravotní dokumentaci v ČR i EU.' },
     { title: 'Bezpečnost dat', body: 'Data vaší ordinace a pacientů nejsou nikdy sdílena s třetími stranami ani používána k trénování modelů.' },
-    { title: 'Plná kontrola', body: 'Vždy vidíte všechny dialogy. Můžete kdykoli zasáhnout, opravit nebo změnit nastavení.' },
+    { title: 'Plná kontrola', body: 'Upozorníme personál, kdykoli si situace vyžádá lidskou pozornost.' },
   ],
 
   faq: {

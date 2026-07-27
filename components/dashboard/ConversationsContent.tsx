@@ -61,6 +61,8 @@ interface Conversation {
   lead_score: number | null
   ai_summary: AiSummary | null
   tagged_at: string | null
+  captured_lead_name: string | null
+  captured_lead_phone: string | null
 }
 
 const ALL_TAGS = Object.keys(TAG_META) as ConversationTag[]
@@ -313,6 +315,8 @@ export default function ConversationsContent({ conversations: initial }: { conve
           onClose={() => setProfileConvId(null)}
           agentId={conversations.find(c => c.id === profileConvId)?.agent_id || ''}
           conversationId={profileConvId}
+          initialName={conversations.find(c => c.id === profileConvId)?.captured_lead_name || ''}
+          initialPhone={conversations.find(c => c.id === profileConvId)?.captured_lead_phone || ''}
         />
       )}
     </div>

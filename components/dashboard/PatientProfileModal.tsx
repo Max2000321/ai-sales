@@ -36,13 +36,16 @@ interface Props {
   onClose: () => void
   agentId: string
   conversationId: string
+  /** Pre-fill from the lead already captured by the AI, when available. */
+  initialName?: string
+  initialPhone?: string
 }
 
-export default function PatientProfileModal({ open, onClose, agentId, conversationId }: Props) {
+export default function PatientProfileModal({ open, onClose, agentId, conversationId, initialName = '', initialPhone = '' }: Props) {
   const { lang } = useLang()
   const t = T[lang]
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [name, setName] = useState(initialName)
+  const [phone, setPhone] = useState(initialPhone)
   const [procedure, setProcedure] = useState('')
   const [saving, setSaving] = useState(false)
   const [justScheduled, setJustScheduled] = useState(false)

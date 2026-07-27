@@ -224,7 +224,7 @@ export const en: LandingDict = {
   trust: [
     { title: 'GDPR-compliant', body: 'Patient data is stored on encrypted EU servers, fully compliant with healthcare regulations in Ukraine and the EU.' },
     { title: 'Your data is private', body: 'Your clinic data and patient information are never shared with third parties or used to train AI models.' },
-    { title: 'Full control', body: 'You always see all conversations. You can step in, correct or change settings at any moment.' },
+    { title: 'Full control', body: 'We’ll notify your staff whenever a situation needs a human’s attention.' },
   ],
 
   faq: {

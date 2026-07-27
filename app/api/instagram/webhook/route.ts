@@ -115,15 +115,22 @@ export async function POST(req: NextRequest) {
           systemPrompt: agent.system_prompt,
           promptVars: promptVarsFromAgent(agent),
           persona: { tone: agent.ai_tone, scenarios: agent.ai_scenarios },
-          onLead: lead => sendChatLead({
-            name: lead.patient_name,
-            phone: lead.patient_phone,
-            channel: 'Instagram',
-            summary: lead.summary,
-            sos: lead.sos,
-            agentName: agent.name,
-            agentId: agent.id,
-          }),
+          onLead: async lead => {
+            if (conv) {
+              await admin.from('conversations')
+                .update({ captured_lead_name: lead.patient_name, captured_lead_phone: lead.patient_phone })
+                .eq('id', conv.id)
+            }
+            return sendChatLead({
+              name: lead.patient_name,
+              phone: lead.patient_phone,
+              channel: 'Instagram',
+              summary: lead.summary,
+              sos: lead.sos,
+              agentName: agent.name,
+              agentId: agent.id,
+            })
+          },
         })
       } catch (e) {
         console.error('instagram generateAgentReply failed:', e)
