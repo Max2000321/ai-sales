@@ -113,14 +113,10 @@ export const en: LandingDict = {
   },
 
   integrations: {
-    badge: 'Integrations',
-    title: 'Works with your practice management system',
-    subtitle: 'DentAI syncs with your clinic’s MIS/CRM — bookings land where you already work.',
-    microcopy: 'Direct Synchronization. DentAI inputs reservations directly into your active medical calendar with zero manual data transfer or double-bookings.',
-    groups: [
-      { label: 'Czechia / EU', systems: ['XDENT', 'Dentem'] },
-      { label: 'Ukraine / CIS', systems: ['DentalTap', 'ClinicIQ', 'Medods'] },
-    ],
+    badge: 'No changes to your system',
+    title: 'Nothing to change in your practice',
+    subtitle: 'DentAI works on top of the channels you already use — no need to connect or replace your MIS/CRM.',
+    microcopy: 'Every request lands instantly in the DentAI dashboard and is emailed to your front desk — your team confirms the booking in your usual system within seconds, no double-bookings.',
   },
 
   pdfAudit: {

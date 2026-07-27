@@ -113,13 +113,10 @@ export const cz: LandingDict = {
   },
 
   integrations: {
-    badge: 'Integrace',
-    title: 'Funguje s vaším ordinačním systémem',
-    subtitle: 'DentAI se synchronizuje s MIS/CRM vaší ordinace — objednávky se objeví tam, kde už pracujete.',
-    microcopy: 'Přímá synchronizace. DentAI zapisuje rezervace přímo do vašeho aktivního lékařského kalendáře — bez ručního přenosu dat a bez dvojích objednávek.',
-    groups: [
-      { label: 'Česko / EU', systems: ['XDENT', 'Dentem'] },
-    ],
+    badge: 'Bez zásahu do vašeho systému',
+    title: 'Nic ve své ordinaci měnit nemusíte',
+    subtitle: 'DentAI funguje nad vašimi stávajícími kanály — váš MIS/CRM není potřeba nijak propojovat ani měnit.',
+    microcopy: 'Každá poptávka se okamžitě objeví v dashboardu DentAI a odešle se e-mailem recepci — tým objednávku potvrdí ve svém běžném systému během pár vteřin, bez dvojích objednávek.',
   },
 
   pdfAudit: {

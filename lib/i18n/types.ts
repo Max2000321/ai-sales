@@ -277,19 +277,11 @@ export interface FooterDict {
   badges: string
 }
 
-export interface IntegrationGroup {
-  /** Localized region label, e.g. "ЄС / Чехія" or "Україна / СНД". */
-  label: string
-  /** MIS / CRM product names (brand names, locale-invariant). */
-  systems: string[]
-}
-
 export interface IntegrationsDict {
   badge: string
   title: string
   subtitle: string
   microcopy: string
-  groups: IntegrationGroup[]
 }
 
 export interface PdfAuditDict {
