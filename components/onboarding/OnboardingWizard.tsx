@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
-import { Bot, BookOpen, Rocket, Check, Loader2, Copy, ExternalLink, Sparkles } from 'lucide-react'
+import { Bot, BookOpen, Rocket, Check, Loader2, Copy, ExternalLink, Sparkles, Plus } from 'lucide-react'
 
 const COLORS = ['#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
@@ -25,9 +26,15 @@ const T = {
     step2: {
       title: 'Додайте базу знань',
       sub: 'Вставте FAQ, інформацію про послуги або ціни. AI відповідатиме на основі цих даних.',
-      placeholder: `Приклад:\n\nQ: Скільки коштує чищення зубів?\nA: Професійне чищення €60, займає 45 хвилин.\n\nQ: Як записатись на прийом?\nA: Напишіть тут або зателефонуйте нам. Найближчі слоти — завтра о 10:00 та 14:30.\n\nQ: Чи є безкоштовна консультація?\nA: Так, перша консультація безкоштовна.`,
+      placeholder: `Приклад:\n\nQ: Скільки коштує чищення зубів?\nA: Професійне чищення — 1 500 грн, займає 45 хвилин.\n\nQ: Де ви знаходитесь і який графік?\nA: вул. Хрещатик 1. Пн-Сб з 09:00 до 20:00. Є безкоштовна парковка.\n\nQ: Як записатись на прийом?\nA: Напишіть тут або зателефонуйте нам. Найближчі слоти — завтра о 10:00 та 14:30.`,
       btnSave: 'Зберегти та продовжити →',
       btnSkip: 'Пропустити →',
+      chipServices: 'Шаблон послуг та цін',
+      chipHours: 'Графік та адреса',
+      chipBooking: 'Запис та консультація',
+      templateServices: `Q: Скільки коштує [послуга]?\nA: [ціна] грн, займає [тривалість] хвилин.\n\nQ: Які послуги ви надаєте?\nA: [перелік послуг клініки].`,
+      templateHours: `Q: Де ви знаходитесь і який графік роботи?\nA: [адреса]. [дні тижня] з [час] до [час]. [парковка / додаткова інформація].`,
+      templateBooking: `Q: Як записатись на прийом?\nA: Напишіть тут або зателефонуйте нам. Найближчі слоти — [дата] о [час].\n\nQ: Чи є безкоштовна консультація?\nA: [так/ні — умови].`,
     },
     step3: {
       title: 'Агента запущено!',
@@ -56,9 +63,15 @@ const T = {
     step2: {
       title: 'Add your knowledge base',
       sub: 'Paste your FAQ, service info or pricing. The AI will use this to answer patients.',
-      placeholder: `Example:\n\nQ: How much is teeth cleaning?\nA: Professional cleaning is €60, takes 45 minutes.\n\nQ: How do I book an appointment?\nA: Write here or call us. Nearest slots — tomorrow at 10:00 and 14:30.\n\nQ: Is the consultation free?\nA: Yes, the first consultation is free.`,
+      placeholder: `Example:\n\nQ: How much is teeth cleaning?\nA: Professional cleaning is €60, takes 45 minutes.\n\nQ: Where are you located and what are your hours?\nA: 1 Main Street. Mon–Sat 09:00–20:00. Free parking available.\n\nQ: How do I book an appointment?\nA: Write here or call us. Nearest slots — tomorrow at 10:00 and 14:30.`,
       btnSave: 'Save & continue →',
       btnSkip: 'Skip for now →',
+      chipServices: 'Services & pricing template',
+      chipHours: 'Hours & address',
+      chipBooking: 'Booking & consultation',
+      templateServices: `Q: How much does [service] cost?\nA: [price], takes [duration] minutes.\n\nQ: What services do you offer?\nA: [list of clinic services].`,
+      templateHours: `Q: Where are you located and what are your hours?\nA: [address]. [days] from [time] to [time]. [parking / extra info].`,
+      templateBooking: `Q: How do I book an appointment?\nA: Write here or call us. Nearest slots — [date] at [time].\n\nQ: Is the consultation free?\nA: [yes/no — details].`,
     },
     step3: {
       title: 'Your agent is live!',
@@ -87,9 +100,15 @@ const T = {
     step2: {
       title: 'Přidejte znalostní bázi',
       sub: 'Vložte FAQ, informace o službách nebo ceník. AI bude odpovídat na základě těchto dat.',
-      placeholder: `Příklad:\n\nQ: Kolik stojí čištění zubů?\nA: Profesionální čištění 1 500 Kč, trvá 45 minut.\n\nQ: Jak se objednat na termín?\nA: Napište zde nebo nám zavolejte. Nejbližší termíny — zítra v 10:00 a 14:30.\n\nQ: Je konzultace zdarma?\nA: Ano, první konzultace je zdarma.`,
+      placeholder: `Příklad:\n\nQ: Kolik stojí čištění zubů?\nA: Profesionální čištění 1 500 Kč, trvá 45 minut.\n\nQ: Kde se nacházíte a jaká je otevírací doba?\nA: Hlavní 1. Po–So 09:00–20:00. K dispozici bezplatné parkování.\n\nQ: Jak se objednat na termín?\nA: Napište zde nebo nám zavolejte. Nejbližší termíny — zítra v 10:00 a 14:30.`,
       btnSave: 'Uložit a pokračovat →',
       btnSkip: 'Přeskočit →',
+      chipServices: 'Šablona služeb a cen',
+      chipHours: 'Otevírací doba a adresa',
+      chipBooking: 'Objednání a konzultace',
+      templateServices: `Q: Kolik stojí [služba]?\nA: [cena], trvá [délka] minut.\n\nQ: Jaké služby nabízíte?\nA: [seznam služeb ordinace].`,
+      templateHours: `Q: Kde se nacházíte a jaká je otevírací doba?\nA: [adresa]. [dny] od [čas] do [čas]. [parkování / doplňující info].`,
+      templateBooking: `Q: Jak se objednat na termín?\nA: Napište zde nebo nám zavolejte. Nejbližší termíny — [datum] v [čas].\n\nQ: Je konzultace zdarma?\nA: [ano/ne — podmínky].`,
     },
     step3: {
       title: 'Agent je spuštěn!',
@@ -117,6 +136,7 @@ export default function OnboardingWizard() {
   const [agentId, setAgentId] = useState<string | null>(null)
   const [faqText, setFaqText] = useState('')
   const [skippedKnowledge, setSkippedKnowledge] = useState(false)
+  const faqTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   const t = T[lang]
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-sales-iota-three.vercel.app'
@@ -177,6 +197,25 @@ export default function OnboardingWizard() {
     })
     setLoading(false)
     setStep(3)
+  }
+
+  /** Inserts a Q&A template at the cursor, keeping any text already typed. */
+  function insertTemplate(template: string) {
+    const el = faqTextareaRef.current
+    const start = el?.selectionStart ?? faqText.length
+    const end = el?.selectionEnd ?? faqText.length
+    const before = faqText.slice(0, start)
+    const after = faqText.slice(end)
+    const prefix = before.length > 0 && !before.endsWith('\n\n') ? (before.endsWith('\n') ? '\n' : '\n\n') : ''
+    const insertion = prefix + template
+
+    // flushSync forces the textarea's DOM value to update before we touch its
+    // selection — otherwise the browser clamps setSelectionRange to whatever
+    // (stale) value is still on screen.
+    flushSync(() => setFaqText(before + insertion + after))
+    const cursor = (before + insertion).length
+    el?.focus()
+    el?.setSelectionRange(cursor, cursor)
   }
 
   async function copyLink() {
@@ -300,7 +339,21 @@ export default function OnboardingWizard() {
               <p className="text-slate-500 text-sm">{t.step2.sub}</p>
             </div>
             <div className="space-y-4">
+              <div className="flex flex-wrap gap-2">
+                {[t.step2.chipServices, t.step2.chipHours, t.step2.chipBooking].map((label, i) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => insertTemplate([t.step2.templateServices, t.step2.templateHours, t.step2.templateBooking][i])}
+                    className="inline-flex items-center gap-1 border border-indigo-200 bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-full text-xs font-medium hover:bg-indigo-100 transition-colors"
+                  >
+                    <Plus className="w-3 h-3" />
+                    {label}
+                  </button>
+                ))}
+              </div>
               <textarea
+                ref={faqTextareaRef}
                 value={faqText}
                 onChange={e => setFaqText(e.target.value)}
                 placeholder={t.step2.placeholder}
@@ -314,7 +367,7 @@ export default function OnboardingWizard() {
                 className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                {faqText.trim() ? t.step2.btnSave : t.step2.btnSkip}
+                <span className="transition-all">{faqText.trim() ? t.step2.btnSave : t.step2.btnSkip}</span>
               </button>
             </div>
           </>
